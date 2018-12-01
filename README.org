@@ -1,0 +1,21 @@
+#+AUTHOR: Oleksandr Kononov
+#+TITLE: SFML Game
+
+This is a game created in [[https://www.sfml-dev.org/][SFML]]  using various external libraries such as:
+- [[https://github.com/ocornut/imgui][ImGui]]
+- [[https://github.com/mlabbe/nativefiledialog][NativeFileDialog]]
+- [[https://github.com/erincatto/Box2D][Box2D]]
+
+* Expected Features
+- Entity Component design pattern
+- Tiling (map)
+- Asset Manager (for loading in textures,etc)
+- AI:
+  - Influence Map
+  - A* Algorithm
+  - Path Following, Wandering, etc
+- Memory Mangement (memory pools)
+- Networking (basic replication of other players position)
+- Sound Effects
+- Music
+- Menus (GUI)
