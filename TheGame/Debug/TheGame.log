@@ -1,6 +1,14 @@
-﻿  TextureManager.cpp
-  GraphicsComponent.cpp
+﻿  GameObject.cpp
+  Game.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(6): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(14): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+  PhysicsComponent.cpp
   Generating Code...
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\texturemanager.cpp(41): warning C4715: 'TextureManager::GetTexture': not all control paths return a value
+  Skipping... (no relevant changes detected)
+  Player.cpp
+  Main.cpp
+  InputComponent.cpp
+  GraphicsComponent.cpp
+  Command.cpp
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

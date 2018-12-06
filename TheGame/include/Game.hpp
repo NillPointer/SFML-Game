@@ -21,8 +21,8 @@ public:
 
 private:
 	Window m_window;
-
 	Level m_level;
+	b2World m_world;
 
 	Player m_player;
 

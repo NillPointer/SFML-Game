@@ -24,6 +24,12 @@ void Window::BeginDraw() { m_window.clear(sf::Color::Black); }
 void Window::Draw(sf::Drawable &drawable) { m_window.draw(drawable); }
 void Window::EndDraw() { m_window.display(); }
 
+void Window::MoveView(sf::Vector2f position) {
+	auto currentView = m_window.getView();
+	currentView.setCenter(position);
+	m_window.setView(currentView);
+}
+
 bool Window::IsDone() { return m_isDone; }
 bool Window::IsFullscreen() { return m_isFullscreen; }
 bool Window::IsDebug() { return m_isDebug; }

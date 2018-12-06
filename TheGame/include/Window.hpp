@@ -9,9 +9,11 @@ public:
 	~Window();
 
 	void BeginDraw();
+	void Draw(sf::Drawable& drawable);
 	void EndDraw();
 
 	void Update();
+	void MoveView(sf::Vector2f position);
 
 	bool IsDone();
 	bool IsFullscreen();
@@ -21,8 +23,6 @@ public:
 	sf::Vector2u GetWindowSize();
 
 	void ToggleFullscreen();
-
-	void Draw(sf::Drawable& drawable);
 
 private:
 	void Setup();

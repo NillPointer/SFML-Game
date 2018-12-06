@@ -1,5 +1,6 @@
 #include "Components/GraphicsComponent.hpp"
 #include "TextureManager.hpp"
+#include "Util.hpp"
 
 GraphicsComponent::GraphicsComponent() :
 m_animationSpeed(0),
@@ -84,7 +85,7 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string className): Graphic
 	m_textureIDs[static_cast<int>(ANIMATION_STATE::IDLE_LEFT)] = TextureManager::AddTexture(texturePathPrefix + "_idle_left.png");
 
 	// Set initial sprite.
-	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, 12);
+	SetSprite(TextureManager::GetTexture(m_textureIDs[static_cast<int>(ANIMATION_STATE::WALK_UP)]), false, 8, ANIMATION_SPEED);
 	m_currentTextureIndex = static_cast<int>(ANIMATION_STATE::WALK_UP);
 	m_sprite.setOrigin(sf::Vector2f(13.f, 18.f));
 }

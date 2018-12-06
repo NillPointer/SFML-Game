@@ -2,12 +2,13 @@
 #define PhysicsComponent_hpp
 
 #include "GameObject.hpp"
+#include "Util.hpp"
 
 class GameObject;
 
 class PhysicsComponent {
 public:
-	PhysicsComponent() {};
+	PhysicsComponent(GameObject& obj, b2World& world);
 	virtual ~PhysicsComponent() {};
 
 	void Update(GameObject& obj, float timeDelta);
@@ -16,6 +17,8 @@ public:
 
 private:
 	sf::Vector2f m_velocity;
+	b2Body* m_body;
+	b2World* m_world;
 };
 
 #endif // !PhysicsComponent_hpp

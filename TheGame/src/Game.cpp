@@ -1,6 +1,6 @@
 #include "Game.hpp"
 
-Game::Game() {
+Game::Game(): m_world(b2Vec2(0,10)), m_player(m_world) {
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
 	srand(time(nullptr));
@@ -30,6 +30,8 @@ void Game::Update() {
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
 
 	m_player.Update(deltaTime.asSeconds());
+
+	m_window.MoveView(m_player.GetPosition());
 }
 
 void Game::Render() {

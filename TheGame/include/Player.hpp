@@ -5,7 +5,7 @@
 
 class Player : public GameObject {
 public:
-	Player();
+	Player(b2World& world);
 	void Update(float timeDelta);
 	void SetHealth(int healthValue);
 	PLAYER_CLASS GetClass() const;
