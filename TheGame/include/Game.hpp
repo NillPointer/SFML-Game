@@ -3,6 +3,8 @@
 
 #include "Util.hpp"
 #include "Window.hpp"
+#include "Level.hpp"
+#include "Player.hpp"
 
 class Game {
 public:
@@ -20,8 +22,13 @@ public:
 private:
 	Window m_window;
 
+	Level m_level;
+
+	Player m_player;
+
 	sf::Clock m_clock;
 	sf::Time m_previousTime;
+	sf::Font m_font;
 
 };
 

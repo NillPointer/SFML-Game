@@ -24,6 +24,33 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\GraphicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\InputComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Components\PhysicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextureManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bitshifter\object_pool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp">
@@ -125,5 +152,487 @@
     <ClInclude Include="include\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\GameObject.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\Command.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\GraphicsComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\HealthComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\InuptComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\PhysicsComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Enums.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextureManager.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\bitshifter\ObjectPool.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Level.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="include\bitshifter\ObjectPool.inl">
+      <Filter>Header Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resource\spr_light_grid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\spr_path.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\spr_torch.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_aim.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_archer_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_attack_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_attack_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_bar_outline.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_coin_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_defense_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_defense_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_dexterity_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_dexterity_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_gem_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_health_bar.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_key_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_key_ui_transparent.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_mage_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_mana_bar.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_spare_trait_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_spare_trait_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_stamina_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_stamina_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_strength_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_strength_ui_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_thief_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\ui\spr_warrior_ui.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_door_locked.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_door_unlocked.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_floor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_floor_alt.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_bottom_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_bottom_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_bottom_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_bottom_t.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_entrance.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_intersection.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_side_left_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_side_left_t.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_side_right_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_side_right_t.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_single.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_top.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_top_end.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_top_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_top_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\tiles\spr_tile_wall_top_t.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\projectiles\spr_arrow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\projectiles\spr_dagger.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\projectiles\spr_magic_ball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\projectiles\spr_sword.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\archer\spr_archer_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\mage\spr_mage_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\thief\spr_thief_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\players\warrior\spr_warrior_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\gem\spr_pickup_gem.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\gold\spr_pickup_gold_large.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\gold\spr_pickup_gold_medium.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\gold\spr_pickup_gold_small.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\heart\spr_pickup_heart.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\key\spr_pickup_key.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_attack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_defense.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_dexterity.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_health.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_mana.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_stamina.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\loot\potions\spr_potion_strength.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\goblin\spr_goblin_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\skeleton\spr_skeleton_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_idle_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_idle_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_idle_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_idle_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_walk_down.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_walk_left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_walk_right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\enemies\slime\spr_slime_walk_up.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\helmet\spr_helmet_idle_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\helmet\spr_helmet_idle_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\helmet\spr_helmet_walk_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\helmet\spr_helmet_walk_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\legs\spr_legs_idle_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\legs\spr_legs_idle_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\legs\spr_legs_walk_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\legs\spr_legs_walk_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\torso\spr_torso_idle_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\torso\spr_torso_idle_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\torso\spr_torso_walk_front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="resource\armor\torso\spr_torso_walk_side.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resource\sounds\snd_coin_pickup.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\sounds\snd_enemy_dead.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\sounds\snd_fire.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\sounds\snd_gem_pickup.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\sounds\snd_key_pickup.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\sounds\snd_player_hit.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\music\msc_main_track_1.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\music\msc_main_track_2.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\music\msc_main_track_3.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="resource\music\msc_main_track_4.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resource\fonts\arial.ttf" />
+    <Font Include="resource\fonts\04B_03__.TTF" />
+    <Font Include="resource\fonts\ADDSBP__.TTF" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="resource\data\level_data.txt" />
   </ItemGroup>
 </Project>
