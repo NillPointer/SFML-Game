@@ -5,6 +5,7 @@
 
 #include "Level.hpp"
 #include "TextureManager.hpp"
+#include "Util.hpp"
 
 // Default constructor.
 Level::Level() {}
@@ -167,7 +168,7 @@ Tile* Level::GetTile(int columnIndex, int rowIndex) {
 }
 
 // Loads a level from a .txt file.
-bool Level::LoadLevelFromFile(std::string fileName) {
+bool Level::LoadLevelFromFile(std::string fileName, b2World& world) {
 	// Create all the fields we need.
 	std::ifstream file(fileName);
 
@@ -195,6 +196,21 @@ bool Level::LoadLevelFromFile(std::string fileName) {
 				cell.type = static_cast<TILE>(tileID);
 				cell.sprite.setTexture(TextureManager::GetTexture(m_textureIDs[tileID]));
 				cell.sprite.setPosition(m_origin.x + (TILE_SIZE * i), m_origin.y + (TILE_SIZE * j));
+
+				if (IsSolid(i, j)) {
+					b2BodyDef bodyDef;
+					bodyDef.type = b2_staticBody;
+					auto posX = cell.sprite.getPosition().x + cell.sprite.getTexture()->getSize().x/2.0f;
+					auto posY = cell.sprite.getPosition().y + cell.sprite.getTexture()->getSize().y / 2.0f;
+					bodyDef.position.Set(posX / PIXEL_PER_METER, posY/ PIXEL_PER_METER);
+					cell.physicsBody = world.CreateBody(&bodyDef);
+
+					b2PolygonShape shape;
+					b2FixtureDef fixture;
+					shape.SetAsBox(0.75f, 0.75f);
+					fixture.shape = &shape;
+					cell.physicsBody->CreateFixture(&fixture);
+				}
 
 				// Check for entry/exit nodes.
 				if (cell.type == TILE::WALL_DOOR_LOCKED) {

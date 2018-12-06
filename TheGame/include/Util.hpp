@@ -14,4 +14,13 @@ constexpr unsigned int WINDOW_HEIGHT = { 600 };
 constexpr float FPS{ 60 };
 constexpr float ANIMATION_SPEED{ 12 };
 
+constexpr float WALK_ACCELERATION{ 200 };
+constexpr int TEXT_SIZE_FOR_TILE{ 10 };
+
+/* Physics Settings */
+constexpr float PIXEL_PER_METER{ 32 };
+constexpr float32 TIME_STEP{ 1 / 20.0f }; //the length of time passed to simulate (seconds)
+constexpr int32 VELOCITY_ITERATIONS = 8;   //how strongly to correct velocity
+constexpr int32 POSITION_ITERATIONS = 3;   //how strongly to correct position
+
 #endif // !UTIL_HPP

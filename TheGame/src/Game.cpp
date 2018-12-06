@@ -1,16 +1,16 @@
 #include "Game.hpp"
+#include "SFMLDebugDraw.h"
 
-Game::Game(): m_world(b2Vec2(0,10)), m_player(m_world) {
+Game::Game(): m_world(b2Vec2(0,0)), m_player(m_world){
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
 	srand(time(nullptr));
 
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 	m_level = Level(*m_window.GetRenderWindow());
-	m_level.LoadLevelFromFile("resource/data/level_data.txt");
+	m_level.LoadLevelFromFile("resource/data/level_data.txt", m_world);
 
 	m_player.SetPosition({ m_window.GetWindowSize().x / 2.f, m_window.GetWindowSize().y / 2.f });
-
 	m_window.GetRenderWindow()->setFramerateLimit(FPS);
 }
 
@@ -35,11 +35,19 @@ void Game::Update() {
 }
 
 void Game::Render() {
+	static SFMLDebugDraw debugDraw(*m_window.GetRenderWindow());
+
+	m_world.SetDebugDraw(&debugDraw);
+
+	debugDraw.SetFlags(b2Draw::e_shapeBit);
+
 	m_window.BeginDraw();
 
 	m_window.Draw(m_level);
 
 	m_window.Draw(m_player);
+
+	m_world.DrawDebugData();
 
 	m_window.EndDraw();
 }

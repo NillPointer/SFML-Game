@@ -29,7 +29,6 @@ private:
 	sf::Clock m_clock;
 	sf::Time m_previousTime;
 	sf::Font m_font;
-
 };
 
 #endif // !GAME_HPP

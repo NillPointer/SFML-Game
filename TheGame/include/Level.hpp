@@ -28,6 +28,7 @@ struct Tile {
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
 	sf::Sprite sprite;					// The tile sprite.
+	b2Body* physicsBody;
 	int H;								// Heuristic / movement cost to goal.
 	int G;								// Movement cost. (Total of entire path)
 	int F;								// Estimated cost for full path. (G + H)
@@ -78,7 +79,7 @@ public:
 	* @param fileName The path to the level file to load.
 	* return true if the level loaded succesfully.
 	*/
-	bool Level::LoadLevelFromFile(std::string fileName);
+	bool Level::LoadLevelFromFile(std::string fileName, b2World& world);
 
 	/**
 	* Gets the tile at the given position.

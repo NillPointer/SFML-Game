@@ -18,5 +18,6 @@ void GameObject::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 
 void GameObject::SetPosition(sf::Vector2f position) {
 	m_position = position;
+	if (m_physics != nullptr) m_physics->ResetPosition(position);
 	if (m_graphics != nullptr) m_graphics->GetSprite().setPosition(position);
 }

@@ -29,6 +29,7 @@
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\SFMLDebugDraw.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -74,6 +75,7 @@
     <ClInclude Include="include\nlohmann\json.hpp" />
     <ClInclude Include="include\nlohmann\json_fwd.hpp" />
     <ClInclude Include="include\Player.hpp" />
+    <ClInclude Include="include\SFMLDebugDraw.h" />
     <ClInclude Include="include\TextureManager.hpp" />
     <ClInclude Include="include\Util.hpp" />
     <ClInclude Include="include\Window.hpp" />
