@@ -196,7 +196,7 @@ bool Level::LoadLevelFromFile(std::string fileName, b2World& world) {
 				cell.type = static_cast<TILE>(tileID);
 				cell.sprite.setTexture(TextureManager::GetTexture(m_textureIDs[tileID]));
 				cell.sprite.setPosition(m_origin.x + (TILE_SIZE * i), m_origin.y + (TILE_SIZE * j));
-
+/* TODO for testing purposes - remove later */ static char* t = "The door is closed";
 				if (IsSolid(i, j)) {
 					b2BodyDef bodyDef;
 					bodyDef.type = b2_staticBody;
@@ -204,11 +204,13 @@ bool Level::LoadLevelFromFile(std::string fileName, b2World& world) {
 					auto posY = cell.sprite.getPosition().y + cell.sprite.getTexture()->getSize().y / 2.0f;
 					bodyDef.position.Set(posX / PIXEL_PER_METER, posY/ PIXEL_PER_METER);
 					cell.physicsBody = world.CreateBody(&bodyDef);
+/* TODO for testing purposes - remove later */ if (cell.type == TILE::WALL_DOOR_LOCKED) cell.physicsBody->SetUserData(&t);
 
 					b2PolygonShape shape;
 					b2FixtureDef fixture;
-					shape.SetAsBox(0.75f, 0.75f);
+					shape.SetAsBox(0.8f, 0.8f);
 					fixture.shape = &shape;
+					fixture.friction = 0.0f;
 					cell.physicsBody->CreateFixture(&fixture);
 				}
 

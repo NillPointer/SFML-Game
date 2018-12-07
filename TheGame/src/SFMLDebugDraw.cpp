@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-#include "SFMLDebugDraw.h"
+#include "SFMLDebugDraw.hpp"
 
 SFMLDebugDraw::SFMLDebugDraw(sf::RenderWindow &window) : m_window(&window) {}
 
@@ -46,8 +46,8 @@ void SFMLDebugDraw::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, 
 	m_window->draw(polygon);
 }
 void SFMLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color) {
-	sf::CircleShape circle(radius * sfdd::SCALE);
-	circle.setOrigin(radius * sfdd::SCALE, radius * sfdd::SCALE);
+	sf::CircleShape circle(radius * PIXEL_PER_METER);
+	circle.setOrigin(radius * PIXEL_PER_METER, radius * PIXEL_PER_METER);
 	circle.setPosition(SFMLDebugDraw::B2VecToSFVec(center));
 	circle.setFillColor(sf::Color::Transparent);
 	circle.setOutlineThickness(-1.f);
@@ -56,8 +56,8 @@ void SFMLDebugDraw::DrawCircle(const b2Vec2& center, float32 radius, const b2Col
 	m_window->draw(circle);
 }
 void SFMLDebugDraw::DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color) {
-	sf::CircleShape circle(radius * sfdd::SCALE);
-	circle.setOrigin(radius * sfdd::SCALE, radius * sfdd::SCALE);
+	sf::CircleShape circle(radius * PIXEL_PER_METER);
+	circle.setOrigin(radius * PIXEL_PER_METER, radius * PIXEL_PER_METER);
 	circle.setPosition(SFMLDebugDraw::B2VecToSFVec(center));
 	circle.setFillColor(SFMLDebugDraw::GLColorToSFML(color, 60));
 	circle.setOutlineThickness(1.f);

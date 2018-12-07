@@ -1,28 +1,26 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "Util.hpp"
-#include "Window.hpp"
+#include "Scene.hpp"
 #include "Level.hpp"
 #include "Player.hpp"
+#include "SFMLDebugDraw.hpp"
 
-class Game {
+class Game: public Scene {
 public:
-	Game();
+	Game(std::shared_ptr<Window> windowprt);
 	~Game();
 
-	void Update();
-	void Render();
-
-	bool IsRunning() { return m_window.IsDone(); }
+	virtual void Update();
+	virtual void Render();
+	virtual void RestartClock();
 
 	sf::Time GetElapsed();
-	void RestartClock();
 
 private:
-	Window m_window;
 	Level m_level;
 	b2World m_world;
+	SFMLDebugDraw m_debugDraw;
 
 	Player m_player;
 

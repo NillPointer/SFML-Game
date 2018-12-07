@@ -75,7 +75,8 @@
     <ClInclude Include="include\nlohmann\json.hpp" />
     <ClInclude Include="include\nlohmann\json_fwd.hpp" />
     <ClInclude Include="include\Player.hpp" />
-    <ClInclude Include="include\SFMLDebugDraw.h" />
+    <ClInclude Include="include\Scene.hpp" />
+    <ClInclude Include="include\SFMLDebugDraw.hpp" />
     <ClInclude Include="include\TextureManager.hpp" />
     <ClInclude Include="include\Util.hpp" />
     <ClInclude Include="include\Window.hpp" />

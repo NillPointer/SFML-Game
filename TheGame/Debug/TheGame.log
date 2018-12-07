@@ -1,4 +1,3 @@
-﻿  Level.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(198): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+﻿  PhysicsComponent.cpp
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

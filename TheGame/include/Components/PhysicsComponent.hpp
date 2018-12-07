@@ -6,7 +6,7 @@
 
 class GameObject;
 
-class PhysicsComponent {
+class PhysicsComponent: public b2ContactListener {
 public:
 	PhysicsComponent(GameObject& obj, b2World& world);
 	virtual ~PhysicsComponent() {};
@@ -17,6 +17,11 @@ public:
 	sf::Vector2f GetVelocity() const;
 
 private:
+	void BeginContact(b2Contact* contact);
+	void EndContact(b2Contact* contact);
+	void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+	void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse);
+
 	sf::Vector2f m_velocity;
 
 	b2Body* m_body;

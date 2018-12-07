@@ -188,7 +188,10 @@
     <ClInclude Include="include\Player.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\SFMLDebugDraw.h">
+    <ClInclude Include="include\Scene.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\SFMLDebugDraw.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
