@@ -28,11 +28,11 @@ struct Tile {
 	int columnIndex;					// The column index of the tile.
 	int rowIndex;						// The row index of the tile.
 	sf::Sprite sprite;					// The tile sprite.
-	b2Body* physicsBody;
+	b2Body* physicsBody = nullptr;		// Physics body
 	int H;								// Heuristic / movement cost to goal.
 	int G;								// Movement cost. (Total of entire path)
 	int F;								// Estimated cost for full path. (G + H)
-	Tile* parentNode;					// Node to reach this node.
+	Tile* parentNode = nullptr;			// Node to reach this node.
 };
 
 class Level : public sf::Drawable {
@@ -75,13 +75,6 @@ public:
 	TILE GetTileType(int columnIndex, int rowIndex) const;
 
 	/**
-	* Loads a level from a text file.
-	* @param fileName The path to the level file to load.
-	* return true if the level loaded succesfully.
-	*/
-	bool LoadLevelFromFile(std::string fileName, b2World& world);
-
-	/**
 	* Generate a random level.
 	* return player starting position.
 	*/
@@ -103,36 +96,12 @@ public:
 	Tile* GetTile(int columnIndex, int rowIndex);
 
 	/**
-	* Gets the position of the level grid relative to the window.
-	* @return The position of the top-left of the level grid.
-	*/
-	sf::Vector2f GetPosition() const;
-
-	/**
 	* Checks if a given tile is valid.
 	* @param columnIndex The column that the tile is in.
 	* @param rowIndex The column that the row is in.
 	* @return True if the tile is valid.
 	*/
 	bool TileIsValid(int columnIndex, int rowIndex);
-
-	/**
-	* Gets the current floor number.
-	* @return The current floor.
-	*/
-	int GetFloorNumber() const;
-
-	/**
-	* Gets the current room number.
-	* @return The current room.
-	*/
-	int GetRoomNumber() const;
-
-	/**
-	* Gets the size of the level in terms of tiles.
-	* @return The size of the level grid.
-	*/
-	sf::Vector2i GetSize() const;
 
 	/**
 	* Unlocks the door in the level.
@@ -216,30 +185,10 @@ private:
 	Tile m_grid[GRID_WIDTH][GRID_HEIGHT];
 
 	/**
-	* A vector off all the sprites in the level.
-	*/
-	std::vector<sf::Sprite> m_tileSprites;
-
-	/**
 	* The position of the level relative to the window.
 	* This is to the top-left of the level grid.
 	*/
 	sf::Vector2i m_origin;
-
-	/**
-	* The floor number that the player is currently on.
-	*/
-	int m_floorNumber;
-
-	/**
-	* The room number that the player is currently in.
-	*/
-	int m_roomNumber;
-
-	/**
-	* A 2D array that contains the room layout for the current floor.
-	*/
-	int m_roomLayout[3][10];
 
 	/**
 	* An array containing all texture IDs of the level tiles.

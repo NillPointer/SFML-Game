@@ -19,6 +19,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\imgui\imgui-SFML.cpp" />
+    <ClCompile Include="src\imgui\imgui.cpp" />
+    <ClCompile Include="src\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\bitshifter\object_pool.cpp" />
     <ClCompile Include="src\Components\Command.cpp" />
     <ClCompile Include="src\Components\GraphicsComponent.cpp" />
@@ -31,6 +36,7 @@
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SFMLDebugDraw.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -236,9 +242,6 @@
     <Font Include="resource\fonts\04B_03__.TTF" />
     <Font Include="resource\fonts\ADDSBP__.TTF" />
     <Font Include="resource\fonts\arial.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resource\data\level_data.txt" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4DE13E17-D91D-4974-9320-FB8F61B99F22}</ProjectGuid>

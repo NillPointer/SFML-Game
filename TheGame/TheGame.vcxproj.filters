@@ -54,6 +54,24 @@
     <ClCompile Include="src\SFMLDebugDraw.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\imgui\imgui.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_demo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_draw.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_widgets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui-SFML.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp">
@@ -640,8 +658,5 @@
     <Font Include="resource\fonts\arial.ttf" />
     <Font Include="resource\fonts\04B_03__.TTF" />
     <Font Include="resource\fonts\ADDSBP__.TTF" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="resource\data\level_data.txt" />
   </ItemGroup>
 </Project>

@@ -13,8 +13,6 @@ Level::Level() {}
 // Constructor.
 Level::Level(sf::RenderWindow& window) :
 	m_origin({ 0, 0 }),
-	m_floorNumber(1),
-	m_roomNumber(0),
 	m_doorTileIndices({ 0, 0 }) {
 	// Load all tiles.
 	AddTile("resource/tiles/spr_tile_floor.png", TILE::FLOOR);
@@ -60,75 +58,33 @@ Level::Level(sf::RenderWindow& window) :
 	}
 }
 
-// Create and adds a tile sprite to the list of those available.
 int Level::AddTile(std::string fileName, TILE tileType) {
-	// Add the texture to the texture manager.
 	int textureID = TextureManager::AddTexture(fileName);
-
-	if (textureID < 0) {
-		return -1; // Failed
-	} else {
-		m_textureIDs[static_cast<int>(tileType)] = textureID;
-	}
-
-	// Return the ID of the tile.
+	if (textureID < 0) return -1; // Failed
+	else m_textureIDs[static_cast<int>(tileType)] = textureID;
 	return textureID;
 }
 
-// Checks if a given tile is passable
 bool Level::IsSolid(int i, int j) {
-	// Check that the tile is valid
 	if (TileIsValid(i, j)) {
 		int tileIndex = static_cast<int>(m_grid[i][j].type);
 		return (((tileIndex != static_cast<int>(TILE::FLOOR)) && (tileIndex != static_cast<int>(TILE::FLOOR_ALT))) && (tileIndex != static_cast<int>(TILE::WALL_DOOR_UNLOCKED)));
-	} else
-		return false;
+	} else return false;
 }
 
-// Returns the position of the level relative to the application window.
-sf::Vector2f Level::GetPosition() const {
-	return sf::Vector2f(static_cast<float>(m_origin.x), static_cast<float>(m_origin.y));
-}
-
-// Returns the id of the given tile in the 2D level array.
 TILE Level::GetTileType(int columnIndex, int rowIndex) const {
-	// Check that the parameters are valid.
-	if ((columnIndex >= GRID_WIDTH) || (rowIndex >= GRID_HEIGHT)) {
-		return TILE::EMPTY; // failed
-	}
-
-	// Fetch the id.
+	if ((columnIndex >= GRID_WIDTH) || (rowIndex >= GRID_HEIGHT)) return TILE::EMPTY;
 	return m_grid[columnIndex][rowIndex].type;
 }
 
-// Sets the id of the given tile in the grid.
 void Level::SetTile(int columnIndex, int rowIndex, TILE tileType) {
-	// Check that the provided tile index is valid.
-	if ((columnIndex >= GRID_WIDTH) || (rowIndex >= GRID_HEIGHT)) {
-		return;
-	}
+	if ((columnIndex >= GRID_WIDTH) || (rowIndex >= GRID_HEIGHT)) return;
+	if (tileType >= TILE::COUNT) return;
 
-	// check that the sprite index is valid
-	if (tileType >= TILE::COUNT) {
-		return;
-	}
-
-	// change that tiles sprite to the new index
 	m_grid[columnIndex][rowIndex].type = tileType;
 	m_grid[columnIndex][rowIndex].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(tileType)]));
 }
 
-// Gets the current floor number.
-int Level::GetFloorNumber() const {
-	return m_floorNumber;
-}
-
-// Gets the current room number.
-int Level::GetRoomNumber() const {
-	return m_roomNumber;
-}
-
-// Checks if a given tile is valid.
 bool Level::TileIsValid(int column, int row) {
 	bool validColumn, validRow;
 
@@ -138,18 +94,11 @@ bool Level::TileIsValid(int column, int row) {
 	return (validColumn && validRow);
 }
 
-// Gets the size of the level in terms of tiles.
-sf::Vector2i Level::GetSize() const {
-	return sf::Vector2i(GRID_WIDTH, GRID_HEIGHT);
-}
-
 // Gets the tile that the position lies on.
 Tile* Level::GetTile(sf::Vector2f position) {
-	// Convert the position to relative to the level grid.
 	position.x -= m_origin.x;
 	position.y -= m_origin.y;
 
-	// Convert to a tile position.
 	int tileColumn, tileRow;
 
 	tileColumn = static_cast<int>(position.x) / TILE_SIZE;
@@ -158,82 +107,11 @@ Tile* Level::GetTile(sf::Vector2f position) {
 	return &m_grid[tileColumn][tileRow];
 }
 
-// Returns a pointer to the tile at the given index.
 Tile* Level::GetTile(int columnIndex, int rowIndex) {
-	if (TileIsValid(columnIndex, rowIndex)) {
-		return &m_grid[columnIndex][rowIndex];
-	} else {
-		return nullptr;
-	}
+	if (TileIsValid(columnIndex, rowIndex)) return &m_grid[columnIndex][rowIndex];
+	else return nullptr;
 }
 
-// Loads a level from a .txt file.
-bool Level::LoadLevelFromFile(std::string fileName, b2World& world) {
-	// Create all the fields we need.
-	std::ifstream file(fileName);
-
-	// Read level data into 2D int array that describes the level.
-	if (file.is_open()) {
-		for (int j = 0; j < GRID_HEIGHT; ++j) {
-			for (int i = 0; i < GRID_WIDTH; ++i) {
-				// Get the cell that we're working on.
-				auto& cell = m_grid[i][j];
-
-				// Read the character. Out of 4 characters we only want 2nd and 3rd.
-				std::string input;
-
-				file.get();
-				input += file.get();
-				input += file.get();
-				file.get();
-
-				// Convert string to int.
-				std::stringstream convert(input);
-				int tileID;
-				convert >> tileID;
-
-				// Set type, sprite and position.
-				cell.type = static_cast<TILE>(tileID);
-				cell.sprite.setTexture(TextureManager::GetTexture(m_textureIDs[tileID]));
-				cell.sprite.setPosition(m_origin.x + (TILE_SIZE * i), m_origin.y + (TILE_SIZE * j));
-/* TODO for testing purposes - remove later */ static char* t = "The door is closed";
-				if (IsSolid(i, j)) {
-					b2BodyDef bodyDef;
-					bodyDef.type = b2_staticBody;
-					auto posX = cell.sprite.getPosition().x + cell.sprite.getTexture()->getSize().x/2.0f;
-					auto posY = cell.sprite.getPosition().y + cell.sprite.getTexture()->getSize().y / 2.0f;
-					bodyDef.position.Set(posX / PIXEL_PER_METER, posY/ PIXEL_PER_METER);
-					cell.physicsBody = world.CreateBody(&bodyDef);
-/* TODO for testing purposes - remove later */ if (cell.type == TILE::WALL_DOOR_LOCKED) cell.physicsBody->SetUserData(&t);
-
-					b2PolygonShape shape;
-					b2FixtureDef fixture;
-					shape.SetAsBox(0.8f, 0.8f);
-					fixture.shape = &shape;
-					fixture.friction = 0.0f;
-					cell.physicsBody->CreateFixture(&fixture);
-				}
-
-				// Check for entry/exit nodes.
-				if (cell.type == TILE::WALL_DOOR_LOCKED) {
-					// Save the location of the exit door.
-					m_doorTileIndices = sf::Vector2i(i, 0);
-				}
-			}
-
-			// Read end line char.
-			file.get();
-		}
-
-		file.close(); //closing the file
-	} else {
-		return false;
-	}
-
-	return true;
-}
-
-// Generate a random level.
 sf::Vector2f Level::GenerateLevel(b2World& world) {
 	for (int i = 0; i < GRID_WIDTH; ++i) {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
@@ -243,8 +121,13 @@ sf::Vector2f Level::GenerateLevel(b2World& world) {
 				m_grid[i][j].type = TILE::WALL_TOP;
 				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::WALL_TOP)]));
 			}
-
 			m_grid[i][j].sprite.setPosition(m_origin.x + (TILE_SIZE * i), m_origin.y + (TILE_SIZE * j));
+			
+			// Clear any previous physics bodies
+			if (m_grid[i][j].physicsBody != nullptr) {
+				world.DestroyBody(m_grid[i][j].physicsBody);
+				m_grid[i][j].physicsBody = nullptr;
+			}
 		}
 	}
 	CreatePath(1, 1);
@@ -270,6 +153,7 @@ sf::Vector2f Level::GenerateEntryExit() {
 
 	SetTile(startI, GRID_HEIGHT - 1, TILE::WALL_ENTRANCE);
 	SetTile(endI, 0, TILE::WALL_DOOR_LOCKED);
+	m_doorTileIndices = { endI, 0 };
 	m_grid[endI][0].physicsBody->SetUserData(&t);
 	return{(((float)startI + 0.5f) * TILE_SIZE) + m_origin.x, ((GRID_HEIGHT - 1.5f) * TILE_SIZE) + (float)m_origin.y };
 }
@@ -290,19 +174,9 @@ void Level::CalculateTextures(b2World& world) {
 				m_grid[i][j].type = static_cast<TILE>(value);
 				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[value]));
 
-				b2BodyDef bodyDef;
-				bodyDef.type = b2_staticBody;
 				auto posX = m_grid[i][j].sprite.getPosition().x + m_grid[i][j].sprite.getTexture()->getSize().x / 2.0f;
 				auto posY = m_grid[i][j].sprite.getPosition().y + m_grid[i][j].sprite.getTexture()->getSize().y / 2.0f;
-				bodyDef.position.Set(posX / PIXEL_PER_METER, posY / PIXEL_PER_METER);
-				m_grid[i][j].physicsBody = world.CreateBody(&bodyDef);
-
-				b2PolygonShape shape;
-				b2FixtureDef fixture;
-				shape.SetAsBox(0.8f, 0.8f);
-				fixture.shape = &shape;
-				fixture.friction = 0.0f;
-				m_grid[i][j].physicsBody->CreateFixture(&fixture);
+				m_grid[i][j].physicsBody = CreatePhysicsBody(world, { posX, posY }, {0.8f, 0.8f});
 			}
 		}
 	}
@@ -376,37 +250,28 @@ void Level::CreateRooms(int roomCount) {
 	}
 }
 
-// Checks if a given tile is a wall block.
 bool Level::IsWall(int i, int j) {
-	if (TileIsValid(i, j))
-		return m_grid[i][j].type <= TILE::WALL_INTERSECTION;
-	else
-		return false;
+	if (TileIsValid(i, j)) return m_grid[i][j].type <= TILE::WALL_INTERSECTION;
+	else return false;
 }
 
-// Unlocks the door in the level.
 void Level::UnlockDoor() {
 	SetTile(m_doorTileIndices.x, m_doorTileIndices.y, TILE::WALL_DOOR_UNLOCKED);
 }
 
-// Return true if the given tile is a floor tile.
 bool Level::IsFloor(int columnIndex, int rowIndex) {
 	Tile* tile = &m_grid[columnIndex][rowIndex];
-
 	return ((tile->type == TILE::FLOOR) || (tile->type == TILE::FLOOR_ALT));
 }
 
-// Return true if the given tile is a floor tile.
 bool Level::IsFloor(const Tile& tile) {
 	return ((tile.type == TILE::FLOOR) || (tile.type == TILE::FLOOR_ALT));
 }
 
-// Gets the size of the tiles in the level.
 int Level::GetTileSize() const {
 	return TILE_SIZE;
 }
 
-// Draws the level grid to the given render window.
 void Level::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	// Draw the level tiles.
 	for (int i = 0; i < GRID_WIDTH; i++) {

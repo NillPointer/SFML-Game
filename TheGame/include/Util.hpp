@@ -23,4 +23,10 @@ constexpr float32 TIME_STEP{ 1.0f / FPS }; //the length of time passed to simula
 constexpr int32 VELOCITY_ITERATIONS{ 6 };   //how strongly to correct velocity
 constexpr int32 POSITION_ITERATIONS{ 2 };   //how strongly to correct position
 
+/* A quick function to create a physics body */
+b2Body* CreatePhysicsBody(b2World& world,
+						  sf::Vector2f position,
+						  sf::Vector2f size = {0.45f, 0.45f},
+						  b2BodyType type = b2_staticBody,
+						  sf::Vector2f offset = { 0,0 });
 #endif // !UTIL_HPP

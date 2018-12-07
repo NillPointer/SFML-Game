@@ -27,7 +27,7 @@ void Window::EndDraw() { m_window.display(); }
 void Window::MoveView(sf::Vector2f position) {
 	auto currentView = m_window.getView();
 	currentView.setCenter(position);
-	currentView.setSize({ 1400,1050 });
+	//currentView.setSize({ 1400,1050 });
 	m_window.setView(currentView);
 }
 

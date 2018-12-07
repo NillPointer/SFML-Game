@@ -4,19 +4,7 @@ PhysicsComponent::PhysicsComponent(GameObject& obj, b2World& world) {
 	m_world = &world;
 	auto posX = obj.GetPosition().x;
 	auto posY = obj.GetPosition().y;
-
-	b2BodyDef bodyDef;
-	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(posX / PIXEL_PER_METER, posY / PIXEL_PER_METER);
-	bodyDef.fixedRotation = true;
-	m_body = world.CreateBody(&bodyDef);
-
-	b2PolygonShape shape;
-	b2FixtureDef fixture;
-	shape.SetAsBox(0.45f, 0.45f, {0.1f, 0}, 0);
-	fixture.shape = &shape;
-	fixture.friction = 0.0f;
-	m_body->CreateFixture(&fixture);
+	m_body = CreatePhysicsBody(world, { posX, posY }, { 0.45f, 0.45f }, b2_dynamicBody, {0.1f, 0.0f});
 	m_world->SetContactListener(this);
 }
 

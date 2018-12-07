@@ -14,10 +14,8 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 	m_level = Level(*m_window->GetRenderWindow());
-	//m_level.LoadLevelFromFile("resource/data/level_data.txt", m_world);
 	sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 
-	//m_player.SetPosition({ m_window->GetWindowSize().x / 2.f, m_window->GetWindowSize().y / 2.f });
 	m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
 }
@@ -39,12 +37,12 @@ void Game::Update() {
 
 	m_player.Update(deltaTime.asSeconds());
 
+	m_window->MoveView(m_player.GetPosition());
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 		m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	}
-
-	m_window->MoveView(m_player.GetPosition());
 }
 
 void Game::Render() {
