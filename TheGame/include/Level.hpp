@@ -79,7 +79,13 @@ public:
 	* @param fileName The path to the level file to load.
 	* return true if the level loaded succesfully.
 	*/
-	bool Level::LoadLevelFromFile(std::string fileName, b2World& world);
+	bool LoadLevelFromFile(std::string fileName, b2World& world);
+
+	/**
+	* Generate a random level.
+	* return player starting position.
+	*/
+	sf::Vector2f GenerateLevel(b2World& world);
 
 	/**
 	* Gets the tile at the given position.
@@ -164,6 +170,28 @@ public:
 	int AddTile(std::string fileName, TILE tileType);
 
 private:
+
+	/**
+	* Creates a path between two nodes in the recursive backtracker algorithm.
+	*/
+	void CreatePath(int columnIndex, int rowIndex);
+
+	/**
+	* Adds a given number of randomly sized rooms to the level to create some
+	open space.
+	*/
+	void CreateRooms(int roomCount);
+
+	/**
+	* Calculates the correct texture for each tile in the level.
+	*/
+	void CalculateTextures(b2World& world);
+
+	/**
+	* Generates an entry and exit point for the given level.
+	* return one tile above entry location.
+	*/
+	sf::Vector2f GenerateEntryExit();
 
 	/**
 	* Draws the level grid to the provided render window.
