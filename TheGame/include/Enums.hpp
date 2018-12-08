@@ -103,6 +103,7 @@ enum class TILE {
 enum class VIEW {
 	MAIN,
 	UI,
+	DEBUG,
 	COUNT
 };
 

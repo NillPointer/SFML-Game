@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include <functional>
 
 Game::Game(std::shared_ptr<Window> windowprt):
 	Scene(windowprt), m_world(b2Vec2(0,0)),
@@ -15,6 +16,9 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 	m_level = Level(*m_window->GetRenderWindow());
 	sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
+
+	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
+	m_player.GetPhysicsComponent()->SetCollisionCallback(DOOR, m_newLevelCallback);
 
 	m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
@@ -36,10 +40,10 @@ void Game::Update() {
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
 
 	m_player.Update(deltaTime.asSeconds());
-
 	m_window->MoveView(m_player.GetPosition());
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Q)) {
+	if (m_generateNewLevel) {
+		m_generateNewLevel = false;
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 		m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	}
@@ -52,7 +56,7 @@ void Game::Render() {
 
 	m_window->Draw(m_player);
 
-	m_world.DrawDebugData();
+	if (m_window->IsDebug()) m_world.DrawDebugData();
 
 	m_window->EndDraw();
 }

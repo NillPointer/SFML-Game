@@ -1,6 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
+#include <functional>
 #include "Scene.hpp"
 #include "Level.hpp"
 #include "Player.hpp"
@@ -18,6 +19,10 @@ public:
 	sf::Time GetElapsed();
 
 private:
+	std::function<void()> m_newLevelCallback;
+	bool m_generateNewLevel = false;
+
+
 	Level m_level;
 	b2World m_world;
 	SFMLDebugDraw m_debugDraw;

@@ -8,12 +8,18 @@ void Window::Setup() {
 	m_windowSize = { WINDOW_WIDTH, WINDOW_HEIGHT };
 	m_isFullscreen = false;
 	m_isDone = false;
+	m_isDebug = true;
+	m_views[static_cast<int>(VIEW::MAIN)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
+	m_views[static_cast<int>(VIEW::DEBUG)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
+	m_views[static_cast<int>(VIEW::DEBUG)].zoom(1.7f);
+	m_currentView = VIEW::MAIN;
 	Create();
 }
 
 void Window::Create() {
 	auto style = (m_isFullscreen ? sf::Style::Fullscreen : sf::Style::Default);
 	m_window.create({ m_windowSize.x, m_windowSize.y, 32 }, m_windowTitle, style);
+	m_window.setView(m_views[static_cast<int>(VIEW::MAIN)]);
 }
 
 void Window::Destroy() {
@@ -25,10 +31,10 @@ void Window::Draw(sf::Drawable &drawable) { m_window.draw(drawable); }
 void Window::EndDraw() { m_window.display(); }
 
 void Window::MoveView(sf::Vector2f position) {
-	auto currentView = m_window.getView();
-	currentView.setCenter(position);
-	//currentView.setSize({ 1400,1050 });
-	m_window.setView(currentView);
+	if (m_isDebug) m_currentView = VIEW::DEBUG;
+	else m_currentView = VIEW::MAIN;
+	m_views[static_cast<int>(m_currentView)].setCenter(position);
+	m_window.setView(m_views[static_cast<int>(m_currentView)]);
 }
 
 bool Window::IsDone() { return m_isDone; }
@@ -50,6 +56,6 @@ void Window::Update() {
 		if (event.type == sf::Event::Closed) { m_isDone = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) { m_isDone = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) { ToggleFullscreen(); }
-		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Q) { m_isDebug = !m_isDebug; }
+		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F2) { m_isDebug = !m_isDebug; }
 	}
 }

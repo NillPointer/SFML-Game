@@ -1,6 +1,7 @@
 #ifndef PhysicsComponent_hpp
 #define PhysicsComponent_hpp
 
+#include <functional>
 #include "GameObject.hpp"
 #include "Util.hpp"
 
@@ -13,6 +14,7 @@ public:
 
 	void Update(GameObject& obj, float timeDelta);
 	void SetVelocity(sf::Vector2f velocity);
+	void SetCollisionCallback(char* collisionWith, std::function<void()> callback);
 	void ResetPosition(sf::Vector2f position);
 	sf::Vector2f GetVelocity() const;
 
@@ -26,6 +28,8 @@ private:
 
 	b2Body* m_body;
 	b2World* m_world;
+
+	std::map<char*, std::function<void()>> m_collisionCallbacks;
 };
 
 #endif // !PhysicsComponent_hpp

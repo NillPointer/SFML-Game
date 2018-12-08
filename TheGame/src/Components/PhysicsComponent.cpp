@@ -4,7 +4,7 @@ PhysicsComponent::PhysicsComponent(GameObject& obj, b2World& world) {
 	m_world = &world;
 	auto posX = obj.GetPosition().x;
 	auto posY = obj.GetPosition().y;
-	m_body = CreatePhysicsBody(world, { posX, posY }, { 0.45f, 0.45f }, b2_dynamicBody, {0.1f, 0.0f});
+	m_body = CreatePhysicsBody(world, { posX, posY }, { 0.45f, 0.45f }, b2_dynamicBody);
 	m_world->SetContactListener(this);
 }
 
@@ -27,12 +27,18 @@ void PhysicsComponent::ResetPosition(sf::Vector2f position) {
 	m_body->SetTransform({ position.x/ PIXEL_PER_METER, position.y/PIXEL_PER_METER }, m_body->GetAngle());
 }
 
+void PhysicsComponent::SetCollisionCallback(char* collisionWith, std::function<void()> callback) {
+	m_collisionCallbacks[collisionWith] = callback;
+}
+
 void PhysicsComponent::BeginContact(b2Contact* contact) {
-	//std::cout << "Contact Began" << std::endl;
+//	std::cout << "Contact Began" << std::endl;
 	auto body = contact->GetFixtureB()->GetBody();
 	if (body->GetUserData() != nullptr) {
-		char *t = *((char **)contact->GetFixtureB()->GetBody()->GetUserData());
-		std::cout << t << std::endl;
+		char* collidedWith = *((char **)contact->GetFixtureB()->GetBody()->GetUserData());
+		if (collidedWith != nullptr && m_collisionCallbacks.find(collidedWith) != m_collisionCallbacks.end()) {
+			m_collisionCallbacks[collidedWith]();
+		}
 	}
 }
 

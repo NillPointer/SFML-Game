@@ -140,7 +140,6 @@ sf::Vector2f Level::GenerateLevel(b2World& world) {
 sf::Vector2f Level::GenerateEntryExit() {
 	int startI, endI;
 	startI = endI = -1;
-/* TODO for testing purposes - remove later */ static char* t = "The door is closed";
 
 	while (startI == -1) {
 		int index = std::rand() % GRID_WIDTH;
@@ -154,7 +153,7 @@ sf::Vector2f Level::GenerateEntryExit() {
 	SetTile(startI, GRID_HEIGHT - 1, TILE::WALL_ENTRANCE);
 	SetTile(endI, 0, TILE::WALL_DOOR_LOCKED);
 	m_doorTileIndices = { endI, 0 };
-	m_grid[endI][0].physicsBody->SetUserData(&t);
+	m_grid[endI][0].physicsBody->SetUserData((void *)(&DOOR));
 	return{(((float)startI + 0.5f) * TILE_SIZE) + m_origin.x, ((GRID_HEIGHT - 1.5f) * TILE_SIZE) + (float)m_origin.y };
 }
 
@@ -176,7 +175,7 @@ void Level::CalculateTextures(b2World& world) {
 
 				auto posX = m_grid[i][j].sprite.getPosition().x + m_grid[i][j].sprite.getTexture()->getSize().x / 2.0f;
 				auto posY = m_grid[i][j].sprite.getPosition().y + m_grid[i][j].sprite.getTexture()->getSize().y / 2.0f;
-				m_grid[i][j].physicsBody = CreatePhysicsBody(world, { posX, posY }, {0.8f, 0.8f});
+				m_grid[i][j].physicsBody = CreatePhysicsBody(world, { posX, posY }, {0.77f, 0.77f});
 			}
 		}
 	}

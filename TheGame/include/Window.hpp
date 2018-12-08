@@ -2,6 +2,7 @@
 #define WINDOW_HPP
 
 #include "Util.hpp"
+#include "Enums.hpp"
 
 class Window {
 public:
@@ -30,8 +31,11 @@ private:
 	void Destroy();
 
 	sf::RenderWindow m_window;
+	sf::View m_views[static_cast<int>(VIEW::COUNT)];
 	sf::Vector2u m_windowSize;
 	std::string m_windowTitle;
+
+	VIEW m_currentView;
 
 	bool m_isDone;
 	bool m_isFullscreen;
