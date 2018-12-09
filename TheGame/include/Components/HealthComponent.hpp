@@ -1,7 +1,10 @@
 #ifndef HealthComponent_hpp
 #define HealthComponent_hpp
 
-#include "Component.hpp"
+#include "GameObject.hpp"
+#include "Components/Component.hpp"
+
+class Component;
 
 class HealthComponent: public Component {
 public:

@@ -3,13 +3,13 @@
 
 #include <map>
 
-#include "Enums.hpp"
 #include "GameObject.hpp"
+#include "Enums.hpp"
 #include "Components/Command.hpp"
-#include "Component.hpp"
+#include "Components/Component.hpp"
 
-class GameObject;
 class Command;
+class Component;
 
 class InputComponent: public Component {
 

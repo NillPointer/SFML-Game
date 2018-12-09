@@ -1,13 +1,26 @@
 #ifndef SPRITECOMPONENT_HPP
 #define SPRITECOMPONENT_HPP
 
-#include "Component.hpp"
+#include <memory>
+#include "GameObject.hpp"
+#include "Components/Component.hpp"
 
-class SpriteComponent: public Component {
+class Component;
+
+class SpriteComponent: public Component, public sf::Drawable {
 public:
 	SpriteComponent(GameObject& obj);
 
 	void Update(float timeDelta);
+
+	void SetSprite(int textureID);
+	void SetSprite(sf::Texture& texture);
+	std::shared_ptr<sf::Sprite> GetSprite() const;
+
+private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	std::shared_ptr<sf::Sprite> m_sprite;
 };
 
 #endif // !SPRITECOMPONENT_HPP
