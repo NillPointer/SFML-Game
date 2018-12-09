@@ -6,7 +6,11 @@
 Player::Player(b2World& world) {
 	m_animator = std::make_shared<AnimatorComponent>(*this);
 	m_sprite = std::make_shared<SpriteComponent>(*this);
-	m_physics = std::make_shared<PhysicsComponent>(*this, world);
+	b2Body* body = CreatePhysicsBody(world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
+	b2Filter filter = body->GetFixtureList()->GetFilterData();
+	filter.categoryBits = PLAYER;
+	body->GetFixtureList()->SetFilterData(filter);
+	m_physics = std::make_shared<PhysicsComponent>(*this,world, body);
 	m_input = std::make_shared<InputComponent>(*this);
 	m_health = std::make_shared<HealthComponent>(*this);
 

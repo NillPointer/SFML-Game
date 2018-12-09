@@ -153,7 +153,6 @@ sf::Vector2f Level::GenerateEntryExit() {
 	SetTile(startI, GRID_HEIGHT - 1, TILE::WALL_ENTRANCE);
 	SetTile(endI, 0, TILE::WALL_DOOR_LOCKED);
 	m_doorTileIndices = { endI, 0 };
-	m_grid[m_doorTileIndices.x][m_doorTileIndices.y].physicsBody->SetUserData((void *)(&DOOR_LOCKED));
 	return{(((float)startI + 0.5f) * TILE_SIZE) + m_origin.x, ((GRID_HEIGHT - 1.5f) * TILE_SIZE) + (float)m_origin.y };
 }
 
@@ -255,7 +254,9 @@ bool Level::IsWall(int i, int j) {
 }
 
 void Level::UnlockDoor() {
-	m_grid[m_doorTileIndices.x][m_doorTileIndices.y].physicsBody->SetUserData((void *)(&DOOR_UNLOCKED));
+	b2Filter filter = m_grid[m_doorTileIndices.x][m_doorTileIndices.y].physicsBody->GetFixtureList()->GetFilterData();
+	filter.categoryBits = UNLOCKED_DOOR;
+	m_grid[m_doorTileIndices.x][m_doorTileIndices.y].physicsBody->GetFixtureList()->SetFilterData(filter);
 	SetTile(m_doorTileIndices.x, m_doorTileIndices.y, TILE::WALL_DOOR_UNLOCKED);
 }
 

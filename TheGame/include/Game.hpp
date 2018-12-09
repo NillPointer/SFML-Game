@@ -4,6 +4,7 @@
 #include <functional>
 #include "Scene.hpp"
 #include "Level.hpp"
+#include "PhysicsCollisionListener.hpp"
 #include "Player.hpp"
 #include "SFMLDebugDraw.hpp"
 
@@ -19,15 +20,20 @@ public:
 	sf::Time GetElapsed();
 
 private:
-	std::function<void()> m_newLevelCallback;
-	bool m_generateNewLevel = false;
+	void SetupKey();
 
+
+	std::function<void()> m_newLevelCallback;
+	std::function<void()> m_unlockDoorCallbak;
+	bool m_generateNewLevel = false;
 
 	Level m_level;
 	b2World m_world;
+	PhysicsCollisionListener m_collisionListener;
 	SFMLDebugDraw m_debugDraw;
 
 	Player m_player;
+	GameObject m_key;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;

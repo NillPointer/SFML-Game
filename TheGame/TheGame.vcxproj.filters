@@ -81,6 +81,9 @@
     <ClCompile Include="src\Components\AnimatorComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysicsCollisionListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp">
@@ -231,6 +234,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Components\AnimationComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\PhysicsCollisionListener.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

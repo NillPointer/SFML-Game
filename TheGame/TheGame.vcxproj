@@ -36,6 +36,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\PhysicsCollisionListener.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SFMLDebugDraw.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="include\nlohmann\detail\value_t.hpp" />
     <ClInclude Include="include\nlohmann\json.hpp" />
     <ClInclude Include="include\nlohmann\json_fwd.hpp" />
+    <ClInclude Include="include\PhysicsCollisionListener.hpp" />
     <ClInclude Include="include\Player.hpp" />
     <ClInclude Include="include\Scene.hpp" />
     <ClInclude Include="include\SFMLDebugDraw.hpp" />

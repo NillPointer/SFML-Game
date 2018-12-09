@@ -23,9 +23,10 @@ constexpr float32 TIME_STEP{ 1.0f / FPS }; //the length of time passed to simula
 constexpr int32 VELOCITY_ITERATIONS{ 6 };   //how strongly to correct velocity
 constexpr int32 POSITION_ITERATIONS{ 2 };   //how strongly to correct position
 
-/* Collision body identifiers */
-constexpr char* DOOR_LOCKED{ "DOOR_LOCKED" };
-constexpr char* DOOR_UNLOCKED{ "DOOR_UNLOCKED" };
+/* Physics Catergories */
+constexpr uint16 PLAYER        { 0b0000000010 };
+constexpr uint16 DOOR_KEY      { 0b0000000100 };
+constexpr uint16 UNLOCKED_DOOR { 0b0000001000 };
 
 /* A quick function to create a physics body */
 b2Body* CreatePhysicsBody(b2World& world,
