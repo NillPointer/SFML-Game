@@ -1,12 +1,15 @@
 #ifndef HealthComponent_hpp
 #define HealthComponent_hpp
 
-class HealthComponent {
+#include "Component.hpp"
+
+class HealthComponent: public Component {
 public:
-	HealthComponent() {};
-	HealthComponent(int health) : m_health(health) {};
+	HealthComponent(GameObject& obj): Component(obj) {}
+	HealthComponent(GameObject& obj, int health) : Component(obj), m_health(health) {}
 	~HealthComponent() {};
 
+	void Update(float timeDelta) {}
 	void SetHealth(int health) { m_health = health;  }
 	int GetHealth() const { return m_health; }
 	void Damage(int damage) { m_health -= damage; }

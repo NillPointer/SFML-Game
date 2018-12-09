@@ -3,10 +3,10 @@
 #include "Util.hpp"
 
 Player::Player(b2World& world) {
-	m_graphics = std::make_shared<PlayerGraphicsComponent>("mage");
+	//m_graphics = std::make_shared<PlayerGraphicsComponent>("mage");
 	m_physics = std::make_shared<PhysicsComponent>(*this, world);
-	m_input = std::make_shared<InputComponent>();
-	m_health = std::make_shared<HealthComponent>();
+	m_input = std::make_shared<InputComponent>(*this);
+	m_health = std::make_shared<HealthComponent>(*this);
 }
 
 // Updates the player object.

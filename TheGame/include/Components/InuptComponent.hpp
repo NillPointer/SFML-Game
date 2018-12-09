@@ -6,18 +6,19 @@
 #include "Enums.hpp"
 #include "GameObject.hpp"
 #include "Components/Command.hpp"
+#include "Component.hpp"
 
 class GameObject;
 class Command;
 
-class InputComponent {
+class InputComponent: public Component {
 
 public:
-	InputComponent();
+	InputComponent(GameObject& obj);
 	~InputComponent() {};
 
 	void BindKey(KEY key, sf::Keyboard::Key keyToBind);
-	void Update(GameObject& obj);
+	void Update(float timeDelta);
 
 protected:
 	// Key bindings map

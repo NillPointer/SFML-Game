@@ -1,16 +1,14 @@
 #include "Components/PhysicsComponent.hpp"
 
-PhysicsComponent::PhysicsComponent(GameObject& obj, b2World& world) {
+PhysicsComponent::PhysicsComponent(GameObject& obj, b2World& world): Component(obj) {
 	m_world = &world;
-	auto posX = obj.GetPosition().x;
-	auto posY = obj.GetPosition().y;
-	m_body = CreatePhysicsBody(world, { posX, posY }, { 0.45f, 0.45f }, b2_dynamicBody);
+	m_body = CreatePhysicsBody(world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
 	m_world->SetContactListener(this);
 }
 
-void PhysicsComponent::Update(GameObject& obj, float timeDelta) {
+void PhysicsComponent::Update(float timeDelta) {
 	m_body->SetLinearVelocity({ m_velocity.x * timeDelta, m_velocity.y * timeDelta });
-	obj.SetPosition({ m_body->GetPosition().x * PIXEL_PER_METER , m_body->GetPosition().y * PIXEL_PER_METER });
+	m_position = { m_body->GetPosition().x * PIXEL_PER_METER , m_body->GetPosition().y * PIXEL_PER_METER };
 	m_world->Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 }
 
@@ -23,8 +21,13 @@ sf::Vector2f PhysicsComponent::GetVelocity() const {
 	return m_velocity;
 }
 
-void PhysicsComponent::ResetPosition(sf::Vector2f position) {
-	m_body->SetTransform({ position.x/ PIXEL_PER_METER, position.y/PIXEL_PER_METER }, m_body->GetAngle());
+void PhysicsComponent::SetPosition(sf::Vector2f position) {
+	m_position = position;
+	m_body->SetTransform({ position.x / PIXEL_PER_METER, position.y / PIXEL_PER_METER }, m_body->GetAngle());
+}
+
+sf::Vector2f PhysicsComponent::GetPosition() const {
+	return m_position;
 }
 
 void PhysicsComponent::SetCollisionCallback(char* collisionWith, std::function<void()> callback) {

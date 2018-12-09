@@ -16,12 +16,12 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 	m_level = Level(*m_window->GetRenderWindow());
-	sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
+	sf::Vector2f playerPos = m_level.GenerateLevel(m_world);
 
 	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
 	m_player.GetPhysicsComponent()->SetCollisionCallback(DOOR_UNLOCKED, m_newLevelCallback);
 
-	m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
+	m_player.GetPhysicsComponent()->SetPosition({ playerPos.x, playerPos.y });
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
 }
 
@@ -41,12 +41,12 @@ void Game::Update() {
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
 
 	m_player.Update(deltaTime.asSeconds());
-	m_window->MoveView(m_player.GetPosition());
+	m_window->MoveView(m_player.GetPhysicsComponent()->GetPosition());
 
 	if (m_generateNewLevel) {
 		m_generateNewLevel = false;
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
-		m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
+		m_player.GetPhysicsComponent()->SetPosition({ PlayerPos.x, PlayerPos.y });
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
