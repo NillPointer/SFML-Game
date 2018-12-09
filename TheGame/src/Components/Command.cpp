@@ -6,20 +6,20 @@ void Command::Walk(GameObject& obj, sf::Vector2f newVelocity) {
 
 void WalkLeftCommand::Execute(GameObject& obj) {
 	Command::Walk(obj, { -WALK_ACCELERATION, 0 });
-	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetAnimation(static_cast<int>(ANIMATION_STATE::WALK_LEFT));
+	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetCurrentAnimation(static_cast<int>(ANIMATION_STATE::WALK_LEFT));
 }
 
 void WalkRightCommand::Execute(GameObject& obj) {
 	Command::Walk(obj, { WALK_ACCELERATION, 0 });
-	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetAnimation(static_cast<int>(ANIMATION_STATE::WALK_RIGHT));
+	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetCurrentAnimation(static_cast<int>(ANIMATION_STATE::WALK_RIGHT));
 }
 
 void WalkUpCommand::Execute(GameObject& obj) {
 	Command::Walk(obj, { 0, -WALK_ACCELERATION });
-	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetAnimation(static_cast<int>(ANIMATION_STATE::WALK_UP));
+	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetCurrentAnimation(static_cast<int>(ANIMATION_STATE::WALK_UP));
 }
 
 void WalkDownCommand::Execute(GameObject& obj) {
 	Command::Walk(obj, { 0, WALK_ACCELERATION });
-	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetAnimation(static_cast<int>(ANIMATION_STATE::WALK_DOWN));
+	if (obj.GetAnimatorComponent() != nullptr) obj.GetAnimatorComponent()->SetCurrentAnimation(static_cast<int>(ANIMATION_STATE::WALK_DOWN));
 }

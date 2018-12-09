@@ -19,7 +19,8 @@ public:
 	void AddAnimation(int animationID, sf::Texture& texture);
 	void AddAnimation(int animationID, std::shared_ptr<AnimationComponent> animation);
 
-	void SetAnimation(int animationID);
+	void SetCurrentAnimation(int animationID);
+	int GetCurrentAnimation();
 	AnimationComponent& GetAnimation(int animationID);
 
 private:

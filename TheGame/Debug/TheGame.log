@@ -1,4 +1,3 @@
-﻿  AnimatorComponent.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\animatorcomponent.cpp(28): warning C4715: 'AnimatorComponent::GetAnimation': not all control paths return a value
+﻿  Player.cpp
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

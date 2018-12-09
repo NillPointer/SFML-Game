@@ -19,8 +19,12 @@ void AnimatorComponent::AddAnimation(int animationID, std::shared_ptr<AnimationC
 	m_animations.insert(std::make_pair(animationID, animation));
 }
 
-void AnimatorComponent::SetAnimation(int animationID) {
+void AnimatorComponent::SetCurrentAnimation(int animationID) {
 	m_currentAnimation = animationID;
+}
+
+int AnimatorComponent::GetCurrentAnimation() {
+	return m_currentAnimation;
 }
 
 AnimationComponent& AnimatorComponent::GetAnimation(int animationID) {

@@ -10,11 +10,9 @@ Player::Player(b2World& world) {
 	m_input = std::make_shared<InputComponent>(*this);
 	m_health = std::make_shared<HealthComponent>(*this);
 
-	std::string prefix = "resource/players/mage/spr_mage";
-	std::string textures[] = {prefix+"_walk_up.png", prefix + "_walk_down.png",prefix + "_walk_right.png",prefix + "_walk_left.png",
-							prefix + "_idle_up.png", prefix + "_idle_down.png",prefix + "_idle_right.png",prefix + "_idle_left.png" };
+	std::string prefix = "resource/players/mage/spr_mage_";
 	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); ++i) {
-		m_animator->AddAnimation(i, TextureManager::AddTexture(textures[i]));
+		m_animator->AddAnimation(i, TextureManager::AddTexture(prefix+ANIMATION_TEXTURES[i]));
 		auto size = m_animator->GetAnimation(i).GetTexture().getSize();
 		auto frames = size.x > 33 ? 8 : 1;
 		for (int j = 0; j < frames; ++j) m_animator->GetAnimation(i).AddFrame({ ((int)size.x / frames) * j, 0, 33, 33 });
@@ -24,6 +22,17 @@ Player::Player(b2World& world) {
 // Updates the player object.
 void Player::Update(float timeDelta) {
 	GameObject::Update(timeDelta);
+
+	auto vel = m_physics->GetVelocity();
+	if (vel.x == 0 && vel.y == 0) {
+		if (m_animator->GetCurrentAnimation() < 4) {
+			m_animator->SetCurrentAnimation(m_animator->GetCurrentAnimation() + 4);
+		}
+	} else {
+		if (m_animator->GetCurrentAnimation() >= 4) {
+			m_animator->SetCurrentAnimation(m_animator->GetCurrentAnimation() - 4);
+		}
+	}
 }
 
 // Returns the player's class.

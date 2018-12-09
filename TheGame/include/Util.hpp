@@ -34,4 +34,9 @@ b2Body* CreatePhysicsBody(b2World& world,
 						  b2BodyType type = b2_staticBody,
 						  sf::Vector2f offset = { 0,0 });
 
+
+/************ Texures - Animations ************/
+const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_right.png", "walk_left.png",
+									   "idle_up.png", "idle_down.png","idle_right.png","idle_left.png" };
+
 #endif // !UTIL_HPP
