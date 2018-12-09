@@ -24,7 +24,8 @@ constexpr int32 VELOCITY_ITERATIONS{ 6 };   //how strongly to correct velocity
 constexpr int32 POSITION_ITERATIONS{ 2 };   //how strongly to correct position
 
 /* Collision body identifiers */
-constexpr char* DOOR{ "DOOR" };
+constexpr char* DOOR_LOCKED{ "DOOR_LOCKED" };
+constexpr char* DOOR_UNLOCKED{ "DOOR_UNLOCKED" };
 
 /* A quick function to create a physics body */
 b2Body* CreatePhysicsBody(b2World& world,

@@ -15,7 +15,7 @@ InputComponent::InputComponent() {
 	m_keyAttackCommand = std::make_shared<AttackCommand>();
 }
 
-void InputComponent::BindKey(InputComponent::KEY key, sf::Keyboard::Key keyToBind) {
+void InputComponent::BindKey(KEY key, sf::Keyboard::Key keyToBind) {
 	m_keyMappings[key] = keyToBind;
 }
 

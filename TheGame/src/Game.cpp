@@ -1,5 +1,6 @@
 #include "Game.hpp"
 #include <functional>
+#include "TextureManager.hpp"
 
 Game::Game(std::shared_ptr<Window> windowprt):
 	Scene(windowprt), m_world(b2Vec2(0,0)),
@@ -18,7 +19,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 
 	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
-	m_player.GetPhysicsComponent()->SetCollisionCallback(DOOR, m_newLevelCallback);
+	m_player.GetPhysicsComponent()->SetCollisionCallback(DOOR_UNLOCKED, m_newLevelCallback);
 
 	m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
@@ -47,6 +48,8 @@ void Game::Update() {
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 		m_player.SetPosition({ PlayerPos.x, PlayerPos.y });
 	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
 }
 
 void Game::Render() {

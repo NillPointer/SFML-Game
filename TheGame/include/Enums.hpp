@@ -107,6 +107,16 @@ enum class VIEW {
 	COUNT
 };
 
+// Keys for input
+enum class KEY {
+	KEY_LEFT,
+	KEY_RIGHT,
+	KEY_UP,
+	KEY_DOWN,
+	KEY_ATTACK,
+	COUNT
+};
+
 // Colors provided by SFML.
 enum class COLOR {
 	BLACK,

@@ -3,6 +3,7 @@
 
 #include <map>
 
+#include "Enums.hpp"
 #include "GameObject.hpp"
 #include "Components/Command.hpp"
 
@@ -12,15 +13,6 @@ class Command;
 class InputComponent {
 
 public:
-
-	enum class KEY {
-		KEY_LEFT,
-		KEY_RIGHT,
-		KEY_UP,
-		KEY_DOWN,
-		KEY_ATTACK
-	};
-
 	InputComponent();
 	~InputComponent() {};
 
@@ -28,7 +20,7 @@ public:
 	void Update(GameObject& obj);
 
 protected:
-	// Default key bindings
+	// Key bindings map
 	std::map<KEY, sf::Keyboard::Key> m_keyMappings;
 
 	std::shared_ptr<Command> m_keyLeftCommand;
