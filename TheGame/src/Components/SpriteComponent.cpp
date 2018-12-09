@@ -17,7 +17,15 @@ void SpriteComponent::SetSprite(int textureID) {
 
 void SpriteComponent::SetSprite(sf::Texture & texture) {
 	m_sprite->setTexture(texture);
-	m_sprite->setOrigin({ texture.getSize().x / 2.0f, texture.getSize().y / 2.0f });
+}
+
+void SpriteComponent::SetSpriteTextureRect(sf::IntRect rect) {
+	m_sprite->setTextureRect(rect);
+	m_sprite->setOrigin({ rect.width / 2.0f, rect.height / 2.0f });
+}
+
+sf::IntRect SpriteComponent::GetSpriteTextureRect() const {
+	return m_sprite->getTextureRect();
 }
 
 std::shared_ptr<sf::Sprite> SpriteComponent::GetSprite() const {

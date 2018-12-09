@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\AnimationComponent.cpp" />
+    <ClCompile Include="src\Components\AnimatorComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\imgui\imgui-SFML.cpp" />
     <ClCompile Include="src\imgui\imgui.cpp" />
@@ -42,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\bitshifter\ObjectPool.hpp" />
+    <ClInclude Include="include\Components\AnimationComponent.hpp" />
+    <ClInclude Include="include\Components\AnimatorComponent.hpp" />
     <ClInclude Include="include\Components\Command.hpp" />
     <ClInclude Include="include\Components\Component.hpp" />
     <ClInclude Include="include\Components\GraphicsComponent.hpp" />
