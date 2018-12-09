@@ -42,5 +42,10 @@ public:
 	void Execute(GameObject& obj);
 };
 
+class DoNothingCommand : public Command {
+public:
+	void Execute(GameObject& obj);
+};
+
 #endif // !Command_hpp
 

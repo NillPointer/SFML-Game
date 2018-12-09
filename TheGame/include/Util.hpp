@@ -18,7 +18,7 @@ constexpr float WALK_ACCELERATION{ 500.0f };
 constexpr int TEXT_SIZE_FOR_TILE{ 10 };
 
 /************ Physics Settings ************/
-constexpr float PIXEL_PER_METER{ 32.0f };
+constexpr float PIXEL_PER_METER{ 33.0f };
 constexpr float32 TIME_STEP{ 1.0f / FPS }; //the length of time passed to simulate (seconds)
 constexpr int32 VELOCITY_ITERATIONS{ 6 };   //how strongly to correct velocity
 constexpr int32 POSITION_ITERATIONS{ 2 };   //how strongly to correct position

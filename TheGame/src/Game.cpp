@@ -39,7 +39,7 @@ void Game::SetupKey() {
 	filter.categoryBits = DOOR_KEY;
 	body->GetFixtureList()->SetFilterData(filter);
 	body->GetFixtureList()->SetSensor(true);
-	m_key.SetPhysicsComponent(std::make_shared<PhysicsComponent>(m_key, m_world, body));
+	m_key.SetPhysicsComponent(std::make_shared<PhysicsComponent>(m_key, body));
 	m_key.GetSpriteComponent()->SetSprite(TextureManager::AddTexture("resource/loot/key/spr_pickup_key.png"));
 	m_key.GetSpriteComponent()->SetSpriteTextureRect({ 0,0, 33, 33 });
 	m_key.GetPhysicsComponent()->SetPosition({ 100, 200 });
@@ -62,6 +62,8 @@ void Game::Update() {
 	m_window->MoveView(m_player.GetPhysicsComponent()->GetPosition());
 
 	m_key.Update(deltaTime.asSeconds());
+
+	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
 	if (m_generateNewLevel) {
 		m_generateNewLevel = false;

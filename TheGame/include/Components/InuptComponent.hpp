@@ -29,6 +29,7 @@ protected:
 	std::shared_ptr<Command> m_keyUpCommand;
 	std::shared_ptr<Command> m_keyDownCommand;
 	std::shared_ptr<Command> m_keyAttackCommand;
+	std::shared_ptr<Command> m_doNothingCommand;
 
 private:
 	static const int WALK_ACCELERATION = 1;
