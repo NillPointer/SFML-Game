@@ -6,6 +6,7 @@ SpriteComponent::SpriteComponent(GameObject & obj) : Component(obj), m_sprite(nu
 }
 
 void SpriteComponent::Update(float timeDelta) {
+	if (!IsActive()) return;
 	if (m_gameObject.GetPhysicsComponent() != nullptr) m_sprite->setPosition(m_gameObject.GetPhysicsComponent()->GetPosition());
 }
 
@@ -33,5 +34,6 @@ std::shared_ptr<sf::Sprite> SpriteComponent::GetSprite() const {
 }
 
 void SpriteComponent::draw(sf::RenderTarget & target, sf::RenderStates states) const {
+	if (!IsActive()) return;
 	if(m_sprite != nullptr) target.draw(*m_sprite);
 }

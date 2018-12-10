@@ -24,6 +24,9 @@ public:
 	GameObject() {}
 	virtual ~GameObject() {}
 
+	void Activate();
+	void Deactivate();
+
 	void SetInputComponent(std::shared_ptr<InputComponent> input) { m_input = input; }
 	void SetPhysicsComponent(std::shared_ptr<PhysicsComponent> physics) { m_physics = physics; }
 	void SetSpriteComponent(std::shared_ptr<SpriteComponent> sprite) { m_sprite = sprite; }
@@ -35,7 +38,6 @@ public:
 	std::shared_ptr<SpriteComponent> GetSpriteComponent() { return m_sprite; }
 	std::shared_ptr<AnimatorComponent> GetAnimatorComponent() { return m_animator; }
 	std::shared_ptr<HealthComponent> GetHealthComponent() { return m_health; }
-
 private:
 
 	std::shared_ptr<InputComponent> m_input;

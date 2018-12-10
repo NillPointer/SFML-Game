@@ -21,6 +21,7 @@ void InputComponent::BindKey(KEY key, sf::Keyboard::Key keyToBind) {
 }
 
 void InputComponent::Update(float timeDelta) {
+	if (!IsActive()) return;
 	try {
 		if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_LEFT])) m_keyLeftCommand->Execute(m_gameObject);
 		else if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_RIGHT])) m_keyRightCommand->Execute(m_gameObject);

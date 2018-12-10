@@ -4,6 +4,7 @@
 AnimatorComponent::AnimatorComponent(GameObject & obj): Component(obj), m_currentAnimation(0){}
 
 void AnimatorComponent::Update(float timeDelta) {
+	if (!IsActive()) return;
 	if (m_animations.find(m_currentAnimation) != m_animations.end()) m_animations[m_currentAnimation]->Update(timeDelta);
 
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;

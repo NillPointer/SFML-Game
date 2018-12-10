@@ -25,7 +25,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	SetupItem("resource/loot/key/spr_pickup_key.png", DOOR_KEY);
 
 	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
-	m_unlockDoorCallbak = [&]() { m_level.UnlockDoor(); };
+	m_unlockDoorCallbak = [&]() { m_level.UnlockDoor(); m_gameObjects[1]->Deactivate(); };
 	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
 	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallbak);
 
@@ -114,6 +114,7 @@ void Game::Update() {
 
 	if (m_generateNewLevel) {
 		m_generateNewLevel = false;
+		m_gameObjects[1]->Activate();
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 		m_gameObjects[0]->GetPhysicsComponent()->SetPosition({ PlayerPos.x, PlayerPos.y });
 	}
