@@ -35,6 +35,7 @@
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\PhysicsCollisionListener.cpp" />
     <ClCompile Include="src\SFMLDebugDraw.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameObject.hpp" />
     <ClInclude Include="include\Level.hpp" />
+    <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\nlohmann\adl_serializer.hpp" />
     <ClInclude Include="include\nlohmann\detail\conversions\from_json.hpp" />
     <ClInclude Include="include\nlohmann\detail\conversions\to_chars.hpp" />
@@ -93,6 +95,7 @@
     <ClInclude Include="include\Window.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="imgui.ini" />
     <None Include="include\bitshifter\ObjectPool.inl" />
   </ItemGroup>
   <ItemGroup>

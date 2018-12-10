@@ -1,4 +1,6 @@
 #include "Window.hpp"
+#include "imgui.h"
+#include "imgui-SFML.h"
 
 Window::Window() { Setup(); }
 Window::~Window() { Destroy(); }
@@ -54,6 +56,7 @@ void Window::ToggleFullscreen() {
 void Window::Update() {
 	sf::Event event;
 	while (m_window.pollEvent(event)) {
+		ImGui::SFML::ProcessEvent(event);
 		if (event.type == sf::Event::Closed) { m_isDone = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) { m_isDone = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) { ToggleFullscreen(); }

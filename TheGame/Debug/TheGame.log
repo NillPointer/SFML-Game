@@ -1,11 +1,8 @@
-﻿  Game.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(11): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(39): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(47): warning C4018: '<': signed/unsigned mismatch
+﻿  Menu.cpp
   Generating Code...
   Compiling...
   Window.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\window.cpp(62): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\window.cpp(65): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
   Util.cpp
   SFMLDebugDraw.cpp
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\sfmldebugdraw.cpp(86): warning C4305: 'initializing': truncation from 'double' to 'float'
@@ -16,6 +13,10 @@ c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(129): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(142): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   GameObject.cpp
+  Game.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(11): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(39): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(47): warning C4018: '<': signed/unsigned mismatch
   SpriteComponent.cpp
   PhysicsComponent.cpp
   InputComponent.cpp

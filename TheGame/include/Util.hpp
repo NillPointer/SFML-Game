@@ -6,10 +6,19 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <Box2D/Box2D.h>
+#include <imgui.h>
 
-constexpr char* WINDOW_TITLE = { "The Game" };
-constexpr unsigned int WINDOW_WIDTH = { 800 };
-constexpr unsigned int WINDOW_HEIGHT = { 600 };
+constexpr char* WINDOW_TITLE{ "The Game" };
+constexpr char* START_GAME{ "START GAME!" };
+constexpr char* EXIT_GAME{ "EXIT" };
+constexpr unsigned int WINDOW_WIDTH{ 800 };
+constexpr unsigned int WINDOW_HEIGHT{ 600 };
+constexpr float MENU_WINDOW_WIDTH_SCALE{ 0.5f };
+constexpr float MENU_WINDOW_HEIGHT_SCALE{ 0.5f };
+constexpr ImGuiWindowFlags MENU_WINDOW_FLAGS{ ImGuiWindowFlags_NoMove | 
+											  ImGuiWindowFlags_NoResize | 
+											  ImGuiWindowFlags_NoCollapse |
+											  ImGuiWindowFlags_NoTitleBar };
 
 constexpr float FPS{ 60.0f };
 constexpr float ANIMATION_SPEED{ 12.0f };
