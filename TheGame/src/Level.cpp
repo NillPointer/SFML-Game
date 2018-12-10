@@ -174,7 +174,7 @@ void Level::CalculateTextures(b2World& world) {
 
 				auto posX = m_grid[i][j].sprite.getPosition().x + m_grid[i][j].sprite.getTexture()->getSize().x / 2.0f;
 				auto posY = m_grid[i][j].sprite.getPosition().y + m_grid[i][j].sprite.getTexture()->getSize().y / 2.0f;
-				m_grid[i][j].physicsBody = CreatePhysicsBody(world, { posX, posY }, {0.77f, 0.77f});
+				m_grid[i][j].physicsBody = CreateSquarePhysicsBody(world, { posX, posY }, {0.77f, 0.77f});
 			}
 		}
 	}

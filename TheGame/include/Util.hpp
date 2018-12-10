@@ -28,12 +28,16 @@ constexpr uint16 PLAYER        { 0b0000000010 };
 constexpr uint16 DOOR_KEY      { 0b0000000100 };
 constexpr uint16 UNLOCKED_DOOR { 0b0000001000 };
 
-/* A quick function to create a physics body */
-b2Body* CreatePhysicsBody(b2World& world,
-						  sf::Vector2f position,
-						  sf::Vector2f size = {0.45f, 0.45f},
-						  b2BodyType type = b2_staticBody,
-						  sf::Vector2f offset = { 0,0 });
+/* Helper functions to create a physics body */
+b2Body* CreateSquarePhysicsBody(b2World& world,
+								sf::Vector2f position,
+								sf::Vector2f size = {0.45f, 0.45f},
+								b2BodyType type = b2_staticBody);
+
+b2Body* CreateCirclePhysicsBody(b2World& world,
+								sf::Vector2f position,
+								float radius,
+								b2BodyType type = b2_staticBody);
 
 
 /************ Texures - Animations ************/

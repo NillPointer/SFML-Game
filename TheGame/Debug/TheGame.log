@@ -1,3 +1,30 @@
-﻿  GameObject.cpp
+﻿  Window.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\window.cpp(61): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  Util.cpp
+  SFMLDebugDraw.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\sfmldebugdraw.cpp(86): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Player.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\player.cpp(25): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Main.cpp
+  Level.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameObject.cpp
+  Game.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(28): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+  SpriteComponent.cpp
+  PhysicsComponent.cpp
+  InputComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\inputcomponent.cpp(31): warning C4101: 'e': unreferenced local variable
+  GraphicsComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\graphicscomponent.cpp(88): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
+  Command.cpp
+  AnimatorComponent.cpp
+  Generating Code...
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\animatorcomponent.cpp(32): warning C4715: 'AnimatorComponent::GetAnimation': not all control paths return a value
+  Compiling...
+  AnimationComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\animationcomponent.cpp(10): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

@@ -5,7 +5,7 @@
 
 Player::Player(b2World& world) {
 	// Creating physics body and setting collision category
-	b2Body* body = CreatePhysicsBody(world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
+	b2Body* body = CreateCirclePhysicsBody(world, { 0, 0 }, 0.5f, b2_dynamicBody);
 	b2Filter filter = body->GetFixtureList()->GetFilterData();
 	filter.categoryBits = PLAYER;
 	body->GetFixtureList()->SetFilterData(filter);

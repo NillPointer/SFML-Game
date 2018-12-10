@@ -34,7 +34,7 @@ Game::~Game() {}
 
 void Game::SetupKey() {
 	m_key.SetSpriteComponent(std::make_shared<SpriteComponent>(m_key));
-	b2Body* body = CreatePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_staticBody);
+	b2Body* body = CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_staticBody);
 	b2Filter filter = body->GetFixtureList()->GetFilterData();
 	filter.categoryBits = DOOR_KEY;
 	body->GetFixtureList()->SetFilterData(filter);
