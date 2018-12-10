@@ -21,7 +21,7 @@ public:
 
 private:
 	void SetupEntity(std::string textureFilenamePrefix, uint16 physicsCategory, sf::Vector2f position, bool isPlayer = false);
-	void SetupItem(std::string textureFilename, uint16 physicsCategory);
+	void SetupItem(std::string textureFilename, sf::Vector2f position, uint16 physicsCategory);
 
 
 	std::function<void()> m_newLevelCallback;

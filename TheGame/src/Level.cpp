@@ -112,6 +112,24 @@ Tile* Level::GetTile(int columnIndex, int rowIndex) {
 	else return nullptr;
 }
 
+sf::Vector2f Level::GetRandomSpawnLocationForTile(TILE tile) {
+	int columnIndex(0), rowIndex(0);
+
+	while (GetTileType(columnIndex, rowIndex) != tile) {
+		columnIndex = std::rand() % GRID_WIDTH;
+		rowIndex = std::rand() % GRID_HEIGHT;
+	}
+
+	return GetTilePosition(columnIndex, rowIndex);
+}
+
+sf::Vector2f Level::GetTilePosition(int columnIndex, int rowIndex) {
+	sf::Vector2f position;
+	position.x = m_origin.x + (columnIndex * TILE_SIZE) + (TILE_SIZE / 2);
+	position.y = m_origin.y + (rowIndex * TILE_SIZE) + (TILE_SIZE / 2);
+	return position;
+}
+
 sf::Vector2f Level::GenerateLevel(b2World& world) {
 	for (int i = 0; i < GRID_WIDTH; ++i) {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
@@ -153,7 +171,7 @@ sf::Vector2f Level::GenerateEntryExit() {
 	SetTile(startI, GRID_HEIGHT - 1, TILE::WALL_ENTRANCE);
 	SetTile(endI, 0, TILE::WALL_DOOR_LOCKED);
 	m_doorTileIndices = { endI, 0 };
-	return{(((float)startI + 0.5f) * TILE_SIZE) + m_origin.x, ((GRID_HEIGHT - 1.5f) * TILE_SIZE) + (float)m_origin.y };
+	return GetTilePosition(startI, GRID_HEIGHT - 2);
 }
 
 // Calculates the correct texture for each tile in the level.

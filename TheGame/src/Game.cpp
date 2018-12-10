@@ -16,13 +16,12 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 	m_level = Level(*m_window->GetRenderWindow());
-	sf::Vector2f playerPos = m_level.GenerateLevel(m_world);
 
 	// Setup Player
-	SetupEntity("resource/players/mage/spr_mage_", PLAYER, playerPos, true);
+	SetupEntity("resource/players/mage/spr_mage_", PLAYER, m_level.GenerateLevel(m_world), true);
 
 	// Setup Key
-	SetupItem("resource/loot/key/spr_pickup_key.png", DOOR_KEY);
+	SetupItem("resource/loot/key/spr_pickup_key.png", m_level.GetRandomSpawnLocationForTile(TILE::FLOOR), DOOR_KEY);
 
 	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
 	m_unlockDoorCallbak = [&]() { m_level.UnlockDoor(); m_gameObjects[1]->Deactivate(); };
@@ -69,7 +68,7 @@ void Game::SetupEntity(std::string textureFilenamePrefix, uint16 physicsCategory
 	entity->GetPhysicsComponent()->SetPosition(position);
 }
 
-void Game::SetupItem(std::string textureFilename, uint16 physicsCategory) {
+void Game::SetupItem(std::string textureFilename, sf::Vector2f position, uint16 physicsCategory) {
 	std::shared_ptr<GameObject> entity = std::make_shared<GameObject>();
 	b2Body* body = CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_staticBody);
 	b2Filter filter = body->GetFixtureList()->GetFilterData();
@@ -82,7 +81,7 @@ void Game::SetupItem(std::string textureFilename, uint16 physicsCategory) {
 
 	entity->GetSpriteComponent()->SetSprite(TextureManager::AddTexture(textureFilename));
 	entity->GetSpriteComponent()->SetSpriteTextureRect({ 0,0, 33, 33 }); // TODO: account for item being animated!
-	entity->GetPhysicsComponent()->SetPosition({ 100, 200 }); // TODO: Give random spawn location
+	entity->GetPhysicsComponent()->SetPosition(position);
 
 	m_gameObjects.push_back(entity);
 	m_physicComponents.push_back(entity->GetPhysicsComponent());
@@ -117,9 +116,11 @@ void Game::Update() {
 		m_gameObjects[1]->Activate();
 		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
 		m_gameObjects[0]->GetPhysicsComponent()->SetPosition({ PlayerPos.x, PlayerPos.y });
+		m_gameObjects[1]->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocationForTile(TILE::FLOOR));
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) m_generateNewLevel = true;
 }
 
 void Game::Render() {
