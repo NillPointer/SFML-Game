@@ -5,8 +5,8 @@
 #include "Scene.hpp"
 #include "Level.hpp"
 #include "PhysicsCollisionListener.hpp"
-#include "Player.hpp"
 #include "SFMLDebugDraw.hpp"
+#include "GameObject.hpp"
 
 class Game: public Scene {
 public:
@@ -20,7 +20,8 @@ public:
 	sf::Time GetElapsed();
 
 private:
-	void SetupKey();
+	void SetupEntity(std::string textureFilenamePrefix, uint16 physicsCategory, sf::Vector2f position, bool isPlayer = false);
+	void SetupItem(std::string textureFilename, uint16 physicsCategory);
 
 
 	std::function<void()> m_newLevelCallback;
@@ -32,8 +33,13 @@ private:
 	PhysicsCollisionListener m_collisionListener;
 	SFMLDebugDraw m_debugDraw;
 
-	Player m_player;
-	GameObject m_key;
+	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
+
+	std::vector<std::shared_ptr<InputComponent>> m_inputComponents;
+	std::vector<std::shared_ptr<PhysicsComponent>> m_physicComponents;
+	std::vector<std::shared_ptr<AnimatorComponent>> m_animatorComponents;
+	std::vector<std::shared_ptr<SpriteComponent>> m_spriteComponents;
+	std::vector<std::shared_ptr<HealthComponent>> m_healthComponents;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;

@@ -5,6 +5,11 @@ AnimatorComponent::AnimatorComponent(GameObject & obj): Component(obj), m_curren
 
 void AnimatorComponent::Update(float timeDelta) {
 	if (m_animations.find(m_currentAnimation) != m_animations.end()) m_animations[m_currentAnimation]->Update(timeDelta);
+
+	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
+	auto velocity = m_gameObject.GetPhysicsComponent()->GetVelocity();
+	if (velocity.x == 0 && velocity.y == 0) { if (m_animations.size() >= 7 && m_currentAnimation < 4) m_currentAnimation += 4; }
+	else { if (m_animations.size() >= 7 && m_currentAnimation >= 4) m_currentAnimation -= 4; }
 }
 
 void AnimatorComponent::AddAnimation(int animationID, int textureID) {

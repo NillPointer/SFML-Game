@@ -29,15 +29,12 @@
     <ClCompile Include="src\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\bitshifter\object_pool.cpp" />
     <ClCompile Include="src\Components\Command.cpp" />
-    <ClCompile Include="src\Components\GraphicsComponent.cpp" />
     <ClCompile Include="src\Components\InputComponent.cpp" />
     <ClCompile Include="src\Components\PhysicsComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
-    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Level.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\PhysicsCollisionListener.cpp" />
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\SFMLDebugDraw.cpp" />
     <ClCompile Include="src\TextureManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
@@ -49,7 +46,6 @@
     <ClInclude Include="include\Components\AnimatorComponent.hpp" />
     <ClInclude Include="include\Components\Command.hpp" />
     <ClInclude Include="include\Components\Component.hpp" />
-    <ClInclude Include="include\Components\GraphicsComponent.hpp" />
     <ClInclude Include="include\Components\HealthComponent.hpp" />
     <ClInclude Include="include\Components\InuptComponent.hpp" />
     <ClInclude Include="include\Components\PhysicsComponent.hpp" />
@@ -89,7 +85,6 @@
     <ClInclude Include="include\nlohmann\json.hpp" />
     <ClInclude Include="include\nlohmann\json_fwd.hpp" />
     <ClInclude Include="include\PhysicsCollisionListener.hpp" />
-    <ClInclude Include="include\Player.hpp" />
     <ClInclude Include="include\Scene.hpp" />
     <ClInclude Include="include\SFMLDebugDraw.hpp" />
     <ClInclude Include="include\TextureManager.hpp" />

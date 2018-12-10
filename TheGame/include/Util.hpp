@@ -15,7 +15,6 @@ constexpr float FPS{ 60.0f };
 constexpr float ANIMATION_SPEED{ 12.0f };
 
 constexpr float WALK_ACCELERATION{ 500.0f };
-constexpr int TEXT_SIZE_FOR_TILE{ 10 };
 
 /************ Physics Settings ************/
 constexpr float PIXEL_PER_METER{ 33.0f };
