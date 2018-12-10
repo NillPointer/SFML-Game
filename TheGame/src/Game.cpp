@@ -3,7 +3,7 @@
 #include "TextureManager.hpp"
 
 Game::Game(std::shared_ptr<Window> windowprt):
-	Scene(windowprt), m_world(b2Vec2(0,0)),
+	Scene(windowprt), m_world(b2Vec2(0,0)), m_generateNewLevel(true),
 	m_debugDraw(*m_window->GetRenderWindow())
 {
 	m_clock.restart();
@@ -18,74 +18,74 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_level = Level(*m_window->GetRenderWindow());
 
 	// Setup Player
-	SetupEntity("resource/players/mage/spr_mage_", PLAYER, m_level.GenerateLevel(m_world), true);
+	SetupGameObject("resource/players/mage/spr_mage_", PLAYER, true, true);
 
 	// Setup Key
-	SetupItem("resource/loot/key/spr_pickup_key.png", m_level.GetRandomSpawnLocationForTile(TILE::FLOOR), DOOR_KEY);
+	SetupGameObject("resource/loot/key/spr_pickup_key.png", DOOR_KEY, false);
 
-	m_newLevelCallback = [&]() { m_generateNewLevel = true; };
-	m_unlockDoorCallbak = [&]() { m_level.UnlockDoor(); m_gameObjects[1]->Deactivate(); };
+	// Setup Score (Gems)
+	for (int i = 0; i < 15; ++i) SetupGameObject("resource/loot/gem/spr_pickup_gem.png", SCORE, false);
+
+	// Setup Collision callbacks
+	m_newLevelCallback = [&](void *ptr) { m_generateNewLevel = true; };
+	m_unlockDoorCallback = [&](void *ptr) { m_level.UnlockDoor(); m_gameObjects[(int)ptr]->Deactivate(); };
+	m_collectScoreCallback = [&](void *ptr) { printf("score picked up\n"); m_gameObjects[(int)ptr]->Deactivate(); };
+
 	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
-	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallbak);
+	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallback);
+	m_collisionListener.SetCollisionCallback(PLAYER | SCORE, m_collectScoreCallback);
 
+	// Limit Framerate
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
 }
 
 Game::~Game() {}
 
-void Game::SetupEntity(std::string textureFilenamePrefix, uint16 physicsCategory, sf::Vector2f position ,bool isPlayer) {
-	// Creating physics body and setting collision category
-	std::shared_ptr<GameObject> entity = std::make_shared<GameObject>();
-	b2Body* body = CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.5f, b2_dynamicBody);
-	b2Filter filter = body->GetFixtureList()->GetFilterData();
-	filter.categoryBits = physicsCategory;
-	body->GetFixtureList()->SetFilterData(filter);
-
-	if (isPlayer) entity->SetInputComponent(std::make_shared<InputComponent>(*entity));
-	// TODO: else !isPlayer SetAIComponent
-	entity->SetPhysicsComponent(std::make_shared<PhysicsComponent>(*entity, body));
-	entity->SetAnimatorComponent(std::make_shared<AnimatorComponent>(*entity));
-	entity->SetSpriteComponent(std::make_shared<SpriteComponent>(*entity));
-	entity->SetHealthComponent(std::make_shared<HealthComponent>(*entity));
-
-	// Loading textures and creating animations
-	for (int i = 0; i < static_cast<int>(ANIMATION_STATE::COUNT); ++i) {
-		entity->GetAnimatorComponent()->AddAnimation(i, TextureManager::AddTexture(textureFilenamePrefix + ANIMATION_TEXTURES[i]));
-		auto size = entity->GetAnimatorComponent()->GetAnimation(i).GetTexture().getSize();
-		int frames = size.x / PIXEL_PER_METER;
-		for (int j = 0; j < frames; ++j)
-			entity->GetAnimatorComponent()->GetAnimation(i).AddFrame({ ((int)size.x / frames) * j, 0, (int)PIXEL_PER_METER, (int)PIXEL_PER_METER });
+void Game::SetupNewLevel() {
+	m_generateNewLevel = false;
+	m_gameObjects[0]->GetPhysicsComponent()->SetPosition(m_level.GenerateLevel(m_world));
+	for (auto i = 1; i < m_gameObjects.size(); ++i) {
+		m_gameObjects[i]->Activate();
+		m_gameObjects[i]->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocationForTile(TILE::FLOOR));
 	}
-
-	m_gameObjects.push_back(entity);
-	m_physicComponents.push_back(entity->GetPhysicsComponent());
-	m_animatorComponents.push_back(entity->GetAnimatorComponent());
-	m_spriteComponents.push_back(entity->GetSpriteComponent());
-	m_healthComponents.push_back(entity->GetHealthComponent());
-	if (isPlayer) m_inputComponents.push_back(entity->GetInputComponent());
-	// TODO: else !isPlayer m_aiComponents push_back entity->GetAIComponent()
-
-	entity->GetPhysicsComponent()->SetPosition(position);
 }
 
-void Game::SetupItem(std::string textureFilename, sf::Vector2f position, uint16 physicsCategory) {
-	std::shared_ptr<GameObject> entity = std::make_shared<GameObject>();
-	b2Body* body = CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_staticBody);
+void Game::SetupGameObject(std::string texture, uint16 physicsCategory, bool isEntity, bool isPlayer) {
+	std::shared_ptr<GameObject> object = std::make_shared<GameObject>();
+	b2Body* body = isEntity ? CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.5f, b2_dynamicBody) : 
+		CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
 	b2Filter filter = body->GetFixtureList()->GetFilterData();
 	filter.categoryBits = physicsCategory;
 	body->GetFixtureList()->SetFilterData(filter);
-	body->GetFixtureList()->SetSensor(true);
+	body->GetFixtureList()->SetSensor(!isEntity);
+	body->SetUserData((void *)m_gameObjects.size());
 
-	entity->SetSpriteComponent(std::make_shared<SpriteComponent>(*entity));
-	entity->SetPhysicsComponent(std::make_shared<PhysicsComponent>(*entity, body));
+	object->SetSpriteComponent(std::make_shared<SpriteComponent>(*object));
+	object->SetAnimatorComponent(std::make_shared<AnimatorComponent>(*object));
+	object->SetPhysicsComponent(std::make_shared<PhysicsComponent>(*object, body));
+	if (isEntity) {
+		object->SetHealthComponent(std::make_shared<HealthComponent>(*object));
+		if (isPlayer) object->SetInputComponent(std::make_shared<InputComponent>(*object));
+		// TODO: else !isPlayer SetAIComponent
+	}
 
-	entity->GetSpriteComponent()->SetSprite(TextureManager::AddTexture(textureFilename));
-	entity->GetSpriteComponent()->SetSpriteTextureRect({ 0,0, 33, 33 }); // TODO: account for item being animated!
-	entity->GetPhysicsComponent()->SetPosition(position);
+	for (int i = 0; i < (isEntity ? static_cast<int>(ANIMATION_STATE::COUNT) : 1); ++i) {
+		std::string texturePath = isEntity ? texture + ANIMATION_TEXTURES[i] : texture;
+		object->GetAnimatorComponent()->AddAnimation(i, TextureManager::AddTexture(texturePath));
+		auto size = object->GetAnimatorComponent()->GetAnimation(i).GetTexture().getSize();
+		int frames = size.x > PIXEL_PER_METER ? ANIMATION_FRAMES : 1;
+		for (int j = 0; j < frames; ++j)
+			object->GetAnimatorComponent()->GetAnimation(i).AddFrame({ ((int)size.x / frames) * j, 0, (int)size.x / frames, (int)size.y });
+	}
 
-	m_gameObjects.push_back(entity);
-	m_physicComponents.push_back(entity->GetPhysicsComponent());
-	m_spriteComponents.push_back(entity->GetSpriteComponent());
+	m_gameObjects.push_back(object);
+	m_physicComponents.push_back(object->GetPhysicsComponent());
+	m_animatorComponents.push_back(object->GetAnimatorComponent());
+	m_spriteComponents.push_back(object->GetSpriteComponent());
+	if (!isEntity) return;
+	m_healthComponents.push_back(object->GetHealthComponent());
+	if (isPlayer) m_inputComponents.push_back(object->GetInputComponent());
+	// TODO: else !isPlayer m_aiComponents push_back entity->GetAIComponent()
 }
 
 sf::Time Game::GetElapsed() {
@@ -101,7 +101,8 @@ void Game::Update() {
 	m_window->Update();
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
 
-	//m_player.Update(deltaTime.asSeconds());
+	if (m_generateNewLevel) SetupNewLevel();
+
 	for (auto i : m_inputComponents) i->Update(deltaTime.asSeconds());
 	for (auto p : m_physicComponents) p->Update(deltaTime.asSeconds());
 	for (auto a : m_animatorComponents) a->Update(deltaTime.asSeconds());
@@ -110,14 +111,6 @@ void Game::Update() {
 	m_window->MoveView(m_gameObjects[0]->GetPhysicsComponent()->GetPosition());
 
 	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
-	if (m_generateNewLevel) {
-		m_generateNewLevel = false;
-		m_gameObjects[1]->Activate();
-		sf::Vector2f PlayerPos = m_level.GenerateLevel(m_world);
-		m_gameObjects[0]->GetPhysicsComponent()->SetPosition({ PlayerPos.x, PlayerPos.y });
-		m_gameObjects[1]->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocationForTile(TILE::FLOOR));
-	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) m_generateNewLevel = true;

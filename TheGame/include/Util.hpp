@@ -13,6 +13,7 @@ constexpr unsigned int WINDOW_HEIGHT = { 600 };
 
 constexpr float FPS{ 60.0f };
 constexpr float ANIMATION_SPEED{ 12.0f };
+constexpr int ANIMATION_FRAMES{ 8 };
 
 constexpr float WALK_ACCELERATION{ 500.0f };
 
@@ -26,6 +27,7 @@ constexpr int32 POSITION_ITERATIONS{ 2 };   //how strongly to correct position
 constexpr uint16 PLAYER        { 0b0000000010 };
 constexpr uint16 DOOR_KEY      { 0b0000000100 };
 constexpr uint16 UNLOCKED_DOOR { 0b0000001000 };
+constexpr uint16 SCORE         { 0b0000010000 };
 
 /* Helper functions to create a physics body */
 b2Body* CreateSquarePhysicsBody(b2World& world,

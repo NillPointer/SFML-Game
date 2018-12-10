@@ -20,13 +20,13 @@ public:
 	sf::Time GetElapsed();
 
 private:
-	void SetupEntity(std::string textureFilenamePrefix, uint16 physicsCategory, sf::Vector2f position, bool isPlayer = false);
-	void SetupItem(std::string textureFilename, sf::Vector2f position, uint16 physicsCategory);
+	void SetupNewLevel();
+	void SetupGameObject(std::string texture, uint16 physicsCategory, bool isEntity, bool isPlayer = false);
 
-
-	std::function<void()> m_newLevelCallback;
-	std::function<void()> m_unlockDoorCallbak;
-	bool m_generateNewLevel = false;
+	// Callbacks to collisions
+	std::function<void(void* ptr)> m_newLevelCallback;
+	std::function<void(void* ptr)> m_unlockDoorCallback;
+	std::function<void(void* ptr)> m_collectScoreCallback;
 
 	Level m_level;
 	b2World m_world;
@@ -44,6 +44,9 @@ private:
 	sf::Clock m_clock;
 	sf::Time m_previousTime;
 	sf::Font m_font;
+
+	int m_scoreTotal;
+	bool m_generateNewLevel;
 };
 
 #endif // !GAME_HPP

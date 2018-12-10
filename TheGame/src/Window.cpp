@@ -10,6 +10,7 @@ void Window::Setup() {
 	m_isDone = false;
 	m_isDebug = true;
 	m_views[static_cast<int>(VIEW::MAIN)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
+	m_views[static_cast<int>(VIEW::UI)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
 	m_views[static_cast<int>(VIEW::DEBUG)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
 	m_views[static_cast<int>(VIEW::DEBUG)].zoom(1.7f);
 	m_currentView = VIEW::MAIN;
@@ -59,7 +60,6 @@ void Window::Update() {
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F2) { m_isDebug = !m_isDebug; }
 		else if (event.type == sf::Event::Resized) {
 			m_views[static_cast<int>(m_currentView)].reset(sf::FloatRect(0.0f, 0.0f, event.size.width, event.size.height));
-			if (m_currentView == VIEW::DEBUG) m_views[static_cast<int>(m_currentView)].zoom(1.75f);
 			m_window.setView(m_views[static_cast<int>(m_currentView)]);
 		}
 	}

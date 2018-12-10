@@ -1,7 +1,8 @@
 #include "PhysicsCollisionListener.hpp"
 #include <iostream>
+#include "Util.hpp"
 
-void PhysicsCollisionListener::SetCollisionCallback(uint16 collisionMask, std::function<void()> callback) {
+void PhysicsCollisionListener::SetCollisionCallback(uint16 collisionMask, std::function<void(void* ptr)> callback) {
 	m_collisionCallbacks[collisionMask] = callback;
 }
 
@@ -11,7 +12,11 @@ void PhysicsCollisionListener::BeginContact(b2Contact* contact) {
 
 	uint16 collision = filterA.categoryBits | filterB.categoryBits;
 
-	if (m_collisionCallbacks.find(collision) != m_collisionCallbacks.end()) m_collisionCallbacks[collision]();
+	if (m_collisionCallbacks.find(collision) != m_collisionCallbacks.end()) {
+		void* notPlayer = filterA.categoryBits != PLAYER ?
+			contact->GetFixtureA()->GetBody()->GetUserData() : contact->GetFixtureB()->GetBody()->GetUserData();
+		m_collisionCallbacks[collision](notPlayer);
+	}
 }
 
 void PhysicsCollisionListener::EndContact(b2Contact* contact) {
