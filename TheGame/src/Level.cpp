@@ -99,7 +99,7 @@ std::vector<Tile*> Level::GetNeighbours(Tile* tile) {
 
 	for (int x = -1; x <= 1; ++x) {
 		for (int y = -1; y <= 1; ++y) {
-			if (x == 0 && y == 0) continue;
+			if (pow(x,2) == pow(y,2)) continue;
 			int checkX = tile->columnIndex + x;
 			int checkY = tile->rowIndex + y;
 

@@ -2,6 +2,7 @@
 #include "Util.hpp"
 
 Menu::Menu(std::shared_ptr<Window> windowprt): Scene(windowprt) {
+	GetBackgroundMusic().openFromFile("resource/music/msc_main_track_4.wav");
 }
 
 void Menu::Update() {

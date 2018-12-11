@@ -11,7 +11,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_previousTime = m_clock.getElapsedTime();
 	srand(time(nullptr));
 
-	sf::Listener::setGlobalVolume(50.0f);
+	GetBackgroundMusic().openFromFile("resource/music/msc_main_track_3.wav");
 
 	m_world.SetContactListener(&m_collisionListener);
 	m_world.SetDebugDraw(&m_debugDraw);
