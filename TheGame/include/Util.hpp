@@ -26,7 +26,8 @@ constexpr float FPS{ 60.0f };
 constexpr float ANIMATION_SPEED{ 12.0f };
 constexpr int ANIMATION_FRAMES{ 8 };
 
-constexpr float WALK_ACCELERATION{ 500.0f };
+constexpr float PLAYER_WALK_ACCELERATION{ 500.0f };
+constexpr float ENEMY_WALK_ACCELERATION{ 100.0f };
 
 /************ Physics Settings ************/
 constexpr float PIXEL_PER_METER{ 33.0f };
@@ -39,6 +40,7 @@ constexpr uint16 PLAYER        { 0b0000000010 };
 constexpr uint16 DOOR_KEY      { 0b0000000100 };
 constexpr uint16 UNLOCKED_DOOR { 0b0000001000 };
 constexpr uint16 SCORE         { 0b0000010000 };
+constexpr uint16 ENEMY		   { 0b0000100000 };
 
 /* Helper functions to create a physics body */
 b2Body* CreateSquarePhysicsBody(b2World& world,

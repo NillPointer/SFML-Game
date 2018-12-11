@@ -59,6 +59,18 @@ public:
 	bool IsSolid(int columnIndex, int rowIndex);
 
 	/**
+	* Resets the A* data of all level tiles.
+	*/
+	void ResetNodes();
+
+	/**
+	* Get Tile neighbours
+	* @param Tile to get neighbours of
+	* @return vector of neighbouring tiles
+	*/
+	std::vector<Tile*> GetNeighbours(Tile* tile);
+
+	/**
 	* Returns a to-pixel coordinate for spawning a game object
 	* @param Whether the loction must be on the floor
 	* @return float vector of the position for spawning

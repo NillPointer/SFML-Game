@@ -11,11 +11,13 @@
 #include "Components/SpriteComponent.hpp"
 #include "Components/AnimatorComponent.hpp"
 #include "Components/InuptComponent.hpp"
+#include "Components/AIComponent.hpp"
 #include "Components/PhysicsComponent.hpp"
 #include "Components/HealthComponent.hpp"
 #include "Components/SoundComponent.hpp"
 
 class InputComponent;
+class AIComponent;
 class SpriteComponent;
 class AnimatorComponent;
 class PhysicsComponent;
@@ -35,6 +37,7 @@ public:
 	std::string GetName() { return m_name; }
 
 	void SetInputComponent(std::shared_ptr<InputComponent> input) { m_input = input; }
+	void SetAIComponent(std::shared_ptr<AIComponent> ai) { m_ai = ai; }
 	void SetPhysicsComponent(std::shared_ptr<PhysicsComponent> physics) { m_physics = physics; }
 	void SetSpriteComponent(std::shared_ptr<SpriteComponent> sprite) { m_sprite = sprite; }
 	void SetAnimatorComponent(std::shared_ptr<AnimatorComponent> animator) { m_animator = animator; }
@@ -42,6 +45,7 @@ public:
 	void SetSoundComponent(std::shared_ptr<SoundComponent> sound) { m_sound = sound; }
 
 	std::shared_ptr<InputComponent> GetInputComponent() { return m_input; }
+	std::shared_ptr<AIComponent> GetAIComponent() { return m_ai; }
 	std::shared_ptr<PhysicsComponent> GetPhysicsComponent() { return m_physics; }
 	std::shared_ptr<SpriteComponent> GetSpriteComponent() { return m_sprite; }
 	std::shared_ptr<AnimatorComponent> GetAnimatorComponent() { return m_animator; }
@@ -50,6 +54,7 @@ public:
 private:
 
 	std::shared_ptr<InputComponent> m_input;
+	std::shared_ptr<AIComponent> m_ai;
 	std::shared_ptr<PhysicsComponent> m_physics;
 	std::shared_ptr<AnimatorComponent> m_animator;
 	std::shared_ptr<SpriteComponent> m_sprite;

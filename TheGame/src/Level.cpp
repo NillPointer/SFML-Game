@@ -94,6 +94,33 @@ bool Level::TileIsValid(int column, int row) {
 	return (validColumn && validRow);
 }
 
+std::vector<Tile*> Level::GetNeighbours(Tile* tile) {
+	std::vector<Tile*> neighbours;
+
+	for (int x = -1; x <= 1; ++x) {
+		for (int y = -1; y <= 1; ++y) {
+			if (x == 0 && y == 0) continue;
+			int checkX = tile->columnIndex + x;
+			int checkY = tile->rowIndex + y;
+
+			if (TileIsValid(checkX, checkY) && IsFloor(checkX, checkY)) neighbours.push_back(GetTile(checkX, checkY));
+		}
+	}
+	return neighbours;
+}
+
+// Resets the A* data of all tiles.
+void Level::ResetNodes() {
+	for (int i = 0; i < GRID_WIDTH; ++i) {
+		for (int j = 0; j < GRID_HEIGHT; ++j) {
+			m_grid[i][j].parentNode = nullptr;
+			m_grid[i][j].H = 0;
+			m_grid[i][j].G = 0;
+			m_grid[i][j].F = 0;
+		}
+	}
+}
+
 // Gets the tile that the position lies on.
 Tile* Level::GetTile(sf::Vector2f position) {
 	position.x -= m_origin.x;

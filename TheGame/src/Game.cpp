@@ -37,6 +37,8 @@ Game::Game(std::shared_ptr<Window> windowprt):
 		m_gameObjects[index]->SetName(std::string(TORCH));
 	}
 
+	SetupGameObject("resource/enemies/skeleton/spr_skeleton_", "", ENEMY, true, ANIMATION_FRAMES);
+
 	// Setup Collision callbacks
 	m_newLevelCallback = [&](void *ptr) { m_generateNewLevel = true; };
 	m_unlockDoorCallback = [&](void *ptr) { m_level.UnlockDoor(); m_gameObjects[(int)ptr]->GetSoundComponent()->PlaySound(); m_gameObjects[(int)ptr]->Deactivate(); };
@@ -55,6 +57,9 @@ Game::~Game() {}
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
 	m_gameObjects[0]->GetPhysicsComponent()->SetPosition(m_level.GenerateLevel(m_world));
+	m_gameObjects[m_gameObjects.size() - 1]->GetPhysicsComponent()->SetPosition({ 0,0 });
+	m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetLevel(&m_level);
+	m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetTargetPosition(m_gameObjects[0]->GetPhysicsComponent()->GetPosition());
 	for (auto i = 1; i < m_gameObjects.size(); ++i) {
 		m_gameObjects[i]->Activate();
 		bool torch = m_gameObjects[i]->GetName() == std::string(TORCH);
@@ -79,7 +84,7 @@ int Game::SetupGameObject(std::string texture, std::string sound, uint16 physics
 	if (isEntity) {
 		object->SetHealthComponent(std::make_shared<HealthComponent>(*object));
 		if (isPlayer) object->SetInputComponent(std::make_shared<InputComponent>(*object));
-		// TODO: else !isPlayer SetAIComponent
+		else object->SetAIComponent(std::make_shared<AIComponent>(*object));
 	}
 
 	for (int i = 0; i < (isEntity ? static_cast<int>(ANIMATION_STATE::COUNT) : 1); ++i) {
@@ -99,7 +104,7 @@ int Game::SetupGameObject(std::string texture, std::string sound, uint16 physics
 	if (isEntity) {
 		m_healthComponents.push_back(object->GetHealthComponent());
 		if (isPlayer) m_inputComponents.push_back(object->GetInputComponent());
-		// TODO: else !isPlayer m_aiComponents push_back entity->GetAIComponent()
+		else m_aiComponents.push_back(object->GetAIComponent());
 	}
 
 	return m_gameObjects.size() - 1;
@@ -121,6 +126,7 @@ void Game::Update() {
 	if (m_generateNewLevel) SetupNewLevel();
 
 	for (auto input : m_inputComponents) input->Update(deltaTime.asSeconds());
+	for (auto ai : m_aiComponents) ai->Update(deltaTime.asSeconds());
 	for (auto physic : m_physicComponents) physic->Update(deltaTime.asSeconds());
 	for (auto animator : m_animatorComponents) animator->Update(deltaTime.asSeconds());
 	for (auto sprite : m_spriteComponents) sprite->Update(deltaTime.asSeconds());

@@ -36,6 +36,7 @@ private:
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
 	std::vector<std::shared_ptr<InputComponent>> m_inputComponents;
+	std::vector<std::shared_ptr<AIComponent>> m_aiComponents;
 	std::vector<std::shared_ptr<PhysicsComponent>> m_physicComponents;
 	std::vector<std::shared_ptr<AnimatorComponent>> m_animatorComponents;
 	std::vector<std::shared_ptr<SpriteComponent>> m_spriteComponents;

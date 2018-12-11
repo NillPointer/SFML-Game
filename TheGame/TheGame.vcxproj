@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\AIComponent.cpp" />
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\AnimatorComponent.cpp" />
     <ClCompile Include="src\Components\SoundComponent.cpp" />
@@ -45,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\bitshifter\ObjectPool.hpp" />
+    <ClInclude Include="include\Components\AIComponent.hpp" />
     <ClInclude Include="include\Components\AnimationComponent.hpp" />
     <ClInclude Include="include\Components\AnimatorComponent.hpp" />
     <ClInclude Include="include\Components\Command.hpp" />
