@@ -8,6 +8,8 @@
 #include <Box2D/Box2D.h>
 #include <imgui.h>
 
+/************ General Settings ************/
+
 constexpr char* WINDOW_TITLE{ "The Game" };
 constexpr char* START_GAME{ "START GAME!" };
 constexpr char* EXIT_GAME{ "EXIT" };
@@ -53,5 +55,10 @@ b2Body* CreateCirclePhysicsBody(b2World& world,
 /************ Texures - Animations ************/
 const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_right.png", "walk_left.png",
 									   "idle_up.png", "idle_down.png","idle_right.png","idle_left.png" };
+
+
+/************ GameObject Names ************/
+constexpr char* GAMEOBJECT{ "GAMEOBJECT" };
+constexpr char* TORCH{ "TORCH" };
 
 #endif // !UTIL_HPP

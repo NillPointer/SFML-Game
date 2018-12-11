@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\AnimatorComponent.cpp" />
+    <ClCompile Include="src\Components\SoundComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\imgui\imgui-SFML.cpp" />
@@ -38,7 +39,7 @@
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\PhysicsCollisionListener.cpp" />
     <ClCompile Include="src\SFMLDebugDraw.cpp" />
-    <ClCompile Include="src\TextureManager.cpp" />
+    <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\Util.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
@@ -51,6 +52,7 @@
     <ClInclude Include="include\Components\HealthComponent.hpp" />
     <ClInclude Include="include\Components\InuptComponent.hpp" />
     <ClInclude Include="include\Components\PhysicsComponent.hpp" />
+    <ClInclude Include="include\Components\SoundComponent.hpp" />
     <ClInclude Include="include\Components\SpriteComponent.hpp" />
     <ClInclude Include="include\Enums.hpp" />
     <ClInclude Include="include\Game.hpp" />
@@ -90,7 +92,7 @@
     <ClInclude Include="include\PhysicsCollisionListener.hpp" />
     <ClInclude Include="include\Scene.hpp" />
     <ClInclude Include="include\SFMLDebugDraw.hpp" />
-    <ClInclude Include="include\TextureManager.hpp" />
+    <ClInclude Include="include\AssetManager.hpp" />
     <ClInclude Include="include\Util.hpp" />
     <ClInclude Include="include\Window.hpp" />
   </ItemGroup>

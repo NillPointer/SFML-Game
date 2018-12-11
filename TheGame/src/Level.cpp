@@ -4,7 +4,7 @@
 #include <string>
 
 #include "Level.hpp"
-#include "TextureManager.hpp"
+#include "AssetManager.hpp"
 #include "Util.hpp"
 
 // Default constructor.
@@ -59,7 +59,7 @@ Level::Level(sf::RenderWindow& window) :
 }
 
 int Level::AddTile(std::string fileName, TILE tileType) {
-	int textureID = TextureManager::AddTexture(fileName);
+	int textureID = AssetManager::AddTexture(fileName);
 	if (textureID < 0) return -1; // Failed
 	else m_textureIDs[static_cast<int>(tileType)] = textureID;
 	return textureID;
@@ -82,7 +82,7 @@ void Level::SetTile(int columnIndex, int rowIndex, TILE tileType) {
 	if (tileType >= TILE::COUNT) return;
 
 	m_grid[columnIndex][rowIndex].type = tileType;
-	m_grid[columnIndex][rowIndex].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(tileType)]));
+	m_grid[columnIndex][rowIndex].sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(tileType)]));
 }
 
 bool Level::TileIsValid(int column, int row) {
@@ -112,13 +112,17 @@ Tile* Level::GetTile(int columnIndex, int rowIndex) {
 	else return nullptr;
 }
 
-sf::Vector2f Level::GetRandomSpawnLocationForTile(TILE tile) {
+sf::Vector2f Level::GetRandomSpawnLocation(bool floor) {
 	int columnIndex(0), rowIndex(0);
+	bool usedPosition = true;
 
-	while (GetTileType(columnIndex, rowIndex) != tile) {
+	while ((IsFloor(columnIndex, rowIndex) == floor) || usedPosition) {
 		columnIndex = std::rand() % GRID_WIDTH;
 		rowIndex = std::rand() % GRID_HEIGHT;
+		usedPosition = m_spawnPositions.find(std::pair<int, int>(columnIndex, rowIndex)) != m_spawnPositions.end();
 	}
+
+	m_spawnPositions.insert(std::pair<int, int>(columnIndex, rowIndex));
 
 	return GetTilePosition(columnIndex, rowIndex);
 }
@@ -131,13 +135,16 @@ sf::Vector2f Level::GetTilePosition(int columnIndex, int rowIndex) {
 }
 
 sf::Vector2f Level::GenerateLevel(b2World& world) {
+
+	m_spawnPositions.clear();
+
 	for (int i = 0; i < GRID_WIDTH; ++i) {
 		for (int j = 0; j < GRID_HEIGHT; ++j) {
 			if ((i % 2 != 0) && (j % 2 != 0)) {
 				m_grid[i][j].type = TILE::EMPTY;
 			} else {
 				m_grid[i][j].type = TILE::WALL_TOP;
-				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::WALL_TOP)]));
+				m_grid[i][j].sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(TILE::WALL_TOP)]));
 			}
 			m_grid[i][j].sprite.setPosition(m_origin.x + (TILE_SIZE * i), m_origin.y + (TILE_SIZE * j));
 			
@@ -171,6 +178,7 @@ sf::Vector2f Level::GenerateEntryExit() {
 	SetTile(startI, GRID_HEIGHT - 1, TILE::WALL_ENTRANCE);
 	SetTile(endI, 0, TILE::WALL_DOOR_LOCKED);
 	m_doorTileIndices = { endI, 0 };
+	m_spawnPositions.insert(std::pair<int, int>(startI, GRID_HEIGHT - 2));
 	return GetTilePosition(startI, GRID_HEIGHT - 2);
 }
 
@@ -188,7 +196,7 @@ void Level::CalculateTextures(b2World& world) {
 				if (IsWall(i, j + 1)) value += 4;
 				if (IsWall(i - 1, j)) value += 8;
 				m_grid[i][j].type = static_cast<TILE>(value);
-				m_grid[i][j].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[value]));
+				m_grid[i][j].sprite.setTexture(AssetManager::GetTexture(m_textureIDs[value]));
 
 				auto posX = m_grid[i][j].sprite.getPosition().x + m_grid[i][j].sprite.getTexture()->getSize().x / 2.0f;
 				auto posY = m_grid[i][j].sprite.getPosition().y + m_grid[i][j].sprite.getTexture()->getSize().y / 2.0f;
@@ -221,14 +229,14 @@ void Level::CreatePath(int columnIndex, int rowIndex) {
 			if (tile->type == TILE::EMPTY) {
 				// Mark the tile as floor.
 				tile->type = TILE::FLOOR;
-				tile->sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
+				tile->sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
 
 				// Knock that wall down.
 				int ddx = currentTile->columnIndex + (directions[i].x / 2);
 				int ddy = currentTile->rowIndex + (directions[i].y / 2);
 				Tile* wall = &m_grid[ddx][ddy];
 				wall->type = TILE::FLOOR;
-				wall->sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
+				wall->sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
 
 				// Recursively call the function with the new tile.
 				CreatePath(dx, dy);
@@ -258,7 +266,7 @@ void Level::CreateRooms(int roomCount) {
 					// Check if the tile is not on an outer wall.
 					if ((newI != 0) && (newI != (GRID_WIDTH - 1)) && (newY != 0) && (newY != (GRID_HEIGHT - 1))) {
 						m_grid[newI][newY].type = TILE::FLOOR;
-						m_grid[newI][newY].sprite.setTexture(TextureManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
+						m_grid[newI][newY].sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
 					}
 				}
 			}

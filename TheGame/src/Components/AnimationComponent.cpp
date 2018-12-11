@@ -1,5 +1,5 @@
 #include "Components/AnimationComponent.hpp"
-#include "TextureManager.hpp"
+#include "AssetManager.hpp"
 
 AnimationComponent::AnimationComponent(GameObject & obj, sf::Texture & texture, int animationSpeed):
 	Component(obj),

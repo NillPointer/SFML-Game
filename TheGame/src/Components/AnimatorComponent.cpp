@@ -1,5 +1,5 @@
 #include "Components/AnimatorComponent.hpp"
-#include "TextureManager.hpp"
+#include "AssetManager.hpp"
 
 AnimatorComponent::AnimatorComponent(GameObject & obj): Component(obj), m_currentAnimation(0){}
 
@@ -14,7 +14,7 @@ void AnimatorComponent::Update(float timeDelta) {
 }
 
 void AnimatorComponent::AddAnimation(int animationID, int textureID) {
-	m_animations.insert(std::make_pair(animationID, std::make_shared<AnimationComponent>(m_gameObject, TextureManager::GetTexture(textureID))));
+	m_animations.insert(std::make_pair(animationID, std::make_shared<AnimationComponent>(m_gameObject, AssetManager::GetTexture(textureID))));
 }
 
 void AnimatorComponent::AddAnimation(int animationID, sf::Texture& texture) {

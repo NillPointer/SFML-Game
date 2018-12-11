@@ -21,7 +21,7 @@ public:
 
 private:
 	void SetupNewLevel();
-	void SetupGameObject(std::string texture, uint16 physicsCategory, bool isEntity, bool isPlayer = false);
+	int SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES, bool isPlayer = false);
 
 	// Callbacks to collisions
 	std::function<void(void* ptr)> m_newLevelCallback;
@@ -40,6 +40,7 @@ private:
 	std::vector<std::shared_ptr<AnimatorComponent>> m_animatorComponents;
 	std::vector<std::shared_ptr<SpriteComponent>> m_spriteComponents;
 	std::vector<std::shared_ptr<HealthComponent>> m_healthComponents;
+	std::vector<std::shared_ptr<SoundComponent>> m_soundComponents;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;

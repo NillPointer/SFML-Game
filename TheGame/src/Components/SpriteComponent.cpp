@@ -1,5 +1,5 @@
 #include "Components/SpriteComponent.hpp"
-#include "TextureManager.hpp"
+#include "AssetManager.hpp"
 
 SpriteComponent::SpriteComponent(GameObject & obj) : Component(obj), m_sprite(nullptr) {
 	m_sprite = std::make_shared<sf::Sprite>();
@@ -11,7 +11,7 @@ void SpriteComponent::Update(float timeDelta) {
 }
 
 void SpriteComponent::SetSprite(int textureID) {
-	auto &texture = TextureManager::GetTexture(textureID);
+	auto &texture = AssetManager::GetTexture(textureID);
 	m_sprite->setTexture(texture);
 	m_sprite->setOrigin({ texture.getSize().x / 2.0f, texture.getSize().y / 2.0f });
 }

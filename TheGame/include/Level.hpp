@@ -12,6 +12,7 @@
 #ifndef LEVEL_H
 #define LEVEL_H
 
+#include <set>
 #include "Util.hpp"
 #include "Enums.hpp"
 
@@ -59,10 +60,10 @@ public:
 
 	/**
 	* Returns a to-pixel coordinate for spawning a game object
-	* @param tile The tile that the game object will be spawned on top of
+	* @param Whether the loction must be on the floor
 	* @return float vector of the position for spawning
 	*/
-	sf::Vector2f GetRandomSpawnLocationForTile(TILE tile);
+	sf::Vector2f GetRandomSpawnLocation(bool floor = true);
 
 	/**
 	* Returns the screen position of the tile
@@ -211,5 +212,10 @@ private:
 	* The indices of the tile containing the levels door.
 	*/
 	sf::Vector2i m_doorTileIndices;
+
+	/**
+	* Set of tiles where the spawn position is already taken
+	*/
+	std::set<std::pair<int, int>> m_spawnPositions;
 };
 #endif
