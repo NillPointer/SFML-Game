@@ -31,3 +31,16 @@ b2Body* CreateCirclePhysicsBody(b2World& world, sf::Vector2f position, float rad
 	body->CreateFixture(&fixture);
 	return body;
 }
+
+void SetPhysicsBodyFilter(b2Body* body, uint16 categoryBit, bool isSensor) {
+	b2Filter filter = body->GetFixtureList()->GetFilterData();
+	filter.categoryBits = categoryBit;
+	body->GetFixtureList()->SetFilterData(filter);
+	body->GetFixtureList()->SetSensor(isSensor);
+}
+
+sf::Vector2f Normalize(sf::Vector2f vector) {
+	float length = sqrt((vector.x * vector.x) + (vector.y * vector.y));
+	if (length != 0) return sf::Vector2f(vector.x / length, vector.y / length);
+	else return vector;
+}

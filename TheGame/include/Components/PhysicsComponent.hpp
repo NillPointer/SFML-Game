@@ -18,10 +18,13 @@ public:
 	void SetPosition(sf::Vector2f position);
 	sf::Vector2f GetVelocity() const;
 	sf::Vector2f GetPosition() const;
+	sf::Vector2f GetFacingDirection() const;
+	b2Body* GetBody();
 
 private:
-	b2Body* m_body;
+	b2Body* m_body = nullptr;
 	sf::Vector2f m_velocity;
+	sf::Vector2f m_facingDirection;
 	sf::Vector2f m_position;
 };
 

@@ -1,4 +1,10 @@
 #include "Components/InuptComponent.hpp"
+#include "Commands/WalkLeftCommand.hpp"
+#include "Commands/WalkRightCommand.hpp"
+#include "Commands/WalkUpCommand.hpp"
+#include "Commands/WalkDownCommand.hpp"
+#include "Commands/DoNothingCommand.hpp"
+#include "Commands/AttackCommand.hpp"
 
 InputComponent::InputComponent(GameObject& obj): Component(obj) {
 	// Default key binding
@@ -23,12 +29,15 @@ void InputComponent::BindKey(KEY key, sf::Keyboard::Key keyToBind) {
 void InputComponent::Update(float timeDelta) {
 	if (!IsActive()) return;
 	try {
+		// Movement
 		if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_LEFT])) m_keyLeftCommand->Execute(m_gameObject);
 		else if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_RIGHT])) m_keyRightCommand->Execute(m_gameObject);
 		else if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_UP])) m_keyUpCommand->Execute(m_gameObject);
 		else if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_DOWN])) m_keyDownCommand->Execute(m_gameObject);
-		else if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_ATTACK])) m_keyAttackCommand->Execute(m_gameObject);
 		else m_doNothingCommand->Execute(m_gameObject);
+
+		// Attack
+		if (sf::Keyboard::isKeyPressed(m_keyMappings[KEY::KEY_ATTACK])) m_keyAttackCommand->Execute(m_gameObject);
 	} catch (const std::exception& e) {
 		std::cout << "Key Pressed but not bound" << std::endl;
 	}

@@ -4,7 +4,8 @@
 #include "AssetManager.hpp"
 
 Game::Game(std::shared_ptr<Window> windowprt):
-	Scene(windowprt), m_world(b2Vec2(0,0)), m_generateNewLevel(true),
+	Scene(windowprt),
+	m_world(b2Vec2(0,0)), m_generateNewLevel(true),
 	m_debugDraw(*m_window->GetRenderWindow())
 {
 	m_clock.restart();
@@ -22,6 +23,9 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 	// Setup Player
 	SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES, true);
+	m_gameObjects[0]->SetName(PLAYER_ENTITY);
+	m_gameObjects[0]->SetAttackComponent(std::make_shared<AttackComponent>(*m_gameObjects[0], m_world, m_collisionListener));
+	m_attack.push_back(m_gameObjects[0]->GetAttackComponent());
 
 	// Setup Key
 	SetupGameObject("resource/loot/key/spr_pickup_key.png", "resource/sounds/snd_key_pickup.wav", DOOR_KEY, false);
@@ -34,15 +38,23 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	for (int i = 0; i < 5; ++i) {
 		auto index = SetupGameObject("resource/spr_torch.png", "resource/sounds/snd_fire.wav", 0, false, 5);
 		m_gameObjects[index]->GetSoundComponent()->SetSoundLooping(true);
-		m_gameObjects[index]->SetName(std::string(TORCH));
+		m_gameObjects[index]->SetName(TORCH);
 	}
 
 	SetupGameObject("resource/enemies/skeleton/spr_skeleton_", "", ENEMY, true, ANIMATION_FRAMES);
 
 	// Setup Collision callbacks
-	m_newLevelCallback = [&](void *ptr) { m_generateNewLevel = true; };
-	m_unlockDoorCallback = [&](void *ptr) { m_level.UnlockDoor(); m_gameObjects[(int)ptr]->GetSoundComponent()->PlaySound(); m_gameObjects[(int)ptr]->Deactivate(); };
-	m_collectScoreCallback = [&](void *ptr) { printf("score picked up\n"); m_gameObjects[(int)ptr]->GetSoundComponent()->PlaySound(); m_gameObjects[(int)ptr]->Deactivate(); };
+	m_newLevelCallback = [&](GameObject *a, GameObject* b) { m_generateNewLevel = true; };
+	m_unlockDoorCallback = [&](GameObject *a, GameObject *b) {
+		m_level.UnlockDoor(); 
+		b->GetSoundComponent()->PlaySound(); 
+		b->Deactivate(); 
+	};
+	m_collectScoreCallback = [&](GameObject *a, GameObject* b) {
+		printf("score picked up\n"); 
+		b->GetSoundComponent()->PlaySound(); 
+		b->Deactivate(); 
+	};
 
 	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
 	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallback);
@@ -54,6 +66,47 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 Game::~Game() {}
 
+void Game::Update() {
+	m_window->Update();
+	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
+
+	if (m_generateNewLevel) SetupNewLevel();
+	for (auto attack : m_attack) attack->DestroyProjectiles();
+
+	for (auto input : m_inputComponents) input->Update(deltaTime.asSeconds());
+	for (auto ai : m_aiComponents) ai->Update(deltaTime.asSeconds());
+	for (auto physic : m_physicComponents) physic->Update(deltaTime.asSeconds());
+	for (auto animator : m_animatorComponents) animator->Update(deltaTime.asSeconds());
+	for (auto sprite : m_spriteComponents) sprite->Update(deltaTime.asSeconds());
+	for (auto sound : m_soundComponents) sound->Update(deltaTime.asSeconds());
+	for (auto attack : m_attack) attack->Update(deltaTime.asSeconds());
+
+	auto playerPosition = m_gameObjects[0]->GetPhysicsComponent()->GetPosition();
+	m_window->MoveView(playerPosition);
+	sf::Listener::setPosition(playerPosition.x, 0.0f, playerPosition.y);
+
+	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) m_generateNewLevel = true;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) SetChangeScene(true);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) for (auto sound : m_soundComponents) sound->SetActive(false);
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L)) for (auto sound : m_soundComponents) sound->SetActive(true);
+}
+
+void Game::Render() {
+	m_window->BeginDraw();
+
+	m_window->Draw(m_level);
+
+	for (auto sprite : m_spriteComponents) m_window->Draw(*sprite);
+	for (auto attack : m_attack) m_window->Draw(*attack);
+
+	if (m_window->IsDebug()) m_world.DrawDebugData();
+
+	m_window->EndDraw();
+}
+
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
 	m_gameObjects[0]->GetPhysicsComponent()->SetPosition(m_level.GenerateLevel(m_world));
@@ -62,7 +115,7 @@ void Game::SetupNewLevel() {
 	m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetTargetPosition(m_gameObjects[0]->GetPhysicsComponent()->GetPosition());
 	for (auto i = 1; i < m_gameObjects.size(); ++i) {
 		m_gameObjects[i]->Activate();
-		bool torch = m_gameObjects[i]->GetName() == std::string(TORCH);
+		bool torch = m_gameObjects[i]->GetName() == TORCH;
 		m_gameObjects[i]->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(torch));
 	}
 }
@@ -71,11 +124,8 @@ int Game::SetupGameObject(std::string texture, std::string sound, uint16 physics
 	std::shared_ptr<GameObject> object = std::make_shared<GameObject>();
 	b2Body* body = isEntity ? CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.5f, b2_dynamicBody) : 
 		CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
-	b2Filter filter = body->GetFixtureList()->GetFilterData();
-	filter.categoryBits = physicsCategory;
-	body->GetFixtureList()->SetFilterData(filter);
-	body->GetFixtureList()->SetSensor(!isEntity);
-	body->SetUserData((void *)m_gameObjects.size());
+	SetPhysicsBodyFilter(body, physicsCategory, !isEntity);
+	body->SetUserData(object.get());
 
 	object->SetSpriteComponent(std::make_shared<SpriteComponent>(*object));
 	object->SetAnimatorComponent(std::make_shared<AnimatorComponent>(*object));
@@ -117,40 +167,4 @@ sf::Time Game::GetElapsed() {
 void Game::RestartClock() {
 	m_previousTime += GetElapsed();
 	m_clock.restart();
-}
-
-void Game::Update() {
-	m_window->Update();
-	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
-
-	if (m_generateNewLevel) SetupNewLevel();
-
-	for (auto input : m_inputComponents) input->Update(deltaTime.asSeconds());
-	for (auto ai : m_aiComponents) ai->Update(deltaTime.asSeconds());
-	for (auto physic : m_physicComponents) physic->Update(deltaTime.asSeconds());
-	for (auto animator : m_animatorComponents) animator->Update(deltaTime.asSeconds());
-	for (auto sprite : m_spriteComponents) sprite->Update(deltaTime.asSeconds());
-	for (auto sound : m_soundComponents) sound->Update(deltaTime.asSeconds());
-
-	auto playerPosition = m_gameObjects[0]->GetPhysicsComponent()->GetPosition();
-	m_window->MoveView(playerPosition);
-	sf::Listener::setPosition(playerPosition.x, 0.0f, playerPosition.y);
-
-	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) m_generateNewLevel = true;
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) SetChangeScene(true);
-}
-
-void Game::Render() {
-	m_window->BeginDraw();
-
-	m_window->Draw(m_level);
-
-	for (auto sprite : m_spriteComponents) m_window->Draw(*sprite);
-
-	if (m_window->IsDebug()) m_world.DrawDebugData();
-
-	m_window->EndDraw();
 }

@@ -10,7 +10,7 @@ int main(int argc, char** argv) {
 	std::shared_ptr<Scene> gameScene = std::make_shared<Game>(window);
 	std::shared_ptr<Scene> menuScene = std::make_shared<Menu>(window);
 
-	currentScene = gameScene;
+	currentScene = menuScene;
 	currentScene->PlayBackgroundMusic();
 
 	while (!currentScene->IsDone()) {

@@ -18,7 +18,14 @@ SoundComponent::SoundComponent(GameObject& obj, sf::SoundBuffer& soundBuffer):
 }
 
 void SoundComponent::Update(float timeDelta) {
-	if (!IsActive()) return;
+	if (!IsActive()) {
+		m_sound.setVolume(0);
+		return;
+	}
+
+	m_sound.setVolume(100.0f);
+
+	if (m_sound.getLoop() && m_sound.getStatus() != m_sound.Playing) m_sound.play();
 
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
 	sf::Vector2f pos = m_gameObject.GetPhysicsComponent()->GetPosition();
@@ -39,5 +46,4 @@ void SoundComponent::PlaySound() {
 
 void SoundComponent::SetSoundLooping(bool loop) {
 	m_sound.setLoop(loop);
-	if (loop) m_sound.play();
 }

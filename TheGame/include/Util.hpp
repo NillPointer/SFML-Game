@@ -24,9 +24,11 @@ constexpr ImGuiWindowFlags MENU_WINDOW_FLAGS{ ImGuiWindowFlags_NoMove |
 
 constexpr float FPS{ 60.0f };
 constexpr float ANIMATION_SPEED{ 12.0f };
+constexpr float PROJECTILE_COOLDOWN{ 0.3f };
 constexpr int ANIMATION_FRAMES{ 8 };
 
 constexpr float PLAYER_WALK_ACCELERATION{ 500.0f };
+constexpr float PROJECTILE_ACCELERATION{ 1000.0f };
 constexpr float ENEMY_WALK_ACCELERATION{ 100.0f };
 
 /************ Physics Settings ************/
@@ -41,18 +43,8 @@ constexpr uint16 DOOR_KEY      { 0b0000000100 };
 constexpr uint16 UNLOCKED_DOOR { 0b0000001000 };
 constexpr uint16 SCORE         { 0b0000010000 };
 constexpr uint16 ENEMY		   { 0b0000100000 };
-
-/* Helper functions to create a physics body */
-b2Body* CreateSquarePhysicsBody(b2World& world,
-								sf::Vector2f position,
-								sf::Vector2f size = {0.45f, 0.45f},
-								b2BodyType type = b2_staticBody);
-
-b2Body* CreateCirclePhysicsBody(b2World& world,
-								sf::Vector2f position,
-								float radius,
-								b2BodyType type = b2_staticBody);
-
+constexpr uint16 PROJECTILE    { 0b0001000000 };
+constexpr uint16 WALL          { 0b0010000000 };
 
 /************ Texures - Animations ************/
 const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_right.png", "walk_left.png",
@@ -61,6 +53,25 @@ const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_rig
 
 /************ GameObject Names ************/
 constexpr char* GAMEOBJECT{ "GAMEOBJECT" };
+constexpr char* PLAYER_ENTITY{ "PLAYER" };
+constexpr char* ENEMY_ENTITY{ "ENEMY" };
+constexpr char* PROJECTILE_ENTITY{ "PROJECTILE" };
 constexpr char* TORCH{ "TORCH" };
+
+
+/************ Helper Functions ************/
+b2Body* CreateSquarePhysicsBody(b2World& world,
+	sf::Vector2f position,
+	sf::Vector2f size = { 0.45f, 0.45f },
+	b2BodyType type = b2_staticBody);
+
+b2Body* CreateCirclePhysicsBody(b2World& world,
+	sf::Vector2f position,
+	float radius,
+	b2BodyType type = b2_staticBody);
+
+void SetPhysicsBodyFilter(b2Body* body, uint16 categoryBit, bool isSensor = false);
+
+sf::Vector2f Normalize(sf::Vector2f vector);
 
 #endif // !UTIL_HPP

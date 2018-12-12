@@ -152,6 +152,7 @@ void ObjectPoolBlock<T>::delete_object(const T* ptr)
         const index_t index = static_cast<index_t>(ptr - begin);
         index_t* indices = indices_begin();
         // assert this index is allocated
+		if (indices[index] != index) return;
         assert(indices[index] == index);
         // remove index from used list
         indices[index] = free_head_index_;

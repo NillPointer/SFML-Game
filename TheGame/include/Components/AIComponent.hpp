@@ -21,7 +21,6 @@ private:
 	void UpdatePathFinding();
 	void RetracePath(Tile* startTile, Tile* targetTile);
 	int GetDistance(Tile* tileA, Tile* tileB);
-	sf::Vector2f Normalize(sf::Vector2f vector);
 
 	Level* m_level;
 	sf::Vector2f m_targetPosition;

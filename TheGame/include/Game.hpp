@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include <functional>
+#include "bitshifter/ObjectPool.hpp"
 #include "Scene.hpp"
 #include "Level.hpp"
 #include "PhysicsCollisionListener.hpp"
@@ -24,9 +25,9 @@ private:
 	int SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES, bool isPlayer = false);
 
 	// Callbacks to collisions
-	std::function<void(void* ptr)> m_newLevelCallback;
-	std::function<void(void* ptr)> m_unlockDoorCallback;
-	std::function<void(void* ptr)> m_collectScoreCallback;
+	std::function<void(GameObject*, GameObject*)> m_newLevelCallback;
+	std::function<void(GameObject*, GameObject*)> m_unlockDoorCallback;
+	std::function<void(GameObject*, GameObject*)> m_collectScoreCallback;
 
 	Level m_level;
 	b2World m_world;
@@ -42,6 +43,7 @@ private:
 	std::vector<std::shared_ptr<SpriteComponent>> m_spriteComponents;
 	std::vector<std::shared_ptr<HealthComponent>> m_healthComponents;
 	std::vector<std::shared_ptr<SoundComponent>> m_soundComponents;
+	std::vector<std::shared_ptr<AttackComponent>> m_attack;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;

@@ -24,9 +24,10 @@ public:
 	void Exit() { m_isDone = true; }
 
 protected:
-	sf::Music m_backgroundMusic;
-
 	std::shared_ptr<Window> m_window;
+
+private:
+	sf::Music m_backgroundMusic;
 	bool m_changeScene;
 	bool m_isDone;
 };

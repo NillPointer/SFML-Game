@@ -1,4 +1,5 @@
 #include "Components/AIComponent.hpp"
+#include "Util.hpp"
 
 AIComponent::AIComponent(GameObject& obj) : Component(obj), m_level(nullptr) {
 }
@@ -79,12 +80,6 @@ int AIComponent::GetDistance(Tile* tileA, Tile* tileB) {
 	// srt(2) * 10 = 14
 	if (distX > distY) return 14 * distY + 10 * (distX - distY);
 	else 14 * distX + 10 * (distY - distX);
-}
-
-sf::Vector2f AIComponent::Normalize(sf::Vector2f vector) {
-	float length = sqrt((vector.x * vector.x) + (vector.y * vector.y));
-	if (length != 0) return sf::Vector2f(vector.x / length, vector.y / length);
-	else return vector;
 }
 
 void AIComponent::SetLevel(Level* level) {

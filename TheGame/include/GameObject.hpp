@@ -15,6 +15,7 @@
 #include "Components/PhysicsComponent.hpp"
 #include "Components/HealthComponent.hpp"
 #include "Components/SoundComponent.hpp"
+#include "Components/AttackComponent.hpp"
 
 class InputComponent;
 class AIComponent;
@@ -23,6 +24,7 @@ class AnimatorComponent;
 class PhysicsComponent;
 class HealthComponent;
 class SoundComponent;
+class AttackComponent;
 
 class GameObject {
 
@@ -33,7 +35,7 @@ public:
 	void Activate();
 	void Deactivate();
 
-	void SetName(std::string name) { m_name = name; }
+	void SetName(char* name) { m_name = name; }
 	std::string GetName() { return m_name; }
 
 	void SetInputComponent(std::shared_ptr<InputComponent> input) { m_input = input; }
@@ -43,6 +45,7 @@ public:
 	void SetAnimatorComponent(std::shared_ptr<AnimatorComponent> animator) { m_animator = animator; }
 	void SetHealthComponent(std::shared_ptr<HealthComponent> health) { m_health = health; }
 	void SetSoundComponent(std::shared_ptr<SoundComponent> sound) { m_sound = sound; }
+	void SetAttackComponent(std::shared_ptr<AttackComponent> attack) { m_attack = attack; }
 
 	std::shared_ptr<InputComponent> GetInputComponent() { return m_input; }
 	std::shared_ptr<AIComponent> GetAIComponent() { return m_ai; }
@@ -51,6 +54,7 @@ public:
 	std::shared_ptr<AnimatorComponent> GetAnimatorComponent() { return m_animator; }
 	std::shared_ptr<HealthComponent> GetHealthComponent() { return m_health; }
 	std::shared_ptr<SoundComponent> GetSoundComponent() { return m_sound; }
+	std::shared_ptr<AttackComponent> GetAttackComponent() { return m_attack; }
 private:
 
 	std::shared_ptr<InputComponent> m_input;
@@ -60,8 +64,9 @@ private:
 	std::shared_ptr<SpriteComponent> m_sprite;
 	std::shared_ptr<HealthComponent> m_health;
 	std::shared_ptr<SoundComponent> m_sound;
+	std::shared_ptr<AttackComponent> m_attack;
 
-	std::string m_name;
+	char* m_name;
 };
 
 #endif

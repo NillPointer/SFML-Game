@@ -35,13 +35,6 @@ enum class ITEM {
 	COUNT
 };
 
-// Enemy types.
-enum class ENEMY {
-	SLIME,
-	HUMANOID,
-	COUNT
-};
-
 // Enemy humanoid types.
 enum class HUMANOID {
 	GOBLIN,

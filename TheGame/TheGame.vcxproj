@@ -19,9 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Commands\AttackCommand.cpp" />
+    <ClCompile Include="src\Commands\Command.cpp" />
+    <ClCompile Include="src\Commands\DoNothinCommand.cpp" />
+    <ClCompile Include="src\Commands\WalkDownCommand.cpp" />
+    <ClCompile Include="src\Commands\WalkLeftCommand.cpp" />
+    <ClCompile Include="src\Commands\WalkRightCommand.cpp" />
+    <ClCompile Include="src\Commands\WalkUpCommand.cpp" />
     <ClCompile Include="src\Components\AIComponent.cpp" />
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\AnimatorComponent.cpp" />
+    <ClCompile Include="src\Components\AttackComponent.cpp" />
     <ClCompile Include="src\Components\SoundComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -31,7 +39,6 @@
     <ClCompile Include="src\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\bitshifter\object_pool.cpp" />
-    <ClCompile Include="src\Components\Command.cpp" />
     <ClCompile Include="src\Components\InputComponent.cpp" />
     <ClCompile Include="src\Components\PhysicsComponent.cpp" />
     <ClCompile Include="src\Game.cpp" />
@@ -46,10 +53,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\bitshifter\ObjectPool.hpp" />
+    <ClInclude Include="include\Commands\AttackCommand.hpp" />
+    <ClInclude Include="include\Commands\DoNothingCommand.hpp" />
+    <ClInclude Include="include\Commands\WalkDownCommand.hpp" />
+    <ClInclude Include="include\Commands\WalkLeftCommand.hpp" />
+    <ClInclude Include="include\Commands\WalkRightCommand.hpp" />
+    <ClInclude Include="include\Commands\WalkUpCommand.hpp" />
     <ClInclude Include="include\Components\AIComponent.hpp" />
     <ClInclude Include="include\Components\AnimationComponent.hpp" />
     <ClInclude Include="include\Components\AnimatorComponent.hpp" />
-    <ClInclude Include="include\Components\Command.hpp" />
+    <ClInclude Include="include\Commands\Command.hpp" />
+    <ClInclude Include="include\Components\AttackComponent.hpp" />
     <ClInclude Include="include\Components\Component.hpp" />
     <ClInclude Include="include\Components\HealthComponent.hpp" />
     <ClInclude Include="include\Components\InuptComponent.hpp" />

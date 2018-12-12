@@ -5,7 +5,7 @@
 
 #include "GameObject.hpp"
 #include "Enums.hpp"
-#include "Components/Command.hpp"
+#include "Commands/Command.hpp"
 #include "Components/Component.hpp"
 
 class Command;
