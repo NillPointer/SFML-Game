@@ -9,10 +9,12 @@ AttackComponent::AttackComponent(GameObject & obj, b2World& world, PhysicsCollis
 	m_cooldown(0)
 {
 	m_collisionWithEnemyCallback = [&](GameObject* a, GameObject* b) { b->Deactivate(); m_collisionWithWallCallback(a, b); };
-	m_collisionWithWallCallback = [&](GameObject* a, GameObject* b) { m_toBeDeletedFromPool.push_back(a); };
+	m_collisionWithSelfCallback = [&](GameObject* a, GameObject* b) {m_toBeDeletedFromPool.insert(a); m_toBeDeletedFromPool.insert(b); };
+	m_collisionWithWallCallback = [&](GameObject* a, GameObject* b) { m_toBeDeletedFromPool.insert(a); };
 
 	listener.SetCollisionCallback(PROJECTILE | ENEMY, m_collisionWithEnemyCallback);
 	listener.SetCollisionCallback(PROJECTILE | WALL, m_collisionWithWallCallback);
+	listener.SetCollisionCallback(PROJECTILE | PROJECTILE, m_collisionWithSelfCallback);
 }
 
 AttackComponent::~AttackComponent() {
@@ -31,10 +33,11 @@ void AttackComponent::Update(float timeDelta) {
 
 void AttackComponent::DestroyProjectiles() {
 	if (m_world.IsLocked()) return;
-	for (auto projectile : m_toBeDeletedFromPool) {
-		auto body = projectile->GetPhysicsComponent()->GetBody();
-		for (auto b = 0; b < m_world.GetBodyCount(); b++) if (body == m_world.GetBodyList()+b) m_world.DestroyBody(body);
-		//if (body == (b2Body*)0xDDDDDDDD) m_world.DestroyBody(body); //IF ALL ELSE FAILS, USE THIS
+	for (auto& projectile : m_toBeDeletedFromPool) {
+		if (projectile == nullptr) continue;
+		if (projectile->GetPhysicsComponent() != nullptr) m_world.DestroyBody(projectile->GetPhysicsComponent()->GetBody());
+		projectile->SetPhysicsComponent(nullptr);
+		projectile->SetSpriteComponent(nullptr);
 		m_projectilePool.delete_object(projectile);
 	}
 	m_toBeDeletedFromPool.clear();
@@ -43,9 +46,12 @@ void AttackComponent::DestroyProjectiles() {
 void AttackComponent::Attack() {
 	if (m_cooldown < PROJECTILE_COOLDOWN) return;
 	m_cooldown = 0.0f;
+
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
 
 	GameObject* obj = m_projectilePool.new_object();
+	if (obj == nullptr) return;
+
 	obj->SetName(PROJECTILE_ENTITY);
 	b2Body* body = CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.25f, b2_dynamicBody);
 	SetPhysicsBodyFilter(body, PROJECTILE);

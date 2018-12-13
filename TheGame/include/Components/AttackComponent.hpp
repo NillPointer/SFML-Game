@@ -2,7 +2,7 @@
 #define ATTACKCOMPONENT_HPP
 
 #include <functional>
-#include <list>
+#include <set>
 #include "bitshifter/ObjectPool.hpp"
 #include "GameObject.hpp"
 #include "Components/Component.hpp"
@@ -24,9 +24,10 @@ private:
 
 	std::function<void(GameObject*, GameObject*)> m_collisionWithWallCallback;
 	std::function<void(GameObject*, GameObject*)> m_collisionWithEnemyCallback;
+	std::function<void(GameObject*, GameObject*)> m_collisionWithSelfCallback;
 
 	FixedObjectPool<GameObject> m_projectilePool;
-	std::vector<GameObject*> m_toBeDeletedFromPool;
+	std::set<GameObject*> m_toBeDeletedFromPool;
 
 	b2World& m_world;
 
