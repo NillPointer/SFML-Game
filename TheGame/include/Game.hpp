@@ -17,12 +17,13 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void RestartClock();
+	virtual void Initialize(bool networking = false, bool host = false, int seed = -1);
 
 	sf::Time GetElapsed();
 
 private:
 	void SetupNewLevel();
-	int SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES, bool isPlayer = false);
+	int SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES);
 
 	// Callbacks to collisions
 	std::function<void(GameObject*, GameObject*)> m_newLevelCallback;
@@ -38,12 +39,13 @@ private:
 
 	std::vector<std::shared_ptr<InputComponent>> m_inputComponents;
 	std::vector<std::shared_ptr<AIComponent>> m_aiComponents;
+	std::vector<std::shared_ptr<NetworkComponent>> m_networkComponents;
 	std::vector<std::shared_ptr<PhysicsComponent>> m_physicComponents;
 	std::vector<std::shared_ptr<AnimatorComponent>> m_animatorComponents;
 	std::vector<std::shared_ptr<SpriteComponent>> m_spriteComponents;
 	std::vector<std::shared_ptr<HealthComponent>> m_healthComponents;
 	std::vector<std::shared_ptr<SoundComponent>> m_soundComponents;
-	std::vector<std::shared_ptr<AttackComponent>> m_attack;
+	std::vector<std::shared_ptr<AttackComponent>> m_attackComponents;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;

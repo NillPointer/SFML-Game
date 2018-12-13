@@ -25,6 +25,14 @@ enum class GAME_STATE {
 	GAME_OVER
 };
 
+// Game modes (single player, multiplayer)
+enum class GAME_MODE {
+	NA,
+	SINGLE,
+	MULTI_HOST,
+	MULTI_CLIENT
+};
+
 // Spawnable items.
 enum class ITEM {
 	GEM,

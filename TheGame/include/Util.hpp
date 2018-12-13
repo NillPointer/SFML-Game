@@ -11,7 +11,9 @@
 /************ General Settings ************/
 
 constexpr char* WINDOW_TITLE{ "The Game" };
-constexpr char* START_GAME{ "START GAME!" };
+constexpr char* SINGLE_GAME{ "START GAME!" };
+constexpr char* HOST_GAME{ "HOST GAME!" };
+constexpr char* CLIENT_GAME{ "JOIN GAME!" };
 constexpr char* EXIT_GAME{ "EXIT" };
 constexpr unsigned int WINDOW_WIDTH{ 800 };
 constexpr unsigned int WINDOW_HEIGHT{ 600 };

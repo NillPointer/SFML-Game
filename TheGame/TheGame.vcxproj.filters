@@ -108,6 +108,9 @@
     <ClCompile Include="src\Components\AttackComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Components\NetworkComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp">
@@ -285,6 +288,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Components\AttackComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Components\NetworkComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

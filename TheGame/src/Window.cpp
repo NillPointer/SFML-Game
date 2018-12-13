@@ -10,6 +10,7 @@ void Window::Setup() {
 	m_windowSize = { WINDOW_WIDTH, WINDOW_HEIGHT };
 	m_isFullscreen = false;
 	m_isDone = false;
+	m_isPaused = false;
 	m_isDebug = true;
 	m_views[static_cast<int>(VIEW::MAIN)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
 	m_views[static_cast<int>(VIEW::UI)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
@@ -41,6 +42,7 @@ void Window::MoveView(sf::Vector2f position) {
 }
 
 bool Window::IsDone() { return m_isDone; }
+bool Window::IsPaused() { return m_isPaused; }
 bool Window::IsFullscreen() { return m_isFullscreen; }
 bool Window::IsDebug() { return m_isDebug; }
 
@@ -59,6 +61,8 @@ void Window::Update() {
 		ImGui::SFML::ProcessEvent(event);
 		if (event.type == sf::Event::Closed) { m_isDone = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) { m_isDone = true; }
+		else if (event.type == sf::Event::GainedFocus) { m_isPaused = false; }
+		else if (event.type == sf::Event::LostFocus) { m_isPaused = true; }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F5) { ToggleFullscreen(); }
 		else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::F2) { m_isDebug = !m_isDebug; }
 		else if (event.type == sf::Event::Resized) {

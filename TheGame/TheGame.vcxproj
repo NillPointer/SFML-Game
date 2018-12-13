@@ -30,6 +30,7 @@
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\AnimatorComponent.cpp" />
     <ClCompile Include="src\Components\AttackComponent.cpp" />
+    <ClCompile Include="src\Components\NetworkComponent.cpp" />
     <ClCompile Include="src\Components\SoundComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
@@ -67,6 +68,7 @@
     <ClInclude Include="include\Components\Component.hpp" />
     <ClInclude Include="include\Components\HealthComponent.hpp" />
     <ClInclude Include="include\Components\InuptComponent.hpp" />
+    <ClInclude Include="include\Components\NetworkComponent.hpp" />
     <ClInclude Include="include\Components\PhysicsComponent.hpp" />
     <ClInclude Include="include\Components\SoundComponent.hpp" />
     <ClInclude Include="include\Components\SpriteComponent.hpp" />
@@ -345,7 +347,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Box2D/lib;$(SolutionDir)NativeFileDialog/lib;$(SolutionDir)IMGUI/lib;$(SolutionDir)SFML/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Box2D.lib;opengl32.lib;glfw3.lib;nfd_d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Box2D.lib;opengl32.lib;glfw3.lib;nfd_d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-audio-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">

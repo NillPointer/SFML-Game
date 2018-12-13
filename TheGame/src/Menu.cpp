@@ -23,10 +23,20 @@ void Menu::DisplayMainMenu() {
 	ImGui::Text(WINDOW_TITLE);
 	ImGui::NewLine();
 	ImGui::NewLine();
-	ImGui::Indent(-ImGui::CalcTextSize(START_GAME).x / 2.0f -30.0f);
-	if (ImGui::Button(START_GAME, { 200, 100 })) SetChangeScene(true);
-	ImGui::NewLine();
-	if (ImGui::Button(EXIT_GAME, { 200, 100 })) Exit();
+	ImGui::Indent(-ImGui::CalcTextSize(SINGLE_GAME).x / 2.0f -30.0f);
+	if (ImGui::Button(SINGLE_GAME, { 200, 50 })) {
+		m_mode = GAME_MODE::SINGLE;
+		SetChangeScene(true);
+	}
+	if (ImGui::Button(HOST_GAME, { 200, 50 })) {
+		m_mode = GAME_MODE::MULTI_HOST;
+		SetChangeScene(true);
+	}
+	if (ImGui::Button(CLIENT_GAME, { 200, 50 })) {
+		m_mode = GAME_MODE::MULTI_CLIENT;
+		SetChangeScene(true);
+	}
+	if (ImGui::Button(EXIT_GAME, { 200, 50 })) Exit();
 	ImGui::End();
 }
 

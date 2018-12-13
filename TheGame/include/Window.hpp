@@ -18,6 +18,7 @@ public:
 
 	bool IsDone();
 	bool IsFullscreen();
+	bool IsPaused();
 	bool IsDebug();
 
 	sf::RenderWindow* GetRenderWindow();
@@ -38,6 +39,7 @@ private:
 	VIEW m_currentView;
 
 	bool m_isDone;
+	bool m_isPaused;
 	bool m_isFullscreen;
 	bool m_isDebug;
 };
