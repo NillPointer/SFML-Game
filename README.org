@@ -3,23 +3,22 @@
 
 This is a game created in [[https://www.sfml-dev.org/][SFML]] using various external libraries such as:
 - [[https://github.com/ocornut/imgui][ImGui]]
-- [[https://github.com/mlabbe/nativefiledialog][NativeFileDialog]]
 - [[https://github.com/erincatto/Box2D][Box2D]]
 
 * Expected Features
-- Entity Component design pattern
-- Tiling (map)
-- Asset Manager (for loading in textures,etc)
-- Procedural Level Generation (see disclaimers)
+- Entity Component design pattern - *DONE*
+- Tiling (map) - *DONE*
+- Asset Manager (for loading in textures,etc) - *DONE*
+- Procedural Level Generation (see disclaimers) - *DONE*
 - AI:
-  - Influence Map
-  - A* Algorithm
-  - Path Following, Wandering, etc
-- Memory Mangement (memory pools)
-- Networking (basic replication of other players position)
-- Sound Effects
-- Music
-- Menus (GUI)
+  - Influence Map (Bonus) - *NOT DONE*
+  - A* Algorithm - *DONE*
+  - Path Following, Wandering, etc - *DONE* (AI wandering around by following random points in the level)
+- Memory Mangement (memory pools) - *DONE* (Data Locality Pattern & Memory Object Pools)
+- Networking (basic replication of other players position) - *DONE*
+- Sound Effects - *DONE* (With locailisation)
+- Music - *DONE*
+- Menus (GUI) - *DONE*
 
 * Disclaimers
 Many parts of this project use [[https://github.com/utilForever/ProceduralContentGeneration][Chris Ohk's]] code from his *ProceduralContentGeneration* repository, either as a baseline to get the projected started, or as libraries 

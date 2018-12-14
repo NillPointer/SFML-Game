@@ -30,6 +30,7 @@
     <ClCompile Include="src\Components\AnimationComponent.cpp" />
     <ClCompile Include="src\Components\AnimatorComponent.cpp" />
     <ClCompile Include="src\Components\AttackComponent.cpp" />
+    <ClCompile Include="src\Components\HealthComponent.cpp" />
     <ClCompile Include="src\Components\NetworkComponent.cpp" />
     <ClCompile Include="src\Components\SoundComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />

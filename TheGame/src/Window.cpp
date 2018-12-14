@@ -11,7 +11,7 @@ void Window::Setup() {
 	m_isFullscreen = false;
 	m_isDone = false;
 	m_isPaused = false;
-	m_isDebug = true;
+	m_isDebug = false;
 	m_views[static_cast<int>(VIEW::MAIN)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
 	m_views[static_cast<int>(VIEW::UI)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });
 	m_views[static_cast<int>(VIEW::DEBUG)] = sf::View({ 0,0 }, { (float)WINDOW_WIDTH, (float)WINDOW_HEIGHT });

@@ -31,7 +31,7 @@ constexpr int ANIMATION_FRAMES{ 8 };
 
 constexpr float PLAYER_WALK_ACCELERATION{ 500.0f };
 constexpr float PROJECTILE_ACCELERATION{ 1000.0f };
-constexpr float ENEMY_WALK_ACCELERATION{ 100.0f };
+constexpr float ENEMY_WALK_ACCELERATION{ 300.0f };
 
 /************ Physics Settings ************/
 constexpr float PIXEL_PER_METER{ 33.0f };
@@ -77,5 +77,7 @@ b2Body* CreateCirclePhysicsBody(b2World& world,
 void SetPhysicsBodyFilter(b2Body* body, uint16 categoryBit, bool isSensor = false);
 
 sf::Vector2f Normalize(sf::Vector2f vector);
+
+int Distance(sf::Vector2f pointA, sf::Vector2f pointB);
 
 #endif // !UTIL_HPP

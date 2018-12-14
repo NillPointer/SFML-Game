@@ -50,6 +50,15 @@ Game::Game(std::shared_ptr<Window> windowprt):
 		object->SetName(TORCH);
 	}
 
+	// Setup Enemies
+	for (int i = 0; i < 8; ++i) {
+		auto enemy = SetupGameObject("resource/enemies/goblin/spr_goblin_", "", ENEMY, true, ANIMATION_FRAMES);
+		enemy->SetAIComponent(std::make_shared<AIComponent>(*enemy));
+		enemy->GetAIComponent()->SetLevel(&m_level);
+		m_aiComponents.push_back(enemy->GetAIComponent());
+		enemy->SetName(ENEMY_ENTITY);
+	}
+
 	// Setup Collision callbacks
 	m_newLevelCallback = [&](GameObject *a, GameObject* b) { m_generateNewLevel = true; };
 	m_unlockDoorCallback = [&](GameObject *a, GameObject *b) {
@@ -58,20 +67,24 @@ Game::Game(std::shared_ptr<Window> windowprt):
 		b->Deactivate(); 
 	};
 	m_collectScoreCallback = [&](GameObject *a, GameObject* b) {
-		printf("score picked up\n"); 
+		m_scoreTotal++;
 		b->GetSoundComponent()->PlaySound(); 
 		b->Deactivate(); 
+	};
+	m_damagePlayerCallback = [&](GameObject* player, GameObject* enemy) {
+		if (player->GetHealthComponent() != nullptr) player->GetHealthComponent()->Damage(10);
 	};
 
 	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
 	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallback);
 	m_collisionListener.SetCollisionCallback(PLAYER | SCORE, m_collectScoreCallback);
+	m_collisionListener.SetCollisionCallback(PLAYER | ENEMY, m_damagePlayerCallback);
 
 	// Limit Framerate
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
 }
 
-void Game::Initialize(bool networking, bool host, int seed) {
+void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
 	m_clientSocket.disconnect();
 	m_hostSocket.disconnect();
 	m_player->GetNetworkComponent()->SetActive(false);
@@ -81,7 +94,7 @@ void Game::Initialize(bool networking, bool host, int seed) {
 	m_networking = networking;
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
-	srand(seed == -1 ? time(nullptr) : seed);
+	m_levelGenerationSeed = seed == -1 ? static_cast<int>(time(nullptr)) : seed;
 
 	if (networking) {
 		if (host) {
@@ -97,8 +110,8 @@ void Game::Initialize(bool networking, bool host, int seed) {
 			m_networkPlayer->GetNetworkComponent()->SetIsReceiver(true);
 			m_networkPlayer->Activate();
 		} else {
-			if (m_hostSocket.connect("172.16.128.25", 55001) != sf::Socket::Done) return;
-			if (m_clientSocket.connect("172.16.128.25", 55001) != sf::Socket::Done) return;
+			if (m_hostSocket.connect(ip, 55001) != sf::Socket::Done) return;
+			if (m_clientSocket.connect(ip, 55001) != sf::Socket::Done) return;
 
 			m_player->GetNetworkComponent()->SetSocket(m_clientSocket);
 			m_player->GetNetworkComponent()->SetIsReceiver(false);
@@ -117,7 +130,7 @@ Game::~Game() {}
 void Game::Update() {
 	m_window->Update();
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
-	//if (m_window->IsPaused()) return;
+	if (m_window->IsPaused()) return;
 
 	if (m_generateNewLevel) SetupNewLevel();
 	for (auto attack : m_attackComponents) attack->DestroyProjectiles();
@@ -130,11 +143,19 @@ void Game::Update() {
 	for (auto sprite : m_spriteComponents) sprite->Update(deltaTime.asSeconds());
 	for (auto sound : m_soundComponents) sound->Update(deltaTime.asSeconds());
 	for (auto attack : m_attackComponents) attack->Update(deltaTime.asSeconds());
+	for (auto health : m_healthComponents) health->Update(deltaTime.asSeconds());
 
 	if (m_player->GetPhysicsComponent() != nullptr) {
 		auto playerPosition = m_player->GetPhysicsComponent()->GetPosition();
 		m_window->MoveView(playerPosition);
 		sf::Listener::setPosition(playerPosition.x, 0.0f, playerPosition.y);
+
+		for (auto enemy : m_gameObjects) {
+			if (enemy->GetName() == ENEMY_ENTITY) {
+				auto enemyPosition = enemy->GetPhysicsComponent()->GetPosition();
+				if (Distance(playerPosition, enemyPosition) < 60) enemy->GetAIComponent()->SetTarget(m_player);
+			}
+		}
 	}
 
 	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
@@ -161,12 +182,10 @@ void Game::Render() {
 
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
+	srand(m_levelGenerationSeed);
 	auto entrancePosition = m_level.GenerateLevel(m_world);
 	if (!m_networking) m_player->GetPhysicsComponent()->SetPosition(entrancePosition);
 	else m_player->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(false, false));
-	//m_gameObjects[m_gameObjects.size() - 1]->GetPhysicsComponent()->SetPosition({ 0,0 });
-	//m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetLevel(&m_level);
-	//m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetTargetPosition(m_gameObjects[0]->GetPhysicsComponent()->GetPosition());
 	for (auto i = 1; i < m_gameObjects.size(); ++i) {
 		if (m_gameObjects[i]->GetName() != NETWORK_PLAYER) m_gameObjects[i]->Activate();
 		bool torch = m_gameObjects[i]->GetName() == TORCH;

@@ -8,23 +8,23 @@ NetworkComponent::NetworkComponent(GameObject & obj):
 }
 
 void NetworkComponent::Update(float timeDelta) {
-	if (!IsActive()) return;
+	if (!IsActive() || m_socket == nullptr) return;
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
 
 	sf::Packet packet;
 	if (m_isReceiver) {
-		auto velocity = m_gameObject.GetPhysicsComponent()->GetVelocity();
+		auto position = m_gameObject.GetPhysicsComponent()->GetPosition();
 		int animation = 5;
 		if (m_socket->receive(packet) == sf::Socket::Done) {
-			packet >> velocity.x >> velocity.y >> animation;
-			m_gameObject.GetPhysicsComponent()->SetVelocity(velocity);
+			packet >> position.x >> position.y >> animation;
+			m_gameObject.GetPhysicsComponent()->SetPosition(position);
 			if (m_gameObject.GetAnimatorComponent() != nullptr) m_gameObject.GetAnimatorComponent()->SetCurrentAnimation(animation);
 		}
 	} else {
-		auto velocity = m_gameObject.GetPhysicsComponent()->GetVelocity();
+		auto position = m_gameObject.GetPhysicsComponent()->GetPosition();
 		int animation = 5;
 		if (m_gameObject.GetAnimatorComponent() != nullptr) animation = m_gameObject.GetAnimatorComponent()->GetCurrentAnimation();
-		packet << velocity.x << velocity.y << animation;
+		packet << position.x << position.y << animation;
 		m_socket->send(packet);
 	}
 }

@@ -17,7 +17,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void RestartClock();
-	virtual void Initialize(bool networking = false, bool host = false, int seed = -1);
+	virtual void Initialize(sf::IpAddress ip, bool networking = false, bool host = false, int seed = -1);
 
 	sf::Time GetElapsed();
 
@@ -29,6 +29,8 @@ private:
 	std::function<void(GameObject*, GameObject*)> m_newLevelCallback;
 	std::function<void(GameObject*, GameObject*)> m_unlockDoorCallback;
 	std::function<void(GameObject*, GameObject*)> m_collectScoreCallback;
+	std::function<void(GameObject*, GameObject*)> m_damagePlayerCallback;
+	std::function<void(GameObject*, GameObject*)> m_damageEnemyCallback;
 
 	Level m_level;
 	b2World m_world;
@@ -58,6 +60,7 @@ private:
 	sf::Font m_font;
 
 	int m_scoreTotal;
+	bool m_levelGenerationSeed;
 	bool m_generateNewLevel;
 	bool m_networking;
 };

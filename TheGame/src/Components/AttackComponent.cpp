@@ -8,7 +8,7 @@ AttackComponent::AttackComponent(GameObject & obj, b2World& world, PhysicsCollis
 	m_projectilePool(poolSize),
 	m_cooldown(0)
 {
-	m_collisionWithEnemyCallback = [&](GameObject* a, GameObject* b) { b->Deactivate(); m_collisionWithWallCallback(a, b); };
+	m_collisionWithEnemyCallback = [&](GameObject* a, GameObject* b) { b->GetHealthComponent()->Damage(25); m_collisionWithWallCallback(a, b); };
 	m_collisionWithSelfCallback = [&](GameObject* a, GameObject* b) {m_toBeDeletedFromPool.insert(a); m_toBeDeletedFromPool.insert(b); };
 	m_collisionWithWallCallback = [&](GameObject* a, GameObject* b) { m_toBeDeletedFromPool.insert(a); };
 

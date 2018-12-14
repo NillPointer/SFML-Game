@@ -44,3 +44,9 @@ sf::Vector2f Normalize(sf::Vector2f vector) {
 	if (length != 0) return sf::Vector2f(vector.x / length, vector.y / length);
 	else return vector;
 }
+
+int Distance(sf::Vector2f pointA, sf::Vector2f pointB) {
+	float xDist = abs(pointA.x - pointB.x);
+	float yDist = abs(pointA.y - pointB.y);
+	return sqrt(xDist*xDist + yDist*yDist);
+}

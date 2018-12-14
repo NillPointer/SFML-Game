@@ -15,7 +15,7 @@ public:
 
 	void SetLevel(Level* level);
 
-	void SetTargetPosition(sf::Vector2f targetPosition);
+	void SetTarget(std::shared_ptr<GameObject> target);
 
 private:
 	void UpdatePathFinding();
@@ -23,7 +23,8 @@ private:
 	int GetDistance(Tile* tileA, Tile* tileB);
 
 	Level* m_level;
-	sf::Vector2f m_targetPosition;
+	sf::Vector2f m_wanderPoint;
+	std::shared_ptr<GameObject> m_target;
 
 	std::vector<Tile*> m_path;
 };

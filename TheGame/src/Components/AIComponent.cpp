@@ -1,13 +1,15 @@
 #include "Components/AIComponent.hpp"
 #include "Util.hpp"
 
-AIComponent::AIComponent(GameObject& obj) : Component(obj), m_level(nullptr) {
+AIComponent::AIComponent(GameObject& obj) : Component(obj), m_level(nullptr), m_target(nullptr) {
 }
 
 void AIComponent::Update(float timeDelta) {
 	if (!IsActive()) return;
 
 	if (m_gameObject.GetPhysicsComponent() == nullptr || m_level == nullptr) return;
+	if (m_wanderPoint.x == 0 && m_wanderPoint.y == 0) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
+	if (Distance(m_gameObject.GetPhysicsComponent()->GetPosition(), m_wanderPoint) < 20) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
 	m_level->ResetNodes();
 	UpdatePathFinding();
 
@@ -21,7 +23,13 @@ void AIComponent::Update(float timeDelta) {
 
 void AIComponent::UpdatePathFinding() {
 	Tile* startTile = m_level->GetTile(m_gameObject.GetPhysicsComponent()->GetPosition());
-	Tile* endTile = m_level->GetTile(m_targetPosition);
+	Tile* endTile;
+
+	if (m_target != nullptr && m_target->GetPhysicsComponent() != nullptr) {
+		endTile = m_level->GetTile(m_target->GetPhysicsComponent()->GetPosition());
+	} else {
+		endTile = m_level->GetTile(m_level->GetRandomSpawnLocation(false, false));
+	}
 
 	std::vector<Tile*> openSet;
 	std::set<Tile*> closedSet;
@@ -86,6 +94,6 @@ void AIComponent::SetLevel(Level* level) {
 	m_level = level;
 }
 
-void AIComponent::SetTargetPosition(sf::Vector2f targetPosition) {
-	m_targetPosition = targetPosition;
+void AIComponent::SetTarget(std::shared_ptr<GameObject> target) {
+	m_target = target;
 }
