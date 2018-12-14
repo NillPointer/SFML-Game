@@ -29,7 +29,7 @@ private:
 	FixedObjectPool<GameObject> m_projectilePool;
 	std::set<GameObject*> m_toBeDeletedFromPool;
 
-	b2World& m_world;
+	b2World* m_world;
 
 	float m_cooldown;
 };

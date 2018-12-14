@@ -4,7 +4,7 @@
 
 AttackComponent::AttackComponent(GameObject & obj, b2World& world, PhysicsCollisionListener& listener, int poolSize):
 	Component(obj),
-	m_world(world),
+	m_world(&world),
 	m_projectilePool(poolSize),
 	m_cooldown(0)
 {
@@ -32,10 +32,10 @@ void AttackComponent::Update(float timeDelta) {
 }
 
 void AttackComponent::DestroyProjectiles() {
-	if (m_world.IsLocked()) return;
+	if (m_world == nullptr || m_world->IsLocked()) return;
 	for (auto& projectile : m_toBeDeletedFromPool) {
 		if (projectile == nullptr) continue;
-		if (projectile->GetPhysicsComponent() != nullptr) m_world.DestroyBody(projectile->GetPhysicsComponent()->GetBody());
+		if (projectile->GetPhysicsComponent() != nullptr) m_world->DestroyBody(projectile->GetPhysicsComponent()->GetBody());
 		projectile->SetPhysicsComponent(nullptr);
 		projectile->SetSpriteComponent(nullptr);
 		m_projectilePool.delete_object(projectile);
@@ -53,7 +53,7 @@ void AttackComponent::Attack() {
 	if (obj == nullptr) return;
 
 	obj->SetName(PROJECTILE_ENTITY);
-	b2Body* body = CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.25f, b2_dynamicBody);
+	b2Body* body = CreateCirclePhysicsBody(*m_world, { 0, 0 }, 0.25f, b2_dynamicBody);
 	SetPhysicsBodyFilter(body, PROJECTILE);
 	body->SetUserData(obj);
 

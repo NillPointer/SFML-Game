@@ -6,6 +6,7 @@ NetworkComponent::NetworkComponent(GameObject & obj):
 	m_isHost(false)
 {
 	m_socket.setBlocking(false);
+	//m_listener.setBlocking(false);
 }
 
 void NetworkComponent::Update(float timeDelta) {
@@ -26,38 +27,6 @@ void NetworkComponent::Update(float timeDelta) {
 			m_gameObject.GetPhysicsComponent()->SetPosition(currentPos);
 		}
 	}
-
-#if 0
-	if (m_isHost) {
-		if (m_gameObject.GetInputComponent() != nullptr) {
-			auto position = m_gameObject.GetPhysicsComponent()->GetPosition();
-			m_hostPacket << position.x << position.y;
-			std::cout << "SENT FROM HOST: " << position.x << ", " << position.y << std::endl;
-			m_socket.send(m_hostPacket);
-		} else {
-			auto currentPos = m_gameObject.GetPhysicsComponent()->GetPosition();
-			if (m_socket.receive(m_clientPacket) == sf::Socket::Done) {
-				m_clientPacket >> currentPos.x >> currentPos.y;
-				std::cout << "RECEIVED FROM CLIENT: " << currentPos.x << ", " << currentPos.y << std::endl;
-				m_gameObject.GetPhysicsComponent()->SetPosition(currentPos);
-			}
-		}
-	} else {
-		if (m_gameObject.GetInputComponent() == nullptr) {
-			auto currentPos = m_gameObject.GetPhysicsComponent()->GetPosition();
-			if (m_socket.receive(m_hostPacket) == sf::Socket::Done) {
-				m_hostPacket >> currentPos.x >> currentPos.y;
-				std::cout << "RECEIVED FROM HOST: " << currentPos.x << ", " << currentPos.y << std::endl;
-				m_gameObject.GetPhysicsComponent()->SetPosition(currentPos);
-			}
-		} else {
-			auto position = m_gameObject.GetPhysicsComponent()->GetPosition();
-			m_clientPacket << position.x << position.y;
-			std::cout << "SENT FROM CLIENT: " << position.x << ", " << position.y << std::endl;
-			m_socket.send(m_clientPacket);
-		}
-	}
-#endif
 }
 
 void NetworkComponent::Connect(sf::IpAddress ip) {

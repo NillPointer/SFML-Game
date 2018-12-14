@@ -23,7 +23,8 @@ int main(int argc, char** argv) {
 			currentScene->StopBackgroundMusic();
 			mode = currentScene->GetSceneData();
 			currentScene = currentScene == menuScene ? gameScene : menuScene;
-			currentScene->Initialize(mode != GAME_MODE::SINGLE, mode == GAME_MODE::MULTI_HOST ? true : false, 1);
+			auto networkGame = mode != GAME_MODE::SINGLE;
+			currentScene->Initialize(networkGame, mode == GAME_MODE::MULTI_HOST ? true : false, networkGame ? 1 : -1);
 			currentScene->PlayBackgroundMusic();
 		}
 	}

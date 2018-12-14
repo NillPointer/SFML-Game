@@ -5,64 +5,17 @@
 
 Game::Game(std::shared_ptr<Window> windowprt):
 	Scene(windowprt),
-	m_world(b2Vec2(0,0)), m_generateNewLevel(true),
+	m_world(b2Vec2(0,0)),
+	m_level(*m_window->GetRenderWindow()),
+	m_generateNewLevel(true),
 	m_debugDraw(*m_window->GetRenderWindow())
 {
 	GetBackgroundMusic().openFromFile("resource/music/msc_main_track_3.wav");
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
 
-	// Setup Collision callbacks
-	m_newLevelCallback = [&](GameObject *a, GameObject* b) { m_generateNewLevel = true; };
-	m_unlockDoorCallback = [&](GameObject *a, GameObject *b) {
-		m_level.UnlockDoor(); 
-		b->GetSoundComponent()->PlaySound(); 
-		b->Deactivate(); 
-	};
-	m_collectScoreCallback = [&](GameObject *a, GameObject* b) {
-		printf("score picked up\n"); 
-		b->GetSoundComponent()->PlaySound(); 
-		b->Deactivate(); 
-	};
-
-	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
-	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallback);
-	m_collisionListener.SetCollisionCallback(PLAYER | SCORE, m_collectScoreCallback);
-
-	// Limit Framerate
-	m_window->GetRenderWindow()->setFramerateLimit(FPS);
-}
-
-void Game::Initialize(bool networking, bool host, int seed) {
-	//m_world = b2World(b2Vec2(0, 0));
-	m_generateNewLevel = true;
-	m_clock.restart();
-	m_previousTime = m_clock.getElapsedTime();
-	srand(seed == -1 ? time(nullptr) : seed);
-
-	m_level = Level(*m_window->GetRenderWindow());
-
 	m_world.SetContactListener(&m_collisionListener);
 	m_world.SetDebugDraw(&m_debugDraw);
 	m_debugDraw.SetFlags(b2Draw::e_shapeBit);
-
-	for (auto& gameObject : m_gameObjects) {
-		if (gameObject->GetAIComponent() != nullptr) gameObject->GetAIComponent().~shared_ptr();
-		if (gameObject->GetAnimatorComponent() != nullptr) gameObject->GetAnimatorComponent().~shared_ptr();
-		if (gameObject->GetAttackComponent() != nullptr) gameObject->GetAttackComponent().~shared_ptr();
-		if (gameObject->GetInputComponent() != nullptr) gameObject->GetInputComponent().~shared_ptr();
-		if (gameObject->GetPhysicsComponent() != nullptr) gameObject->GetPhysicsComponent().~shared_ptr();
-		if (gameObject->GetSoundComponent() != nullptr) gameObject->GetSoundComponent().~shared_ptr();
-		if (gameObject->GetSpriteComponent() != nullptr) gameObject->GetSpriteComponent().~shared_ptr();
-	}
-
-	m_gameObjects.clear();
-	m_inputComponents.clear();
-	m_aiComponents.clear();
-	m_physicComponents.clear();
-	m_animatorComponents.clear();
-	m_spriteComponents.clear();
-	m_soundComponents.clear();
-	m_soundComponents.clear();
 
 	// Setup Player
 	SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES);
@@ -86,7 +39,35 @@ void Game::Initialize(bool networking, bool host, int seed) {
 		m_gameObjects[index]->SetName(TORCH);
 	}
 
-	SetupGameObject("resource/enemies/skeleton/spr_skeleton_", "", ENEMY, true, ANIMATION_FRAMES);
+	// Setup Collision callbacks
+	m_newLevelCallback = [&](GameObject *a, GameObject* b) { m_generateNewLevel = true; };
+	m_unlockDoorCallback = [&](GameObject *a, GameObject *b) {
+		m_level.UnlockDoor(); 
+		b->GetSoundComponent()->PlaySound(); 
+		b->Deactivate(); 
+	};
+	m_collectScoreCallback = [&](GameObject *a, GameObject* b) {
+		printf("score picked up\n"); 
+		b->GetSoundComponent()->PlaySound(); 
+		b->Deactivate(); 
+	};
+
+	m_collisionListener.SetCollisionCallback(PLAYER | UNLOCKED_DOOR, m_newLevelCallback);
+	m_collisionListener.SetCollisionCallback(PLAYER | DOOR_KEY, m_unlockDoorCallback);
+	m_collisionListener.SetCollisionCallback(PLAYER | SCORE, m_collectScoreCallback);
+
+	// Limit Framerate
+	m_window->GetRenderWindow()->setFramerateLimit(FPS);
+}
+
+void Game::Initialize(bool networking, bool host, int seed) {
+	m_generateNewLevel = true;
+	m_clock.restart();
+	m_previousTime = m_clock.getElapsedTime();
+	srand(seed == -1 ? time(nullptr) : seed);
+
+	for (auto gameObject : m_gameObjects) if (gameObject->GetNetworkComponent() != nullptr) gameObject->GetNetworkComponent().~shared_ptr();
+	m_networkComponents.clear();
 
 	if (networking) {
 		if (host) {
@@ -95,10 +76,7 @@ void Game::Initialize(bool networking, bool host, int seed) {
 			m_gameObjects[0]->GetNetworkComponent()->SetIsHost(host);
 			m_gameObjects[0]->GetNetworkComponent()->Connect("172.16.128.25");
 		} else {
-			m_gameObjects[0]->GetInputComponent()->BindKey(KEY::KEY_LEFT, sf::Keyboard::Key::Left);
-			m_gameObjects[0]->GetInputComponent()->BindKey(KEY::KEY_RIGHT, sf::Keyboard::Key::Right);
-			m_gameObjects[0]->GetInputComponent()->BindKey(KEY::KEY_DOWN, sf::Keyboard::Key::Down);
-			m_gameObjects[0]->GetInputComponent()->BindKey(KEY::KEY_UP, sf::Keyboard::Key::Up);
+			SetupGameObject("resource/enemies/skeleton/spr_skeleton_", "", ENEMY, true, ANIMATION_FRAMES);
 			m_gameObjects[m_gameObjects.size() - 1]->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_gameObjects[m_gameObjects.size() - 1]));
 			m_networkComponents.push_back(m_gameObjects[m_gameObjects.size() - 1]->GetNetworkComponent());
 			m_gameObjects[m_gameObjects.size() - 1]->GetNetworkComponent()->SetIsHost(host);
