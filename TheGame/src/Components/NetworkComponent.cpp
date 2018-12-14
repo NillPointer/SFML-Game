@@ -3,57 +3,40 @@
 NetworkComponent::NetworkComponent(GameObject & obj): 
 	Component(obj),
 	m_cooldown(0),
-	m_isHost(false)
+	m_socket(nullptr)
 {
-	m_socket.setBlocking(false);
-	//m_listener.setBlocking(false);
 }
 
 void NetworkComponent::Update(float timeDelta) {
 	if (!IsActive()) return;
-
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
-	sf::Packet m_hostPacket;
-	if (m_isHost) {
-		auto position = m_gameObject.GetPhysicsComponent()->GetPosition();
-		m_hostPacket << position.x << position.y;
-		std::cout << "SENT FROM HOST: " << position.x << ", " << position.y << std::endl;
-		m_socket.send(m_hostPacket);
-	} else {
-		auto currentPos = m_gameObject.GetPhysicsComponent()->GetPosition();
-		if (m_socket.receive(m_hostPacket) == sf::Socket::Done) {
-			m_hostPacket >> currentPos.x >> currentPos.y;
-			std::cout << "RECEIVED FROM HOST: " << currentPos.x << ", " << currentPos.y << std::endl;
-			m_gameObject.GetPhysicsComponent()->SetPosition(currentPos);
+
+	sf::Packet packet;
+	if (m_isReceiver) {
+		auto velocity = m_gameObject.GetPhysicsComponent()->GetVelocity();
+		int animation = 5;
+		if (m_socket->receive(packet) == sf::Socket::Done) {
+			packet >> velocity.x >> velocity.y >> animation;
+			m_gameObject.GetPhysicsComponent()->SetVelocity(velocity);
+			if (m_gameObject.GetAnimatorComponent() != nullptr) m_gameObject.GetAnimatorComponent()->SetCurrentAnimation(animation);
 		}
+	} else {
+		auto velocity = m_gameObject.GetPhysicsComponent()->GetVelocity();
+		int animation = 5;
+		if (m_gameObject.GetAnimatorComponent() != nullptr) animation = m_gameObject.GetAnimatorComponent()->GetCurrentAnimation();
+		packet << velocity.x << velocity.y << animation;
+		m_socket->send(packet);
 	}
 }
 
-void NetworkComponent::Connect(sf::IpAddress ip) {
-	if (!m_isHost) {
-		std::cout << " CLIENT!!!! \n" << std::endl;
-		sf::Socket::Status status = m_socket.connect(ip, 55001);
-		if (status != sf::Socket::Done) {
-			std::cout << "ERROR HAS OCCURED WHILE CLIENT TRIED TO CONNECT TO HOST!" << std::endl;
-			return;
-		}
-	} else {
-		std::cout << " HOST!!!! \n" << std::endl;
-		if (m_listener.listen(55001) != sf::Socket::Done) {
-			std::cout << "ERROR HAS OCCURED WHILE HOST WAS LISTENING FOR CLIENT!" << std::endl;
-			return;
-		}
-		if (m_listener.accept(m_socket) != sf::Socket::Done) {
-			std::cout << "ERROR HAS OCCURED WHILE HOST WAS ACCEPTING CLIENT!" << std::endl;
-			return;
-		}
-	}
+void NetworkComponent::SetSocket(sf::TcpSocket& socket) {
+	m_socket = &socket;
 }
 
-void NetworkComponent::SetIsHost(bool host) {
-	m_isHost = host;
+void NetworkComponent::SetIsReceiver(bool receiver) {
+	m_isReceiver = receiver;
 }
 
-bool NetworkComponent::IsHost() {
-	return m_isHost;
+bool NetworkComponent::IsReceiver() {
+	return m_isReceiver;
 }

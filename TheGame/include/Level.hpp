@@ -75,7 +75,7 @@ public:
 	* @param Whether the loction must be on the floor
 	* @return float vector of the position for spawning
 	*/
-	sf::Vector2f GetRandomSpawnLocation(bool floor = true);
+	sf::Vector2f GetRandomSpawnLocation(bool wall = true, bool unique = true);
 
 	/**
 	* Returns the screen position of the tile

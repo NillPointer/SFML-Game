@@ -47,6 +47,7 @@ constexpr uint16 SCORE         { 0b0000010000 };
 constexpr uint16 ENEMY		   { 0b0000100000 };
 constexpr uint16 PROJECTILE    { 0b0001000000 };
 constexpr uint16 WALL          { 0b0010000000 };
+constexpr uint16 NETWORK	   { 0b0100000000 };
 
 /************ Texures - Animations ************/
 const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_right.png", "walk_left.png",
@@ -56,6 +57,7 @@ const std::string ANIMATION_TEXTURES[]{"walk_up.png", "walk_down.png", "walk_rig
 /************ GameObject Names ************/
 constexpr char* GAMEOBJECT{ "GAMEOBJECT" };
 constexpr char* PLAYER_ENTITY{ "PLAYER" };
+constexpr char* NETWORK_PLAYER{ "NETWORK" };
 constexpr char* ENEMY_ENTITY{ "ENEMY" };
 constexpr char* PROJECTILE_ENTITY{ "PROJECTILE" };
 constexpr char* TORCH{ "TORCH" };

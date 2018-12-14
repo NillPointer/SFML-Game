@@ -8,6 +8,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_world(b2Vec2(0,0)),
 	m_level(*m_window->GetRenderWindow()),
 	m_generateNewLevel(true),
+	m_networking(false),
 	m_debugDraw(*m_window->GetRenderWindow())
 {
 	GetBackgroundMusic().openFromFile("resource/music/msc_main_track_3.wav");
@@ -18,12 +19,22 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_debugDraw.SetFlags(b2Draw::e_shapeBit);
 
 	// Setup Player
-	SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES);
-	m_gameObjects[0]->SetName(PLAYER_ENTITY);
-	m_gameObjects[0]->SetAttackComponent(std::make_shared<AttackComponent>(*m_gameObjects[0], m_world, m_collisionListener));
-	m_gameObjects[0]->SetInputComponent(std::make_shared<InputComponent>(*m_gameObjects[0]));
-	m_attackComponents.push_back(m_gameObjects[0]->GetAttackComponent());
-	m_inputComponents.push_back(m_gameObjects[0]->GetInputComponent());
+	m_player = SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES);
+	m_player->SetName(PLAYER_ENTITY);
+	m_player->SetAttackComponent(std::make_shared<AttackComponent>(*m_player, m_world, m_collisionListener));
+	m_player->SetInputComponent(std::make_shared<InputComponent>(*m_player));
+	m_player->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_player));
+	m_player->GetNetworkComponent()->SetActive(false);
+	m_attackComponents.push_back(m_player->GetAttackComponent());
+	m_inputComponents.push_back(m_player->GetInputComponent());
+	m_networkComponents.push_back(m_player->GetNetworkComponent());
+
+	// Setup Network Player
+	m_networkPlayer = SetupGameObject("resource/players/thief/spr_thief_", "", NETWORK, true, ANIMATION_FRAMES);
+	m_networkPlayer->SetName(NETWORK_PLAYER);
+	m_networkPlayer->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_networkPlayer));
+	m_networkPlayer->GetNetworkComponent()->SetActive(false);
+	m_networkComponents.push_back(m_networkPlayer->GetNetworkComponent());
 
 	// Setup Key
 	SetupGameObject("resource/loot/key/spr_pickup_key.png", "resource/sounds/snd_key_pickup.wav", DOOR_KEY, false);
@@ -34,9 +45,9 @@ Game::Game(std::shared_ptr<Window> windowprt):
 
 	// Setup Torches
 	for (int i = 0; i < 5; ++i) {
-		auto index = SetupGameObject("resource/spr_torch.png", "resource/sounds/snd_fire.wav", 0, false, 5);
-		m_gameObjects[index]->GetSoundComponent()->SetSoundLooping(true);
-		m_gameObjects[index]->SetName(TORCH);
+		auto object = SetupGameObject("resource/spr_torch.png", "resource/sounds/snd_fire.wav", 0, false, 5);
+		object->GetSoundComponent()->SetSoundLooping(true);
+		object->SetName(TORCH);
 	}
 
 	// Setup Collision callbacks
@@ -61,26 +72,41 @@ Game::Game(std::shared_ptr<Window> windowprt):
 }
 
 void Game::Initialize(bool networking, bool host, int seed) {
+	m_clientSocket.disconnect();
+	m_hostSocket.disconnect();
+	m_player->GetNetworkComponent()->SetActive(false);
+	m_networkPlayer->Deactivate();
+
 	m_generateNewLevel = true;
+	m_networking = networking;
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
 	srand(seed == -1 ? time(nullptr) : seed);
 
-	for (auto gameObject : m_gameObjects) if (gameObject->GetNetworkComponent() != nullptr) gameObject->GetNetworkComponent().~shared_ptr();
-	m_networkComponents.clear();
-
 	if (networking) {
 		if (host) {
-			m_gameObjects[0]->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_gameObjects[0]));
-			m_networkComponents.push_back(m_gameObjects[0]->GetNetworkComponent());
-			m_gameObjects[0]->GetNetworkComponent()->SetIsHost(host);
-			m_gameObjects[0]->GetNetworkComponent()->Connect("172.16.128.25");
+			if (m_listener.listen(55001) != sf::Socket::Done) return;
+			if (m_listener.accept(m_hostSocket) != sf::Socket::Done) return;
+			if (m_listener.accept(m_clientSocket) != sf::Socket::Done) return;
+
+			m_player->GetNetworkComponent()->SetSocket(m_hostSocket);
+			m_player->GetNetworkComponent()->SetIsReceiver(false);
+			m_player->GetNetworkComponent()->SetActive(true);
+
+			m_networkPlayer->GetNetworkComponent()->SetSocket(m_clientSocket);
+			m_networkPlayer->GetNetworkComponent()->SetIsReceiver(true);
+			m_networkPlayer->Activate();
 		} else {
-			SetupGameObject("resource/enemies/skeleton/spr_skeleton_", "", ENEMY, true, ANIMATION_FRAMES);
-			m_gameObjects[m_gameObjects.size() - 1]->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_gameObjects[m_gameObjects.size() - 1]));
-			m_networkComponents.push_back(m_gameObjects[m_gameObjects.size() - 1]->GetNetworkComponent());
-			m_gameObjects[m_gameObjects.size() - 1]->GetNetworkComponent()->SetIsHost(host);
-			m_gameObjects[m_gameObjects.size() - 1]->GetNetworkComponent()->Connect("172.16.128.25");
+			if (m_hostSocket.connect("172.16.128.25", 55001) != sf::Socket::Done) return;
+			if (m_clientSocket.connect("172.16.128.25", 55001) != sf::Socket::Done) return;
+
+			m_player->GetNetworkComponent()->SetSocket(m_clientSocket);
+			m_player->GetNetworkComponent()->SetIsReceiver(false);
+			m_player->GetNetworkComponent()->SetActive(true);
+
+			m_networkPlayer->GetNetworkComponent()->SetSocket(m_hostSocket);
+			m_networkPlayer->GetNetworkComponent()->SetIsReceiver(true);
+			m_networkPlayer->Activate();
 		}
 	}
 
@@ -98,15 +124,15 @@ void Game::Update() {
 
 	for (auto input : m_inputComponents) input->Update(deltaTime.asSeconds());
 	for (auto ai : m_aiComponents) ai->Update(deltaTime.asSeconds());
-	for (auto physic : m_physicComponents) physic->Update(deltaTime.asSeconds());
 	for (auto network : m_networkComponents) network->Update(deltaTime.asSeconds());
+	for (auto physic : m_physicComponents) physic->Update(deltaTime.asSeconds());
 	for (auto animator : m_animatorComponents) animator->Update(deltaTime.asSeconds());
 	for (auto sprite : m_spriteComponents) sprite->Update(deltaTime.asSeconds());
 	for (auto sound : m_soundComponents) sound->Update(deltaTime.asSeconds());
 	for (auto attack : m_attackComponents) attack->Update(deltaTime.asSeconds());
 
-	if (m_gameObjects[0]->GetPhysicsComponent() != nullptr) {
-		auto playerPosition = m_gameObjects[0]->GetPhysicsComponent()->GetPosition();
+	if (m_player->GetPhysicsComponent() != nullptr) {
+		auto playerPosition = m_player->GetPhysicsComponent()->GetPosition();
 		m_window->MoveView(playerPosition);
 		sf::Listener::setPosition(playerPosition.x, 0.0f, playerPosition.y);
 	}
@@ -135,18 +161,20 @@ void Game::Render() {
 
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
-	m_gameObjects[0]->GetPhysicsComponent()->SetPosition(m_level.GenerateLevel(m_world));
+	auto entrancePosition = m_level.GenerateLevel(m_world);
+	if (!m_networking) m_player->GetPhysicsComponent()->SetPosition(entrancePosition);
+	else m_player->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(false, false));
 	//m_gameObjects[m_gameObjects.size() - 1]->GetPhysicsComponent()->SetPosition({ 0,0 });
 	//m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetLevel(&m_level);
 	//m_gameObjects[m_gameObjects.size() - 1]->GetAIComponent()->SetTargetPosition(m_gameObjects[0]->GetPhysicsComponent()->GetPosition());
 	for (auto i = 1; i < m_gameObjects.size(); ++i) {
-		m_gameObjects[i]->Activate();
+		if (m_gameObjects[i]->GetName() != NETWORK_PLAYER) m_gameObjects[i]->Activate();
 		bool torch = m_gameObjects[i]->GetName() == TORCH;
 		m_gameObjects[i]->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(torch));
 	}
 }
 
-int Game::SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames) {
+std::shared_ptr<GameObject> Game::SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames) {
 	std::shared_ptr<GameObject> object = std::make_shared<GameObject>();
 	b2Body* body = isEntity ? CreateCirclePhysicsBody(m_world, { 0, 0 }, 0.5f, b2_dynamicBody) : 
 		CreateSquarePhysicsBody(m_world, { 0, 0 }, { 0.45f, 0.45f }, b2_dynamicBody);
@@ -175,7 +203,7 @@ int Game::SetupGameObject(std::string texture, std::string sound, uint16 physics
 	if (!sound.empty()) m_soundComponents.push_back(object->GetSoundComponent());
 	if (isEntity) m_healthComponents.push_back(object->GetHealthComponent());
 
-	return m_gameObjects.size() - 1;
+	return object;
 }
 
 sf::Time Game::GetElapsed() {

@@ -23,7 +23,7 @@ public:
 
 private:
 	void SetupNewLevel();
-	int SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES);
+	std::shared_ptr<GameObject> SetupGameObject(std::string texture, std::string sound, uint16 physicsCategory, bool isEntity, int frames = ANIMATION_FRAMES);
 
 	// Callbacks to collisions
 	std::function<void(GameObject*, GameObject*)> m_newLevelCallback;
@@ -34,6 +34,12 @@ private:
 	b2World m_world;
 	PhysicsCollisionListener m_collisionListener;
 	SFMLDebugDraw m_debugDraw;
+	sf::TcpListener m_listener;
+	sf::TcpSocket m_hostSocket;
+	sf::TcpSocket m_clientSocket;
+
+	std::shared_ptr<GameObject> m_player;
+	std::shared_ptr<GameObject> m_networkPlayer;
 
 	std::vector<std::shared_ptr<GameObject>> m_gameObjects;
 
@@ -53,6 +59,7 @@ private:
 
 	int m_scoreTotal;
 	bool m_generateNewLevel;
+	bool m_networking;
 };
 
 #endif // !GAME_HPP

@@ -13,16 +13,15 @@ public:
 
 	void Update(float timeDelta);
 
-	void Connect(sf::IpAddress ip);
+	void SetSocket(sf::TcpSocket& socket);
 
-	void SetIsHost(bool host);
-	bool IsHost();
+	void SetIsReceiver(bool receiver);
+	bool IsReceiver();
 
 private:
-	sf::TcpSocket m_socket;
-	sf::TcpListener m_listener;
+	sf::TcpSocket* m_socket;
 
-	bool m_isHost;
+	bool m_isReceiver;
 	float m_cooldown;
 
 };

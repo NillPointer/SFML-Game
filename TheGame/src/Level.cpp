@@ -139,14 +139,14 @@ Tile* Level::GetTile(int columnIndex, int rowIndex) {
 	else return nullptr;
 }
 
-sf::Vector2f Level::GetRandomSpawnLocation(bool floor) {
+sf::Vector2f Level::GetRandomSpawnLocation(bool wall, bool unique) {
 	int columnIndex(0), rowIndex(0);
 	bool usedPosition = true;
 
-	while ((IsFloor(columnIndex, rowIndex) == floor) || usedPosition) {
+	while ((IsFloor(columnIndex, rowIndex) == wall) || usedPosition) {
 		columnIndex = std::rand() % GRID_WIDTH;
 		rowIndex = std::rand() % GRID_HEIGHT;
-		usedPosition = m_spawnPositions.find(std::pair<int, int>(columnIndex, rowIndex)) != m_spawnPositions.end();
+		usedPosition = unique ? m_spawnPositions.find(std::pair<int, int>(columnIndex, rowIndex)) != m_spawnPositions.end() : false;
 	}
 
 	m_spawnPositions.insert(std::pair<int, int>(columnIndex, rowIndex));
@@ -255,7 +255,7 @@ void Level::CreatePath(int columnIndex, int rowIndex) {
 
 			// If the tile has not yet been visited.
 			if (tile->type == TILE::EMPTY) {
-				// Mark the tile as floor.
+				// Mark the tile as wall.
 				tile->type = TILE::FLOOR;
 				tile->sprite.setTexture(AssetManager::GetTexture(m_textureIDs[static_cast<int>(TILE::FLOOR)]));
 
