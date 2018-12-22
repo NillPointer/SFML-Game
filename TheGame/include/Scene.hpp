@@ -8,7 +8,7 @@
 
 class Scene {
 public:
-	Scene(std::shared_ptr<Window> windowptr) : m_window(windowptr), m_mode(GAME_MODE::NA), m_changeScene(false), m_isDone(false) {}
+	Scene(std::shared_ptr<Window> windowptr) : m_window(windowptr), m_mode(GAME_MODE::SINGLE), m_changeScene(false), m_isDone(false) {}
 	virtual ~Scene() {}
 	virtual void Update() = 0;
 	virtual void Render() = 0;

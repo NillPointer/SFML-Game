@@ -1,16 +1,22 @@
 #include "Components/AIComponent.hpp"
 #include "Util.hpp"
 
-AIComponent::AIComponent(GameObject& obj) : Component(obj), m_level(nullptr), m_target(nullptr) {
+AIComponent::AIComponent(GameObject& obj) : Component(obj), m_level(nullptr), m_target(nullptr), m_wanderPoint(INT_MIN, INT_MIN) {
 }
 
 void AIComponent::Update(float timeDelta) {
 	if (!IsActive()) return;
 
 	if (m_gameObject.GetPhysicsComponent() == nullptr || m_level == nullptr) return;
-	if (m_wanderPoint.x == 0 && m_wanderPoint.y == 0) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
-	if (Distance(m_gameObject.GetPhysicsComponent()->GetPosition(), m_wanderPoint) < 20) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
+	auto size = PIXEL_PER_METER;
+	if (m_gameObject.GetSpriteComponent() != nullptr && m_gameObject.GetSpriteComponent()->GetSprite()->getTexture() != nullptr) {
+		auto textureSize = m_gameObject.GetSpriteComponent()->GetSprite()->getTexture()->getSize();
+		size = textureSize.x > textureSize.y ? textureSize.x : textureSize.y;
+	}
+	if (m_wanderPoint.x == INT_MIN && m_wanderPoint.y == INT_MIN) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
+	if (Distance(m_gameObject.GetPhysicsComponent()->GetPosition(), m_wanderPoint) < size * 1.5) m_wanderPoint = m_level->GetRandomSpawnLocation(false, false);
 	m_level->ResetNodes();
+
 	UpdatePathFinding();
 
 	if (m_path.size() == 0) return;
@@ -28,7 +34,7 @@ void AIComponent::UpdatePathFinding() {
 	if (m_target != nullptr && m_target->GetPhysicsComponent() != nullptr) {
 		endTile = m_level->GetTile(m_target->GetPhysicsComponent()->GetPosition());
 	} else {
-		endTile = m_level->GetTile(m_level->GetRandomSpawnLocation(false, false));
+		endTile = m_level->GetTile(m_wanderPoint);
 	}
 
 	std::vector<Tile*> openSet;

@@ -18,6 +18,10 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_world.SetDebugDraw(&m_debugDraw);
 	m_debugDraw.SetFlags(b2Draw::e_shapeBit);
 
+	m_clientSocket.setBlocking(false);
+	m_hostSocket.setBlocking(false);
+	m_listener.setBlocking(false);
+
 	// Setup Player
 	m_player = SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES);
 	m_player->SetName(PLAYER_ENTITY);
@@ -94,7 +98,7 @@ void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
 	m_networking = networking;
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
-	m_levelGenerationSeed = seed == -1 ? static_cast<int>(time(nullptr)) : seed;
+	srand((seed == -1) ? static_cast<int>(time(nullptr)) : seed);
 
 	if (networking) {
 		if (host) {
@@ -130,7 +134,7 @@ Game::~Game() {}
 void Game::Update() {
 	m_window->Update();
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
-	if (m_window->IsPaused()) return;
+	//if (m_window->IsPaused()) return;
 
 	if (m_generateNewLevel) SetupNewLevel();
 	for (auto attack : m_attackComponents) attack->DestroyProjectiles();
@@ -153,7 +157,7 @@ void Game::Update() {
 		for (auto enemy : m_gameObjects) {
 			if (enemy->GetName() == ENEMY_ENTITY) {
 				auto enemyPosition = enemy->GetPhysicsComponent()->GetPosition();
-				if (Distance(playerPosition, enemyPosition) < 60) enemy->GetAIComponent()->SetTarget(m_player);
+				if (Distance(playerPosition, enemyPosition) < PIXEL_PER_METER * 5) enemy->GetAIComponent()->SetTarget(m_player);
 			}
 		}
 	}
@@ -182,7 +186,6 @@ void Game::Render() {
 
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
-	srand(m_levelGenerationSeed);
 	auto entrancePosition = m_level.GenerateLevel(m_world);
 	if (!m_networking) m_player->GetPhysicsComponent()->SetPosition(entrancePosition);
 	else m_player->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(false, false));

@@ -60,7 +60,6 @@ private:
 	sf::Font m_font;
 
 	int m_scoreTotal;
-	bool m_levelGenerationSeed;
 	bool m_generateNewLevel;
 	bool m_networking;
 };

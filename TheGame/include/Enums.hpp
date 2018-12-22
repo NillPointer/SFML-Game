@@ -27,7 +27,6 @@ enum class GAME_STATE {
 
 // Game modes (single player, multiplayer)
 enum class GAME_MODE {
-	NA,
 	SINGLE,
 	MULTI_HOST,
 	MULTI_CLIENT

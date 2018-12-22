@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 	GAME_MODE mode;
 	std::shared_ptr<Scene> currentScene;
 
-	sf::IpAddress ip = "172.16.128.25";
+	sf::IpAddress ip = "192.168.1.7";
 
 	std::shared_ptr<Scene> gameScene = std::make_shared<Game>(window);
 	std::shared_ptr<Scene> menuScene = std::make_shared<Menu>(window);
