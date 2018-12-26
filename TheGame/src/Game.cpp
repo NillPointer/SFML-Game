@@ -18,9 +18,8 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_world.SetDebugDraw(&m_debugDraw);
 	m_debugDraw.SetFlags(b2Draw::e_shapeBit);
 
-	m_clientSocket.setBlocking(false);
-	m_hostSocket.setBlocking(false);
-	m_listener.setBlocking(false);
+	m_clientSocket.setBlocking(true);
+	m_hostSocket.setBlocking(true);
 
 	// Setup Player
 	m_player = SetupGameObject("resource/players/mage/spr_mage_", "", PLAYER, true, ANIMATION_FRAMES);
@@ -38,7 +37,9 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_networkPlayer->SetName(NETWORK_PLAYER);
 	m_networkPlayer->SetNetworkComponent(std::make_shared<NetworkComponent>(*m_networkPlayer));
 	m_networkPlayer->GetNetworkComponent()->SetActive(false);
+	m_networkPlayer->GetSpriteComponent()->GetSprite()->setColor(sf::Color(255, 255, 255, 100));
 	m_networkComponents.push_back(m_networkPlayer->GetNetworkComponent());
+	m_networkPlayer->GetPhysicsComponent()->GetBody()->GetFixtureList()->SetSensor(true);
 
 	// Setup Key
 	SetupGameObject("resource/loot/key/spr_pickup_key.png", "resource/sounds/snd_key_pickup.wav", DOOR_KEY, false);
@@ -55,7 +56,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	}
 
 	// Setup Enemies
-	for (int i = 0; i < 8; ++i) {
+	for (int i = 0; i < 0; ++i) {
 		auto enemy = SetupGameObject("resource/enemies/goblin/spr_goblin_", "", ENEMY, true, ANIMATION_FRAMES);
 		enemy->SetAIComponent(std::make_shared<AIComponent>(*enemy));
 		enemy->GetAIComponent()->SetLevel(&m_level);
@@ -88,7 +89,7 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_window->GetRenderWindow()->setFramerateLimit(FPS);
 }
 
-void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
+void Game::Initialize(sf::IpAddress ip, bool networking, bool host) {
 	m_clientSocket.disconnect();
 	m_hostSocket.disconnect();
 	m_player->GetNetworkComponent()->SetActive(false);
@@ -98,13 +99,14 @@ void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
 	m_networking = networking;
 	m_clock.restart();
 	m_previousTime = m_clock.getElapsedTime();
-	srand((seed == -1) ? static_cast<int>(time(nullptr)) : seed);
+	srand(static_cast<int>(time(nullptr)));
 
 	if (networking) {
 		if (host) {
-			if (m_listener.listen(55001) != sf::Socket::Done) return;
-			if (m_listener.accept(m_hostSocket) != sf::Socket::Done) return;
-			if (m_listener.accept(m_clientSocket) != sf::Socket::Done) return;
+			if (m_hostListener.listen(PORT_NUMBER) != sf::Socket::Done) return;
+			if (m_hostListener.accept(m_hostSocket) != sf::Socket::Done) return;
+			if (m_clientListener.listen(PORT_NUMBER+1) != sf::Socket::Done) return;
+			if (m_clientListener.accept(m_clientSocket) != sf::Socket::Done) return;
 
 			m_player->GetNetworkComponent()->SetSocket(m_hostSocket);
 			m_player->GetNetworkComponent()->SetIsReceiver(false);
@@ -113,9 +115,10 @@ void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
 			m_networkPlayer->GetNetworkComponent()->SetSocket(m_clientSocket);
 			m_networkPlayer->GetNetworkComponent()->SetIsReceiver(true);
 			m_networkPlayer->Activate();
+			srand(static_cast<int>(time(nullptr)));
 		} else {
-			if (m_hostSocket.connect(ip, 55001) != sf::Socket::Done) return;
-			if (m_clientSocket.connect(ip, 55001) != sf::Socket::Done) return;
+			if (m_hostSocket.connect(ip, PORT_NUMBER) != sf::Socket::Done) return;
+			if (m_clientSocket.connect(ip, PORT_NUMBER+1) != sf::Socket::Done) return;
 
 			m_player->GetNetworkComponent()->SetSocket(m_clientSocket);
 			m_player->GetNetworkComponent()->SetIsReceiver(false);
@@ -124,6 +127,7 @@ void Game::Initialize(sf::IpAddress ip, bool networking, bool host, int seed) {
 			m_networkPlayer->GetNetworkComponent()->SetSocket(m_hostSocket);
 			m_networkPlayer->GetNetworkComponent()->SetIsReceiver(true);
 			m_networkPlayer->Activate();
+			srand(static_cast<int>(time(nullptr))+1);
 		}
 	}
 
@@ -134,7 +138,6 @@ Game::~Game() {}
 void Game::Update() {
 	m_window->Update();
 	sf::Time deltaTime = m_clock.getElapsedTime() - GetElapsed();
-	//if (m_window->IsPaused()) return;
 
 	if (m_generateNewLevel) SetupNewLevel();
 	for (auto attack : m_attackComponents) attack->DestroyProjectiles();
@@ -187,8 +190,8 @@ void Game::Render() {
 void Game::SetupNewLevel() {
 	m_generateNewLevel = false;
 	auto entrancePosition = m_level.GenerateLevel(m_world);
-	if (!m_networking) m_player->GetPhysicsComponent()->SetPosition(entrancePosition);
-	else m_player->GetPhysicsComponent()->SetPosition(m_level.GetRandomSpawnLocation(false, false));
+	m_player->GetPhysicsComponent()->SetPosition(entrancePosition);
+	
 	for (auto i = 1; i < m_gameObjects.size(); ++i) {
 		if (m_gameObjects[i]->GetName() != NETWORK_PLAYER) m_gameObjects[i]->Activate();
 		bool torch = m_gameObjects[i]->GetName() == TORCH;

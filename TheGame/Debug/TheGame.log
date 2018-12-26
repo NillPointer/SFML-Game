@@ -1,5 +1,5 @@
 ﻿  Game.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(88): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(192): warning C4018: '<': signed/unsigned mismatch
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(89): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(195): warning C4018: '<': signed/unsigned mismatch
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

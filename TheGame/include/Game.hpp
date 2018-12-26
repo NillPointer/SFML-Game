@@ -17,7 +17,7 @@ public:
 	virtual void Update();
 	virtual void Render();
 	virtual void RestartClock();
-	virtual void Initialize(sf::IpAddress ip, bool networking = false, bool host = false, int seed = -1);
+	virtual void Initialize(sf::IpAddress ip, bool networking = false, bool host = false);
 
 	sf::Time GetElapsed();
 
@@ -36,7 +36,8 @@ private:
 	b2World m_world;
 	PhysicsCollisionListener m_collisionListener;
 	SFMLDebugDraw m_debugDraw;
-	sf::TcpListener m_listener;
+	sf::TcpListener m_hostListener;
+	sf::TcpListener m_clientListener;
 	sf::TcpSocket m_hostSocket;
 	sf::TcpSocket m_clientSocket;
 

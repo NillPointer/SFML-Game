@@ -19,6 +19,7 @@ constexpr unsigned int WINDOW_WIDTH{ 800 };
 constexpr unsigned int WINDOW_HEIGHT{ 600 };
 constexpr float MENU_WINDOW_WIDTH_SCALE{ 0.5f };
 constexpr float MENU_WINDOW_HEIGHT_SCALE{ 0.5f };
+constexpr int PORT_NUMBER{ 54000 };
 constexpr ImGuiWindowFlags MENU_WINDOW_FLAGS{ ImGuiWindowFlags_NoMove | 
 											  ImGuiWindowFlags_NoResize | 
 											  ImGuiWindowFlags_NoCollapse |

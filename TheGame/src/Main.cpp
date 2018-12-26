@@ -8,7 +8,7 @@ int main(int argc, char** argv) {
 	GAME_MODE mode;
 	std::shared_ptr<Scene> currentScene;
 
-	sf::IpAddress ip = "192.168.1.7";
+	sf::IpAddress ip = sf::IpAddress::getLocalAddress();
 
 	std::shared_ptr<Scene> gameScene = std::make_shared<Game>(window);
 	std::shared_ptr<Scene> menuScene = std::make_shared<Menu>(window);
@@ -26,7 +26,7 @@ int main(int argc, char** argv) {
 			mode = currentScene->GetSceneData();
 			currentScene = currentScene == menuScene ? gameScene : menuScene;
 			auto networkGame = mode != GAME_MODE::SINGLE;
-			currentScene->Initialize(ip, networkGame, mode == GAME_MODE::MULTI_HOST ? true : false, networkGame ? 1 : -1);
+			currentScene->Initialize(ip, networkGame, mode == GAME_MODE::MULTI_HOST ? true : false);
 			currentScene->PlayBackgroundMusic();
 		}
 	}

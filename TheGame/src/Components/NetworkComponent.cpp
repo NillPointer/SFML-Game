@@ -11,6 +11,8 @@ void NetworkComponent::Update(float timeDelta) {
 	if (!IsActive() || m_socket == nullptr) return;
 	if (m_gameObject.GetPhysicsComponent() == nullptr) return;
 
+	std::cout << "Networking" << std::endl;
+
 	sf::Packet packet;
 	if (m_isReceiver) {
 		auto position = m_gameObject.GetPhysicsComponent()->GetPosition();

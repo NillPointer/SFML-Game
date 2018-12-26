@@ -13,7 +13,7 @@ public:
 	virtual void Update() = 0;
 	virtual void Render() = 0;
 	virtual void RestartClock() = 0;
-	virtual void Initialize(sf::IpAddress ip, bool networking = false, bool host = false,int seed = -1) {}
+	virtual void Initialize(sf::IpAddress ip, bool networking = false, bool host = false) {}
 
 	sf::Music& GetBackgroundMusic() { return m_backgroundMusic; }
 	void StopBackgroundMusic() { m_backgroundMusic.stop(); }
