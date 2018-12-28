@@ -4,42 +4,6 @@ c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(95): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(213): warning C4018: '<': signed/unsigned mismatch
-  HealthComponent.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  AIComponent.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(14): warning C4244: '=': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(48): warning C4018: '<': signed/unsigned mismatch
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(97): warning C4552: '+': operator has no effect; expected operator with side-effect
-  Generating Code...
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(98): warning C4715: 'AIComponent::GetDistance': not all control paths return a value
-  Skipping... (no relevant changes detected)
-  PhysicsCollisionListener.cpp
-  Main.cpp
-  GameObject.cpp
-  SpriteComponent.cpp
-  SoundComponent.cpp
-  PhysicsComponent.cpp
-  NetworkComponent.cpp
-  InputComponent.cpp
-  InfluenceComponent.cpp
-  AttackComponent.cpp
-  AnimatorComponent.cpp
-  AnimationComponent.cpp
-  WalkUpCommand.cpp
-  WalkRightCommand.cpp
-  WalkLeftCommand.cpp
-  WalkDownCommand.cpp
-  DoNothinCommand.cpp
-  Command.cpp
-  AttackCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(216): warning C4018: '<': signed/unsigned mismatch
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

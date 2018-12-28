@@ -185,11 +185,14 @@ void Game::Update() {
 
 	m_world.Step(TIME_STEP, VELOCITY_ITERATIONS, POSITION_ITERATIONS);
 
+	/* Debug Keys for debugging purposes */
+#if 0
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::U)) m_level.UnlockDoor();
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R)) m_generateNewLevel = true;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::M)) SetChangeScene(true);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) for (auto sound : m_soundComponents) sound->SetActive(false);
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::L)) for (auto sound : m_soundComponents) sound->SetActive(true);
+#endif
 }
 
 void Game::Render() {
