@@ -163,6 +163,7 @@ void Game::Update() {
 	if (m_player->GetHealthComponent()->IsDead()) {
 		m_deathCountdown -= deltaTime.asSeconds();
 		if (m_deathCountdown <= 0) {
+			m_player->GetHealthComponent()->ResetHealth();
 			m_player->Activate();
 			m_deathCountdown = DEATH_COUNT_DOWN;
 			SetChangeScene(true);

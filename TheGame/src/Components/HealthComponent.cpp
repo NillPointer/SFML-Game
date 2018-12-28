@@ -27,3 +27,7 @@ bool HealthComponent::IsDead() {
 	return m_health <= 0;
 }
 
+void HealthComponent::ResetHealth() {
+	m_health = m_maxHealth;
+}
+

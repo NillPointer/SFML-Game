@@ -15,6 +15,7 @@ public:
 	void SetHealth(int health);
 	int GetHealth() const;
 	void Damage(int damage);
+	void ResetHealth();
 	bool IsDead();
 
 protected:
