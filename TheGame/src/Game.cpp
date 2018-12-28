@@ -9,7 +9,9 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	m_level(*m_window->GetRenderWindow()),
 	m_generateNewLevel(true),
 	m_networking(false),
-	m_debugDraw(*m_window->GetRenderWindow())
+	m_debugDraw(*m_window->GetRenderWindow()),
+	m_imap(GRID_WIDTH, GRID_HEIGHT, 0, 0, TILE_SIZE),
+	m_deathCountdown(DEATH_COUNT_DOWN)
 {
 	GetBackgroundMusic().openFromFile("resource/music/msc_main_track_3.wav");
 	m_font.loadFromFile("resource/fonts/ADDSBP__.TTF");
@@ -51,15 +53,19 @@ Game::Game(std::shared_ptr<Window> windowprt):
 	// Setup Torches
 	for (int i = 0; i < 5; ++i) {
 		auto object = SetupGameObject("resource/spr_torch.png", "resource/sounds/snd_fire.wav", 0, false, 5);
+		object->SetInfluenceComponent(std::make_shared<InfluenceComponent>(*object, m_imap, m_level));
+		m_influenceComponents.push_back(object->GetInfluenceComponent());
 		object->GetSoundComponent()->SetSoundLooping(true);
 		object->SetName(TORCH);
 	}
 
 	// Setup Enemies
-	for (int i = 0; i < 0; ++i) {
+	for (int i = 0; i < 8; ++i) {
 		auto enemy = SetupGameObject("resource/enemies/goblin/spr_goblin_", "", ENEMY, true, ANIMATION_FRAMES);
 		enemy->SetAIComponent(std::make_shared<AIComponent>(*enemy));
+		enemy->GetPhysicsComponent()->GetBody()->GetFixtureList()->SetSensor(true);
 		enemy->GetAIComponent()->SetLevel(&m_level);
+		enemy->GetAIComponent()->SetIMap(&m_imap);
 		m_aiComponents.push_back(enemy->GetAIComponent());
 		enemy->SetName(ENEMY_ENTITY);
 	}
@@ -142,6 +148,8 @@ void Game::Update() {
 	if (m_generateNewLevel) SetupNewLevel();
 	for (auto attack : m_attackComponents) attack->DestroyProjectiles();
 
+	m_imap.clear();
+	for (auto influence : m_influenceComponents) influence->Update(deltaTime.asSeconds());
 	for (auto input : m_inputComponents) input->Update(deltaTime.asSeconds());
 	for (auto ai : m_aiComponents) ai->Update(deltaTime.asSeconds());
 	for (auto network : m_networkComponents) network->Update(deltaTime.asSeconds());
@@ -151,6 +159,15 @@ void Game::Update() {
 	for (auto sound : m_soundComponents) sound->Update(deltaTime.asSeconds());
 	for (auto attack : m_attackComponents) attack->Update(deltaTime.asSeconds());
 	for (auto health : m_healthComponents) health->Update(deltaTime.asSeconds());
+
+	if (m_player->GetHealthComponent()->IsDead()) {
+		m_deathCountdown -= deltaTime.asSeconds();
+		if (m_deathCountdown <= 0) {
+			m_player->Activate();
+			m_deathCountdown = DEATH_COUNT_DOWN;
+			SetChangeScene(true);
+		}
+	}
 
 	if (m_player->GetPhysicsComponent() != nullptr) {
 		auto playerPosition = m_player->GetPhysicsComponent()->GetPosition();

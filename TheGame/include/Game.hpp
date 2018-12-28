@@ -3,6 +3,7 @@
 
 #include <functional>
 #include "bitshifter/ObjectPool.hpp"
+#include "game-imap/IMap.h"
 #include "Scene.hpp"
 #include "Level.hpp"
 #include "PhysicsCollisionListener.hpp"
@@ -34,6 +35,8 @@ private:
 
 	Level m_level;
 	b2World m_world;
+	GameIMap::InfluenceMap m_imap;
+
 	PhysicsCollisionListener m_collisionListener;
 	SFMLDebugDraw m_debugDraw;
 	sf::TcpListener m_hostListener;
@@ -55,11 +58,13 @@ private:
 	std::vector<std::shared_ptr<HealthComponent>> m_healthComponents;
 	std::vector<std::shared_ptr<SoundComponent>> m_soundComponents;
 	std::vector<std::shared_ptr<AttackComponent>> m_attackComponents;
+	std::vector<std::shared_ptr<InfluenceComponent>> m_influenceComponents;
 
 	sf::Clock m_clock;
 	sf::Time m_previousTime;
 	sf::Font m_font;
 
+	float m_deathCountdown;
 	int m_scoreTotal;
 	bool m_generateNewLevel;
 	bool m_networking;

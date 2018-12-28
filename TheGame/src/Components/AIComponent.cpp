@@ -63,7 +63,8 @@ void AIComponent::UpdatePathFinding() {
 		for (Tile* neighbour : m_level->GetNeighbours(currentNode)) {
 			if (closedSet.find(neighbour) != closedSet.end()) continue;
 
-			int newMovementCostToNeighbour = currentNode->G + GetDistance(currentNode, neighbour);
+			float influenceMapValue = (m_imap == nullptr) ? 0 : m_imap->getCellValue(neighbour->columnIndex, neighbour->rowIndex);
+			int newMovementCostToNeighbour = currentNode->G + GetDistance(currentNode, neighbour) + influenceMapValue;
 			if (newMovementCostToNeighbour < neighbour->G || !(std::find(openSet.begin(), openSet.end(), neighbour) != openSet.end())) {
 				neighbour->G = newMovementCostToNeighbour;
 				neighbour->H = GetDistance(neighbour, endTile);
@@ -98,6 +99,10 @@ int AIComponent::GetDistance(Tile* tileA, Tile* tileB) {
 
 void AIComponent::SetLevel(Level* level) {
 	m_level = level;
+}
+
+void AIComponent::SetIMap(GameIMap::InfluenceMap* imap) {
+	m_imap = imap;
 }
 
 void AIComponent::SetTarget(std::shared_ptr<GameObject> target) {

@@ -1,5 +1,140 @@
 ﻿  Game.cpp
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(89): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
-c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(195): warning C4018: '<': signed/unsigned mismatch
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(95): warning C4244: 'argument': conversion from 'const float' to 'unsigned int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\game.cpp(212): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Compiling...
+  Window.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\window.cpp(69): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
+  Util.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\util.cpp(51): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+  SFMLDebugDraw.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\sfmldebugdraw.cpp(86): warning C4305: 'initializing': truncation from 'double' to 'float'
+  PhysicsCollisionListener.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Menu.cpp
+  Main.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Level.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(159): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(160): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\level.cpp(176): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameObject.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  SpriteComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  SoundComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  PhysicsComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  NetworkComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  InputComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\inputcomponent.cpp(41): warning C4101: 'e': unreferenced local variable
+  InfluenceComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\influencecomponent.cpp(16): warning C4305: 'argument': truncation from 'double' to 'float'
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\influencecomponent.cpp(17): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  HealthComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  AttackComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  AnimatorComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  AnimationComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\animationcomponent.cpp(10): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  AIComponent.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(14): warning C4244: '=': conversion from 'unsigned int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(48): warning C4018: '<': signed/unsigned mismatch
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(97): warning C4552: '+': operator has no effect; expected operator with side-effect
+  WalkUpCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\aicomponent.cpp(98): warning C4715: 'AIComponent::GetDistance': not all control paths return a value
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\src\components\animatorcomponent.cpp(38): warning C4715: 'AnimatorComponent::GetAnimation': not all control paths return a value
+  Compiling...
+  WalkRightCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  WalkLeftCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  WalkDownCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  DoNothinCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Command.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  AttackCommand.cpp
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(40): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(83): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(333): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\oleksandr\desktop\wit\year 4\game development\workspace\thegame\thegame\include\game-imap\imap.h(334): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.exe
   TheGame.vcxproj -> C:\Users\Oleksandr\Desktop\WIT\Year 4\Game Development\workspace\TheGame\Debug\TheGame.pdb (Full PDB)

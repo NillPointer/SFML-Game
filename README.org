@@ -4,6 +4,7 @@
 This is a game created in [[https://www.sfml-dev.org/][SFML]] using various external libraries such as:
 - [[https://github.com/ocornut/imgui][ImGui]]
 - [[https://github.com/erincatto/Box2D][Box2D]]
+- [[https://github.com/river34/game-imap][Influence Map]]
 
 * Expected Features
 - Entity Component design pattern - *DONE*
@@ -11,7 +12,7 @@ This is a game created in [[https://www.sfml-dev.org/][SFML]] using various exte
 - Asset Manager (for loading in textures,etc) - *DONE*
 - Procedural Level Generation (see disclaimers) - *DONE*
 - AI:
-  - Influence Map (Bonus) - *NOT DONE*
+  - Influence Map (Bonus) - *DONE*
   - A* Algorithm - *DONE*
   - Path Following, Wandering, etc - *DONE* (AI wandering around by following random points in the level)
 - Memory Mangement (memory pools) - *DONE* (Data Locality Pattern & Memory Object Pools)

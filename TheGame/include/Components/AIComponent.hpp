@@ -2,6 +2,7 @@
 #define AICOMPONENT_HPP
 
 #include "GameObject.hpp"
+#include "game-imap/IMap.h"
 #include "Level.hpp"
 #include "Components/Component.hpp"
 
@@ -15,6 +16,8 @@ public:
 
 	void SetLevel(Level* level);
 
+	void SetIMap(GameIMap::InfluenceMap* imap);
+
 	void SetTarget(std::shared_ptr<GameObject> target);
 
 private:
@@ -23,6 +26,7 @@ private:
 	int GetDistance(Tile* tileA, Tile* tileB);
 
 	Level* m_level;
+	GameIMap::InfluenceMap* m_imap;
 	sf::Vector2f m_wanderPoint;
 	std::shared_ptr<GameObject> m_target;
 
